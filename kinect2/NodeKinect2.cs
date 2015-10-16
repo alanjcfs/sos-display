@@ -649,10 +649,22 @@ namespace NodeKinect2
                         foreach (JointType jointType in joints.Keys)
                         {
                             DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(joints[jointType].Position);
+                            ColorSpacePoint colorSpacePoint = this.coordinateMapper.MapCameraPointToColorSpace(joints[jointType].Position);
                             jsJoints[jointType.ToString()] = new
                             {
+                                // backwards compatibility
                                 x = depthSpacePoint.X,
-                                y = depthSpacePoint.Y
+                                y = depthSpacePoint.Y,
+                                // camera
+                                camerax = joints[jointType].Position.X,
+                                cameray = joints[jointType].Position.Y,
+                                cameraz = joints[jointType].Position.Z,
+                                // depth
+                                depthx = depthSpacePoint.X,
+                                depthy = depthSpacePoint.Y,
+                                // color
+                                colorx = colorSpacePoint.X,
+                                colory = colorSpacePoint.Y
                             };
                         }
                         var jsBody = new
