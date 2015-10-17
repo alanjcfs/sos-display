@@ -30,7 +30,8 @@ var SkeletalBody = function() {
   self.rightHipToKnee = new PIXI.Graphics();
   self.rightKneeToAnkle = new PIXI.Graphics();
 
-  this.SHAPESXOFFSET = -150;
+  this.SHAPESXOFFSET = -180;
+  this.SHAPESYOFFSET = -150;
 
   this.init = function(parentContainer, color) {
 
@@ -43,6 +44,7 @@ var SkeletalBody = function() {
     // 		_container = new PIXI.Container();
     self._shapesData = new PIXI.Container();
     self._shapesData.x = self._shapesData.x + self.SHAPESXOFFSET;
+    self._shapesData.y = self._shapesData.y + self.SHAPESYOFFSET;
     self._shapesData.alpha = self._alpha;
 
     // toggle pointer

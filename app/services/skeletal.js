@@ -25,6 +25,7 @@ services.service('skeletalService', function($rootScope, $log) {
     var trackedSkeletons = {};
     var TRACKINGID_PREFIX = "skel-";
     var XOFFSET = new SkeletalBody().SHAPESXOFFSET;
+    var YOFFSET = new SkeletalBody().SHAPESYOFFSET;
 
     socket.on('bodyFrame', function(bodies){
 
@@ -57,7 +58,7 @@ services.service('skeletalService', function($rootScope, $log) {
       angular.forEach(trackedSkeletons, function(skel, key) {
         var input = skel.getHandPointerPoint();
         inputs.push(input.x + XOFFSET);
-        inputs.push(input.y);
+        inputs.push(input.y + YOFFSET);
       });
       $rootScope.$broadcast('kinectInput', inputs);
 
