@@ -4,8 +4,8 @@ var io = require('socket.io')(8008);
 var json = require('json-file');
 var _ = require('lodash');
 
-var output = json.read('./skeletal-stress-test.json');
-var array = output.get('bodiesData')
+var output = json.read('./skeletal-output-01.json');
+var array = output.get('bodiesData');
 
 console.log("Dummy Kinect Server started.  Listening for connections.");
 
@@ -27,4 +27,4 @@ io.on('connection', function(socket){
 
 io.on('disconnect', function(socket) {
 	console.log("Disconnected from client.");
-})
+});

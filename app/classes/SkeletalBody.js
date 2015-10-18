@@ -30,7 +30,8 @@ var SkeletalBody = function() {
   self.rightHipToKnee = new PIXI.Graphics();
   self.rightKneeToAnkle = new PIXI.Graphics();
 
-  this.SHAPESXOFFSET = -150;
+  this.SHAPESXOFFSET = -180;
+  this.SHAPESYOFFSET = -150;
 
   this.init = function(parentContainer, color) {
 
@@ -43,6 +44,7 @@ var SkeletalBody = function() {
     // 		_container = new PIXI.Container();
     self._shapesData = new PIXI.Container();
     self._shapesData.x = self._shapesData.x + self.SHAPESXOFFSET;
+    self._shapesData.y = self._shapesData.y + self.SHAPESYOFFSET;
     self._shapesData.alpha = self._alpha;
 
     // toggle pointer
@@ -69,27 +71,29 @@ var SkeletalBody = function() {
   this.drawLineBetweenJoints = function(j1Name, j2Name, config, polygon) {
     var j1 = self._bodyData.joints[j1Name];
     var j2 = self._bodyData.joints[j2Name];
-    var point1 = { x: j1.x, y: j1.y };
-    var point2 = { x: j2.x, y: j2.y };
-    var width = 8;
-    var color = config.color;
-
-    var halfThickness = width * 0.5;
-    var deltaX = point1.x - point2.x;
-    var deltaY = point2.x - point2.y;
-    var deg = Math.atan2(deltaY, deltaX)*180.0/Math.PI;
-    var newDeg = deg+90;
 
     polygon.clear();
-    polygon.position.x = point1.x;
-    polygon.position.y = point1.y;
+    polygon.position.x = j1.x;
+    polygon.position.y = j1.y;
     polygon.lineStyle(1, 0xDEDEDE);
-    polygon.beginFill(color);
-    polygon.moveTo(-halfThickness, 0);
-    polygon.lineTo(halfThickness, 0);
-    polygon.lineTo((point2.x - point1.x) + halfThickness, point2.y - point1.y);
-    polygon.lineTo((point2.x - point1.x) - halfThickness, point2.y - point1.y);
-    polygon.lineTo(-halfThickness,0);
+    polygon.beginFill(config.color);
+
+    // get the normal of the line so we can extend it outwards appropriately.
+    var width = j2.x - j1.x;
+    var height = j2.y - j1.y;
+    var numerator = Math.sqrt(Math.max(height * height + width * width, 1.0));
+    var normalx = - height / numerator;
+    var normaly = width / numerator;
+    var scale = 8;
+    normalx *= scale;
+    normaly *= scale;
+
+    polygon.moveTo(-normalx, 0.0);
+    polygon.lineTo(0.0, normaly);
+    polygon.lineTo(width, height + normaly);
+    polygon.lineTo(width - normalx, height);
+    polygon.lineTo(-normalx, 0.0);
+
     polygon.endFill();
 
     self._shapesData.addChild(polygon);
