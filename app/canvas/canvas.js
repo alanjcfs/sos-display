@@ -19,7 +19,7 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
   };
 
   $scope.urlParamConfig = {
-    mode: 'modeSlowClap',
+    mode: 'modeTruchet',
     wallDisplayMode: 'DEV',
     x: 15,
     y: 10
@@ -27,8 +27,7 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
 
   // mode metadata
   $scope.activeMode = null;
-  $scope.modeModuleList = [ 'modeSlowClap',
-                            'modeTruchet',
+  $scope.modeModuleList = [ 'modeTruchet',
                             'modeSeascape',
                             'modeEchoplex',
                             'modeFlame',
