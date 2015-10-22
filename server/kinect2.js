@@ -8,7 +8,7 @@ function Kinect2(options) {
     events.EventEmitter.call(this);
 
     var dllProperties = {
-	assemblyFile: __dirname + '..' + path.sep + '..' + path.sep + 'lib' + path.sep + 'NodeKinect2.dll',
+	assemblyFile: __dirname + '..' + path.sep + '..' + path.sep + 'kinect2' + path.sep + 'lib' + path.sep + 'NodeKinect2.dll',
 	typeName: 'NodeKinect2.Startup'
     };
 

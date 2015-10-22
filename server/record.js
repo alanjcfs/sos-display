@@ -1,4 +1,4 @@
-var Kinect2 = require('../kinect2-server/kinect2');
+var Kinect2 = require('./kinect2');
 var json = require('json-file');
 var fs = require('fs');
 

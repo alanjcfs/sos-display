@@ -7,7 +7,6 @@ tmp
 .idea
 kinect2/obj/
 startup/daemon/
-kinect2-server/daemon/
 /GPATH
 /GRTAGS
 /GTAGS
