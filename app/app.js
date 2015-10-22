@@ -1,6 +1,6 @@
 'use strict';
 
-// instance empty modes module, they will be 
+// instance empty modes module, they will be
 // extended in other file imports
 angular.module('sos.modes', []);
 angular.module('sos.services', []);
@@ -11,4 +11,3 @@ angular.module('sos', [
   'sos.modes',
   'sos.services'
 ]);
-

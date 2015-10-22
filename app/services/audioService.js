@@ -14,8 +14,8 @@ services.service('audioService', function($rootScope, $log, $q) {
       self.context.decodeAudioData(request.response, function(buffer) {
         deferred.resolve(buffer);
       });
-    }
+    };
     request.send();
     return deferred.promise;
-  }
+  };
 });
