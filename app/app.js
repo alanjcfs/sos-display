@@ -5,9 +5,9 @@ let Mode = require('./mode.js').Mode;
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-let t = require('./components/Layout');
+let layout = require('./components/Layout');
 
 ReactDOM.render(
-  t,
+  layout,
   document.getElementById('main')
 );
