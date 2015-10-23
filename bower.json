@@ -13,6 +13,7 @@
     "socket.io-client": "~1.3.6",
     "tweenjs": "*",
     "proton": "*",
+    "pako": "*",
     "three.js": "~0.71.0",
     "keyboardjs": "~2.1.1",
     "pixi.js": "~3.0.7"

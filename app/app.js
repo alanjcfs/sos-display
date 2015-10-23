@@ -1,5 +1,7 @@
 'use strict';
 
+let x = 5;
+
 // instance empty modes module, they will be
 // extended in other file imports
 angular.module('sos.modes', []);
