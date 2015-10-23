@@ -33,7 +33,7 @@ module.exports = React.createClass({
               <p>
                 {message}
               </p>
-              <CanvasOffset data={this.props.data.offsets} />
+              <CanvasOffset data={this.props.data.offsets} onOffsetChange={this.props.onOffsetChange} />
             </Panel>
         );
     }

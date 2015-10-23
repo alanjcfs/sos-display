@@ -18,7 +18,7 @@ let Layout = React.createClass({
         };
     },
 
-    onControlToggle: function(is_development, e) {
+    onControlToggle: function(is_development) {
         this.setState({
             control: {
                 development: is_development,
@@ -27,11 +27,11 @@ let Layout = React.createClass({
         });
     },
 
-    onOffsetChange: function(x, y, e) {
+    onOffsetChange: function(x, y) {
         this.setState({
             control: {
                 development: this.state.control.development,
-                offsets: { x: x, y: y }
+                offsets: { x: x || this.state.control.offsets.x, y: y || this.state.control.offsets.y }
             }
         });
     },
