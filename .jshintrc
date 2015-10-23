@@ -3,6 +3,7 @@
   "esnext": true,
   "globals": {
     "require": false,
+    "exports": false,
     "describe": false,
     "it": false,
     "expect": false,

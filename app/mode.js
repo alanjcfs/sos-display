@@ -10,7 +10,7 @@ function onDocumentMouseMove(event) {
   mouse.Y = event.clientY;
 }
 
-exports.Mode = function(id, title) {
+exports.Mode = (id, title) => {
 
   // get reference to self
   var self = this;
@@ -29,7 +29,7 @@ exports.Mode = function(id, title) {
   };
 };
 
-exports.ShaderMode = function(args) {
+exports.ShaderMode = (args) => {
 
   // get reference to self
   var self = this;
@@ -100,7 +100,7 @@ exports.ShaderMode = function(args) {
     });
   };
 
-  this.startRender = function() {
+  this.startRender = () => {
 
     var camera = new THREE.PerspectiveCamera(7, self.parentScope.threejs.renderer.domElement.width / self.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
     camera.position.z = 1;
@@ -143,7 +143,7 @@ exports.ShaderMode = function(args) {
     // poor man's mutex
     self.blocking = false;
 
-    var render = function() {
+    var render = () => {
       if(self.blocking) {
         return; // wait!
       }
@@ -158,7 +158,7 @@ exports.ShaderMode = function(args) {
     self.renderID = requestAnimationFrame(render);
   };
 
-  this.deinit = function() {
+  this.deinit = () => {
     cancelAnimationFrame(self.renderID);
     if(self.audio) {
       self.audio.stop();

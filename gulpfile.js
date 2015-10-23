@@ -15,7 +15,8 @@ gulp.task('webpack', function(callback) {
   var compiler = new webpack(config);
   var options = {
     publicPath: config.output.publicPath,
-    stats : { colors : true }
+    stats: { colors: true },
+    hot: true
   };
   new webpack_dev(compiler, options).listen(8080, "localhost", function (err) {
     if(err) {

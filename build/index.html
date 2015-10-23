@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="sos" class="no-js">
-<!--<![endif]-->
 
 <head>
   <meta charset="utf-8">
@@ -16,6 +15,8 @@
 
 <body>
 
+  <div id="example"></div>
+
   <div class="container-fluid">
 
     <div class="row">
@@ -25,8 +26,8 @@
             <a class="navbar-brand">Six Second Monks</a>
           </div>
           <ul class="nav navbar-nav">
-            <!-- 				  	<li><a href="#">Canvas Display</a></li> -->
-            <!-- 				  	<li><a href="#settings">Setting</a></li> -->
+            <!-- <li><a href="#">Canvas Display</a></li> -->
+            <!-- <li><a href="#settings">Setting</a></li> -->
           </ul>
         </div>
       </nav>
@@ -34,93 +35,14 @@
 
     <div class="row" ng-controller="CanvasCtrl">
       <div class="col-md-5">
-        <div id="kinect-overlay" ng-class="{rotate: rotateForProduction}" ng-style='{ left: offsetStyle.left + "px", top: offsetStyle.top + "px" }'></div>
-        <div id="canvas-stack" ng-class="{rotate: rotateForProduction}" ng-style='{ left: offsetStyle.left + "px", top: offsetStyle.top + "px" }'></div>
+        <!-- Canvas -->
       </div>
       <div class="col-md-4">
-
-        <!-- media panel -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Select Mode</h3>
-          </div>
-          <div class="panel-body">
-            <div class="list-group">
-              <a href="#" class="list-group-item" ng-repeat="mode in loadedModes" ng-click="showMode(mode.id)" ng-class='{ "active":(activeMode.id == mode.id) }'>{{mode.title}}</a>
-            </div>
-            <button class="btn btn-default" type="submit" ng-click="showMode()">Clear Mode</button>
-            <button class="btn btn-default" type="submit" ng-click="toggleKinectOverlay()">Toggle Kinect Overlay</button>
-          </div>
-        </div>
-        <!-- END: media panel -->
-
-        <!-- canvas controls panel -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Canvas Controls</h3>
-          </div>
-          <div class="panel-body">
-
-            <div class="btn-group" data-toggle="buttons">
-              <label class="btn" ng-class="devModeInputGroupClass">
-                <input type="radio" name="display-rotate" id="dev-mode" ng-model="wallDisplayMode" value="DEV" autocomplete="off">Development Mode
-              </label>
-              <label class="btn" ng-class="prodModeInputGroupClass">
-                <input type="radio" name="display-rotate" id="prod-mode" ng-model="wallDisplayMode" value="PROD" autocomplete="off" checked="checked">LED Display Mode (rotated)
-              </label>
-            </div>
-
-            <div ng-if="wallDisplayMode == 'DEV'">
-              <h4>Currently in DEV mode.</h4>
-              <p>The canvas element on your left is displaying in the same manner that it would appear on the LED wall.</p>
-            </div>
-            <div ng-if="wallDisplayMode == 'PROD'">
-              <h4>Currently in Wall Display (PROD) mode.</h4>
-              <p>The canvas element on your left is rotated -90 degrees, so it will appear correctly on the LED wall.</p>
-            </div>
-
-            <h4>Add offset to CANVAS position</h4>
-            <form class="form-inline">
-              <div class="form-group">
-                <label for="xOffset">X Offset</label>
-                <input type="text" class="form-control" id="xOffset" ng-model="offsetStyle.left">
-              </div>
-              <div class="form-group">
-                <label for="yOffset">Y Offset</label>
-                <input type="text" class="form-control" id="yOffset" ng-model="offsetStyle.top">
-              </div>
-            </form>
-
-
-          </div>
-        </div>
-        <!-- END: canvas control panel -->
-
+        <!-- MediaPanel -->
+        <!-- ControlPanel -->
       </div>
       <div class="col-md-3">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Mode Information</h3>
-          </div>
-          <div class="panel-body">
-            <table class="table table-striped">
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-              <tr ng-repeat="(key,value) in debugInfo">
-                <td>
-                  <samp>{{key}}</samp>
-                </td>
-                <td>
-                  <samp>{{value}}</samp>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
+        <!-- ModeInformation -->
       </div>
     </div>
 
@@ -151,7 +73,7 @@
   <script src="vendor/js/pako/dist/pako_inflate.min.js"></script>
 
   <!-- APP SPECIFIC -->
-  <script src="/static/all.js"></script>
+  <script src="/static/bundle.js"></script>
 
   <!-- shaders -->
   <!-- <script id="genericVert" type="x-shader/x-vertex" src="shaders/generic.vert"></script> -->
