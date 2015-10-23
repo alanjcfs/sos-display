@@ -1,45 +1,47 @@
 let React = require('react');
 
+let Panel = require('react-bootstrap').Panel;
+let Button = require('react-bootstrap').Button;
+let ButtonGroup = require('react-bootstrap').ButtonGroup;
+
+let CanvasOffset = require('./CanvasOffset');
+
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            development: true
+        };
+    },
+
+    onClick: function(is_development, e) {
+        this.setState({
+            development: is_development
+        });
+    },
+
+    dev_message: 'The canvas element on your left is displaying in the same manner that it would appear on the LED wall.',
+    prod_message: 'The canvas element on your left is rotated -90 degrees, so it will appear correctly on the LED wall.',
+
     render: function() {
+        let message = this.state.development ? this.dev_message : this.prod_message;
         return (
-          <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">Canvas Controls</h3>
-            </div>
-            <div className="panel-body">
-
-              <div className="btn-group" data-toggle="buttons">
-                <label className="btn" ng-className="devModeInputGroupClassName">
-                  <input type="radio" name="display-rotate" id="dev-mode" ng-model="wallDisplayMode" value="DEV" autocomplete="off" />Development Mode
-                </label>
-                <label className="btn" ng-className="prodModeInputGroupClassName">
-                  <input type="radio" name="display-rotate" id="prod-mode" ng-model="wallDisplayMode" value="PROD" autocomplete="off" checked="checked" />LED Display Mode (rotated)
-                </label>
-              </div>
-
-              <div ng-if="wallDisplayMode == 'DEV'">
-                <h4>Currently in DEV mode.</h4>
-                <p>The canvas element on your left is displaying in the same manner that it would appear on the LED wall.</p>
-              </div>
-              <div ng-if="wallDisplayMode == 'PROD'">
-                <h4>Currently in Wall Display (PROD) mode.</h4>
-                <p>The canvas element on your left is rotated -90 degrees, so it will appear correctly on the LED wall.</p>
-              </div>
-
-              <h4>Add offset to CANVAS position</h4>
-              <form className="form-inline">
-                <div className="form-group">
-                  <label for="xOffset">X Offset</label>
-                  <input type="text" className="form-control" id="xOffset" ng-model="offsetStyle.left" />
-                </div>
-                <div className="form-group">
-                  <label for="yOffset">Y Offset</label>
-                  <input type="text" className="form-control" id="yOffset" ng-model="offsetStyle.top" />
-                </div>
-              </form>
-            </div>
-          </div>
+            <Panel header="Canvas Controls">
+              <ButtonGroup>
+                <Button onClick={this.onClick.bind(this, true)} active={this.state.development} bsStyle="primary">
+                  Development Mode
+                </Button>
+                <Button onClick={this.onClick.bind(this, false)} active={!this.state.development}>
+                  LED Display Mode (rotated)
+                </Button>
+              </ButtonGroup>
+              <h4>
+                Currently in <strong>{this.state.development ? 'development' : 'production'}</strong> mode.
+              </h4>
+              <p>
+                {message}
+              </p>
+              <CanvasOffset />
+            </Panel>
         );
     }
 });

@@ -10,13 +10,13 @@
     "browser-sync": "latest",
     "gulp": "latest",
     "gulp-jshint": "latest",
-    "react": "^0.14.0",
     "socket.io-client": "latest",
     "webpack": "latest",
     "webpack-dev-server": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hot-loader": "latest",
+    "react-bootstrap": "latest",
     "babel-loader": "latest"
   },
   "scripts": {

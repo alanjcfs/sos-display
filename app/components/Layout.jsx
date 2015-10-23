@@ -1,5 +1,6 @@
 
 let React = require('react');
+
 let Header = require('./Header');
 let Canvas = require('./Canvas');
 let MediaPanel = require('./MediaPanel');
