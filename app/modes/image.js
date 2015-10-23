@@ -1,32 +1,34 @@
 'use strict';
 
+let Mode = require('../mode');
+
 var mode = angular.module('sos.modes');
 mode.factory('modeSampleImage', function($log) {
-	
-	var mode = new Mode("modeSampleImage", "Sample Image");
-		
-	mode.init = function(parentScope) {
 
-		this.setParentScope(parentScope);
-		this.container = new PIXI.Container();
+  var mode = new Mode("modeSampleImage", "Sample Image");
 
-		// create a texture from an image path
-		var texture = PIXI.Texture.fromImage('media/winter-is-coming.jpg');
-		// create a new Sprite using the texture
-		var image = new PIXI.Sprite(texture);
+  mode.init = function(parentScope) {
 
-		this.container.addChild(image);
-		this.renderID = requestAnimationFrame(this.update);
-	}
+    this.setParentScope(parentScope);
+    this.container = new PIXI.Container();
 
-	mode.update = function() {
-		mode.parentScope.pixijs.renderer.render(mode.container);
-		requestAnimationFrame(mode.update);			
-	}
+    // create a texture from an image path
+    var texture = PIXI.Texture.fromImage('media/winter-is-coming.JPEG');
+    // create a new Sprite using the texture
+    var image = new PIXI.Sprite(texture);
 
-	mode.deinit = function() {
-		cancelAnimationFrame(self.renderID);
-	} 
+    this.container.addChild(image);
+    this.renderID = requestAnimationFrame(this.update);
+  };
 
-	return mode;
+  mode.update = function() {
+    mode.parentScope.pixijs.renderer.render(mode.container);
+    requestAnimationFrame(mode.update);
+  };
+
+  mode.deinit = function() {
+    cancelAnimationFrame(this.renderID);
+  };
+
+  return mode;
 });

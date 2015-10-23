@@ -1,12 +1,25 @@
 {
   "globalstrict": true,
+  "esnext": true,
   "globals": {
+    "require": false,
     "describe": false,
     "it": false,
     "expect": false,
     "beforeEach": false,
     "afterEach": false,
     "module": false,
-    "inject": false
+    "inject": false,
+
+    "THREE": false,
+    "PIXI": false,
+    "MIDI": false,
+    "XMLHttpRequest": false,
+    "document": false,
+    "window": false,
+    "console": false,
+    "setTimeout": false,
+    "requestAnimationFrame": false,
+    "cancelAnimationFrame": false
   }
 }

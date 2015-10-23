@@ -1,3 +1,5 @@
+'use strict';
+
 var SkeletalBody = function() {
 
   var self = this;
@@ -157,11 +159,11 @@ var SkeletalBody = function() {
       self.torso.clear();
       self.torso.lineStyle(4, 0xFFFFFF);
       self.torso.beginFill(self._color);
-      self.torso.moveTo(self._bodyData.joints["ShoulderLeft"].x, self._bodyData.joints["ShoulderLeft"].y);
-      self.torso.lineTo(self._bodyData.joints["ShoulderRight"].x, self._bodyData.joints["ShoulderRight"].y);
-      self.torso.lineTo(self._bodyData.joints["HipRight"].x, self._bodyData.joints["HipRight"].y);
-      self.torso.lineTo(self._bodyData.joints["HipLeft"].x, self._bodyData.joints["HipLeft"].y);
-      self.torso.lineTo(self._bodyData.joints["ShoulderLeft"].x, self._bodyData.joints["ShoulderLeft"].y);
+      self.torso.moveTo(self._bodyData.joints.ShoulderLeft.x, self._bodyData.joints.ShoulderLeft.y);
+      self.torso.lineTo(self._bodyData.joints.ShoulderRight.x, self._bodyData.joints.ShoulderRight.y);
+      self.torso.lineTo(self._bodyData.joints.HipRight.x, self._bodyData.joints.HipRight.y);
+      self.torso.lineTo(self._bodyData.joints.HipLeft.x, self._bodyData.joints.HipLeft.y);
+      self.torso.lineTo(self._bodyData.joints.ShoulderLeft.x, self._bodyData.joints.ShoulderLeft.y);
       self.torso.endFill();
       self._shapesData.addChild(self.torso);
 
@@ -188,19 +190,19 @@ var SkeletalBody = function() {
 
       self.leftHand.clear();
       self.leftHand.lineStyle(1, 0xFFFFFF);
-      self.leftHand.beginFill(self._color).drawCircle(self._bodyData.joints["HandLeft"].x, self._bodyData.joints["HandLeft"].y, 5);
+      self.leftHand.beginFill(self._color).drawCircle(self._bodyData.joints.HandLeft.x, self._bodyData.joints.HandLeft.y, 5);
       self.leftHand.endFill();
       self._shapesData.addChild(self.leftHand);
 
       self.rightHand.clear();
       self.rightHand.lineStyle(1, 0xFFFFFF);
-      self.rightHand.beginFill(self._color).drawCircle(self._bodyData.joints["HandRight"].x, self._bodyData.joints["HandRight"].y, 5);
+      self.rightHand.beginFill(self._color).drawCircle(self._bodyData.joints.HandRight.x, self._bodyData.joints.HandRight.y, 5);
       self.rightHand.endFill();
       self._shapesData.addChild(self.rightHand);
 
       self.head.clear();
       self.head.lineStyle(2, 0xFFFFFF);
-      self.head.beginFill(self._color).drawCircle(self._bodyData.joints["Head"].x, self._bodyData.joints["Head"].y, 25);
+      self.head.beginFill(self._color).drawCircle(self._bodyData.joints.Head.x, self._bodyData.joints.Head.y, 25);
       self.head.endFill();
       self._shapesData.addChild(self.head);
 

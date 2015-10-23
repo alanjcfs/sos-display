@@ -1,5 +1,7 @@
 logs/*
 build/vendor/js
+build/all.js
+build/all.js.map
 !.gitkeep
 node_modules/
 tmp

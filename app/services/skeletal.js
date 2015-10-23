@@ -1,3 +1,7 @@
+'use strict';
+
+let SkeletalBody = require('../skeletalbody');
+
 var services = angular.module('sos.services');
 services.service('skeletalService', function($rootScope, $log) {
 

@@ -1,6 +1,8 @@
-(function(){
+'use strict';
 
-    importScripts('pako.inflate.min.js');
+var pako = require('pako.inflate.min');
+
+(function(){
 
     var imageData = null;
 
@@ -25,7 +27,7 @@
         for (var i = 0; i < imageDataSize; i++) {
             imageData.data[i] = newPixelData[i];
         }
-        self.postMessage({ "message": "imageReady", "imageData": imageData });
+      this.postMessage({ "message": "imageReady", "imageData": imageData });
     }
 
     init();

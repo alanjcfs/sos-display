@@ -1,3 +1,5 @@
+'use strict';
+
 var services = angular.module('sos.services');
 services.service('audioService', function($rootScope, $log, $q) {
   window.AudioContext = window.AudioContext||window.webkitAudioContext;

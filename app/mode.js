@@ -1,3 +1,5 @@
+'use strict';
+
 var mouse = {};
 
 document.addEventListener('mousemove', onDocumentMouseMove, false);
@@ -83,7 +85,7 @@ var ShaderMode = function(args) {
       }
       // normalize.
       for (var i = 0; i < inputs.length; i++) {
-        if ((i % 2) == 0) {
+        if ((i % 2) === 0) {
           self.inputs[i] = inputs[i] / parentScope.wallDisplay.width;
           // clamp
           self.inputs[i] = Math.max(self.inputs[i], 0.0);

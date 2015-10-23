@@ -1,7 +1,10 @@
 'use strict';
 
+let Mode = require('../mode');
+let Color = require('../color');
+
 var mode = angular.module('sos.modes');
-mode.factory('modeSkeletalFun', function($log, skeletalService, protonEmitterService) {
+mode.factory('modeSkeletalFun', function($log, skeletalService) {
 
   var mode = new Mode("modeSkeletalFun", "Skeletal Fun!");
   mode.rendererType = "PIXI";
@@ -55,39 +58,6 @@ mode.factory('modeSkeletalFun', function($log, skeletalService, protonEmitterSer
       var color = Color.random();
       skel.init(mode.container, color);
 
-      // NB. disabled due to excessive memory leaks
-
-      // create emitter
-      // var proton = protonEmitterService.createProton3(skel);
-      // var renderer = new Proton.Renderer('other', proton, mode.kinect.renderer.view);
-      // renderer.onParticleUpdate = function(particle) {
-      //   if(particle.sprite) {
-      //     particle.sprite.x = particle.p.x;
-      //     particle.sprite.y = particle.p.y;
-      //     particle.sprite.alpha = particle.alpha;
-      //     particle.sprite.scale.x = particle.scale;
-      //     particle.sprite.scale.y = particle.scale;
-      //     particle.sprite.rotation = particle.rotation * Math.PI / 180;
-      //   }
-      // };
-      // renderer.onParticleCreated = function(particle) {
-      //   particle.sprite = new PIXI.Sprite(texture); // PIXI.CanvasTinter.getTintedTexture(sprite, color);
-      //   particle.sprite.tint = Color.random();
-      //   particle.sprite.x = particle.p.x;
-      //   particle.sprite.y = particle.p.y;
-      //   mode.container.addChild(particle.sprite);
-      // };
-      // renderer.onParticleDead = function(particle) {
-      //   if(particle.sprite) {
-      //     mode.container.removeChild(particle.sprite);
-      //     particle.emitters = [];
-      //     particle.sprite = null;
-      //   }
-      //   particle = null;
-      // };
-      // renderer.start();
-
-      // skel.proton = proton;
     });
 
     // assign renderid from animation frame (for future deinit call)
@@ -139,13 +109,6 @@ mode.factory('modeSkeletalFun', function($log, skeletalService, protonEmitterSer
 
       if(skel.getActiveStatus()) {
 
-	// if(skel.proton) {
-        //   var pointer = skel.getHandPointerFn();
-        //   skel.proton.emitters[0].p.x = pointer.x - 150;
-        //   skel.proton.emitters[0].p.y = pointer.y;
-	//   skel.proton.update();
-	// }
-
 	skel.drawToStage();
 
 	// get hand pointer
@@ -181,13 +144,13 @@ mode.factory('modeSkeletalFun', function($log, skeletalService, protonEmitterSer
   };
 
   // poor man's mutex
-  self.blocking = false;
+  this.blocking = false;
 
   mode.update = function() {
-    if(self.blocking) {
+    if(this.blocking) {
       return; // wait!
     }
-    self.blocking = true;
+    this.blocking = true;
 
     mode.drawSkeletons();
 
@@ -197,13 +160,13 @@ mode.factory('modeSkeletalFun', function($log, skeletalService, protonEmitterSer
 
     mode.kinect.renderer.render(mode.container);
     requestAnimationFrame(mode.update);
-    self.blocking = false;
+    this.blocking = false;
   };
 
   // override deinit because we need to do
   // additional work
   mode.deinit = function() {
-    cancelAnimationFrame(self.renderID);
+    cancelAnimationFrame(this.renderID);
     if(mode.socket) {
       mode.socket.disconnect();
     }
