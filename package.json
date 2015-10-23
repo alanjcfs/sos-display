@@ -17,7 +17,9 @@
     "react-dom": "latest",
     "react-hot-loader": "latest",
     "react-bootstrap": "latest",
-    "babel-loader": "latest"
+    "reflux": "latest",
+    "babel-loader": "latest",
+    "keyboardjs": "latest"
   },
   "scripts": {
     "postinstall": "bower install",

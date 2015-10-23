@@ -2,19 +2,14 @@ let React = require('react');
 
 let Input = require('react-bootstrap').Input;
 
+let actions = require('../actions');
+
 module.exports = React.createClass({
 
-    onChangeX: function(event) {
+    onChange: function(coord, event) {
         let result = parseInt(event.target.value);
         if (!isNaN(result)) {
-            this.props.onOffsetChange(result, undefined);
-        }
-    },
-
-    onChangeY: function(event) {
-        let result = parseInt(event.target.value);
-        if (!isNaN(result)) {
-            this.props.onOffsetChange(undefined, result);
+            actions.adjustOffset(coord, result);
         }
     },
 
@@ -23,8 +18,8 @@ module.exports = React.createClass({
             <div>
               <h4>Adjust offsets:</h4>
               <form>
-                <Input type="text" addonBefore="X Offset" value={this.props.data.x} onChange={this.onChangeX} />
-                <Input type="text" addonBefore="Y Offset" value={this.props.data.y} onChange={this.onChangeY} />
+                <Input type="text" addonBefore="X Offset" value={this.props.data.x} onChange={this.onChange.bind(this, 'x')} />
+                <Input type="text" addonBefore="Y Offset" value={this.props.data.y} onChange={this.onChange.bind(this, 'y')} />
               </form>
             </div>
         );

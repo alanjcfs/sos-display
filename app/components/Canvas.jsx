@@ -1,6 +1,8 @@
 let React = require('react');
 
 module.exports = React.createClass({
+    width: 192,
+    height: 320,
     render: function() {
         return (
             <div>

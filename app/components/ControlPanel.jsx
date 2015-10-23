@@ -5,12 +5,9 @@ let Button = require('react-bootstrap').Button;
 let ButtonGroup = require('react-bootstrap').ButtonGroup;
 
 let CanvasOffset = require('./CanvasOffset');
+let actions = require('../actions');
 
 module.exports = React.createClass({
-
-    onClick: function(is_development, e) {
-        this.props.onControlToggle(is_development);
-    },
 
     dev_message: 'The canvas element on your left is displaying in the same manner that it would appear on the LED wall.',
     prod_message: 'The canvas element on your left is rotated -90 degrees, so it will appear correctly on the LED wall.',
@@ -20,10 +17,10 @@ module.exports = React.createClass({
         return (
             <Panel header="Canvas Controls">
               <ButtonGroup>
-                <Button onClick={this.onClick.bind(this, true)} active={this.props.data.development} bsStyle="primary">
+                <Button onClick={actions.setProductionMode.bind(this, true)} active={this.props.data.development} >
                   Development Mode
                 </Button>
-                <Button onClick={this.onClick.bind(this, false)} active={!this.props.data.development}>
+                <Button onClick={actions.setProductionMode.bind(this, false)} active={!this.props.data.development} bsStyle="primary">
                   LED Display Mode (rotated)
                 </Button>
               </ButtonGroup>
@@ -33,7 +30,7 @@ module.exports = React.createClass({
               <p>
                 {message}
               </p>
-              <CanvasOffset data={this.props.data.offsets} onOffsetChange={this.props.onOffsetChange} />
+              <CanvasOffset data={this.props.data.offsets} />
             </Panel>
         );
     }
