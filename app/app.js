@@ -9,5 +9,5 @@ let t = require('./components/Layout');
 
 ReactDOM.render(
   t,
-  document.getElementById('example')
+  document.getElementById('main')
 );
