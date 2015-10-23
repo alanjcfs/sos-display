@@ -10,7 +10,7 @@ function onDocumentMouseMove(event) {
   mouse.Y = event.clientY;
 }
 
-var Mode = function(id, title) {
+exports.Mode = function(id, title) {
 
   // get reference to self
   var self = this;
@@ -29,7 +29,7 @@ var Mode = function(id, title) {
   };
 };
 
-var ShaderMode = function(args) {
+exports.ShaderMode = function(args) {
 
   // get reference to self
   var self = this;

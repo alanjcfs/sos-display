@@ -1,6 +1,6 @@
 'use strict';
 
-let ShaderMode = require('../shadermode');
+let ShaderMode = require('../mode.js').ShaderMode;
 
 let bubbles = new ShaderMode({ id: 'modeBubbles',
                                title: 'Bubbles',

@@ -1,3 +1,3 @@
 'use strict';
 
-// nothing here!
+var Mode = require('./mode.js').Mode;

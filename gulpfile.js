@@ -1,9 +1,9 @@
 var gulp = require('gulp');
+var gutil = require("gulp-util");
 var jshint = require('gulp-jshint');
-var sourcemaps = require('gulp-sourcemaps');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
-var connect = require('gulp-connect');
+var webpack = require('webpack');
+var webpack_dev = require('webpack-dev-server');
+var config = require('./webpack.config.js');
 
 gulp.task('jshint', function() {
   gulp.src('./app/**/*.js')
@@ -11,24 +11,21 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('es6', function () {
-  return gulp.src('app/app.js')
-    .pipe(sourcemaps.init())
-    .pipe(babel({ optional: ['runtime'] }))
-    .pipe(concat('all.js'))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('build'));
-});
-
-gulp.task('webserver', function() {
-  connect.server({
-    livereload: true
+gulp.task('webpack', function(callback) {
+  var compiler = new webpack(config);
+  var options = {
+    publicPath: config.output.publicPath,
+    stats : { colors : true }
+  };
+  new webpack_dev(compiler, options).listen(8080, "localhost", function (err) {
+    if(err) {
+      throw new gutil.PluginError("webpack-dev-server", err);
+    }
+    gutil.log("[webpack-dev-server]", "http://localhost:8080/build/");
+    callback();
   });
 });
 
-gulp.task('default', ['jshint', 'es6', 'webserver'], function() {
-  gulp.watch('./app/**/*.js', function() {
-    gulp.run('jshint');
-    gulp.run('es6');
-  });
+gulp.task('default', ['jshint', 'webpack'], function() {
+  gulp.watch(['./app/**/*.js'], ['jshint']);
 });
