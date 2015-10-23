@@ -12,7 +12,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('es6', function () {
-  return gulp.src('app/**/*.js')
+  return gulp.src('app/app.js')
     .pipe(sourcemaps.init())
     .pipe(babel({ optional: ['runtime'] }))
     .pipe(concat('all.js'))

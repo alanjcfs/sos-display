@@ -1,7 +1,6 @@
 'use strict';
 
 let Mode = require('../mode');
-let Color = require('../color');
 
 var mode = angular.module('sos.modes');
 mode.factory('modeSkeletalFun', function($log, skeletalService) {
