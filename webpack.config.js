@@ -6,7 +6,7 @@ var deps = path.resolve(__dirname, 'build/vendor/js');
 
 module.exports = {
   entry: {
-    app: ['./app/app.js', 'webpack-dev-server/client?http://localhost:8080']
+    app: ['./app/app.js']
   },
   node: { fs: "empty" }, // PIXI does require('fs')
   output: {
@@ -42,7 +42,6 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       'angular': 'angular'
     })

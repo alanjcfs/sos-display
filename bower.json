@@ -6,7 +6,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "preloadjs": "*"
   },
   "devDependencies": {
     "bootstrap": "~3.3.4"

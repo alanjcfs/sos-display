@@ -17,13 +17,13 @@ let caustic = new ShaderMode({ id: 'Caustic',
 let cloudten = new ShaderMode({ id: 'CloudTen',
                                 title: 'Cloud Ten PS',
                                 fragmentShader: require('./shaders/cloudten.frag.glsl'),
-                                loadUniforms: function() {
+                                uniformExtras: (() => {
                                   var tex = loader.load('static/images/tex16.png');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   var res = new Three.Vector2(256.0, 256.0);
                                   return { input_channel0: { type: "t", value: tex },
                                            input_channel0_resolution: { type: "v2", value: res } };
-                                }
+                                })()
                               });
 
 let disco = new ShaderMode({ id: 'Disco',
@@ -34,11 +34,11 @@ let disco = new ShaderMode({ id: 'Disco',
 let echoplex = new ShaderMode({ id: 'Echoplex',
                                 title: 'Echoplex PS',
                                 fragmentShader: require('./shaders/echoplex.frag.glsl'),
-                                loadUniforms: function() {
+                                uniformExtras: (() => {
 	                          var tex = loader.load('static/images/tex07.jpg');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   return { input_channel0: { type: "t", value: tex } };
-                                }
+                                })()
                               });
 
 let flame = new ShaderMode({ id: 'Flame',
@@ -48,20 +48,20 @@ let flame = new ShaderMode({ id: 'Flame',
 let hell = new ShaderMode({ id: 'Hell',
                             title: 'Hell PS',
                             fragmentShader: require('./shaders/hell.frag.glsl'),
-                            loadUniforms: function() {
+                            uniformExtras: (() => {
 	                      var tex = loader.load('static/images/tex16.png');
 	                      tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                               var res = new Three.Vector2(256.0, 256.0);
                               return { input_channel0: { type: "t", value: tex },
                                        input_channel0_resolution: { type: "v2", value: res } };
-                            }
+                            })()
                           });
 
 let nyan = new ShaderMode({ id: 'Nyan',
                             title: 'Nyan PS',
                             fragmentShader: require('./shaders/nyan.frag.glsl'),
                             disableKinect: true,
-                            loadUniforms: function() {
+                            uniformExtras: (() => {
 	                      var anim = loader.load('static/images/tex14.png');
                               var stars = loader.load('static/images/tex03.jpg');
 	                      stars.wrapS = stars.wrapT = Three.RepeatWrapping;
@@ -71,7 +71,7 @@ let nyan = new ShaderMode({ id: 'Nyan',
                                        input_channel1: { type: "t", value: stars },
                                        input_resolution: { type: "v2", value: new Three.Vector2(240.0, 140.0) }
                                      };
-                            }
+                            })()
                           });
 
 let ribbon = new ShaderMode({ id: 'Ribbon',
@@ -89,19 +89,19 @@ let stardust = new ShaderMode({ id: 'Stardust',
 let storm = new ShaderMode({ id: 'Storm',
                              title: 'Storm PS',
                              fragmentShader: require('./shaders/storm.frag.glsl'),
-                             loadUniforms: function() {
+                             uniformExtras: (() => {
 	                       var tex = loader.load('static/images/tex16.png');
 	                       tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                var res = new Three.Vector2(256.0, 256.0);
                                return { input_channel0: { type: "t", value: tex },
                                         input_channel0_resolution: { type: "v2", value: res } };
-                             }
+                             })()
                         });
 
 let truchet = new ShaderMode({ id: 'Truchet',
                                title: 'Truchet PS',
                                fragmentShader: require('./shaders/truchet.frag.glsl'),
-                               loadUniforms: function() {
+                               uniformExtras: (() => {
                                  var cube = new Three.CubeTextureLoader(['static/images/cube00.png',
 	                                                                 'static/images/cube01.png',
 	                                                                 'static/images/cube02.png',
@@ -114,7 +114,7 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                    input_resolution: { type: "v2", value: new Three.Vector2(320.0, 480.0) },
                                    input_channel0: { type: "t", value: cube }
                                  };
-                               }
+                               })()
                              });
 
 let tunnel = new ShaderMode({ id: 'Tunnel',
@@ -124,13 +124,13 @@ let tunnel = new ShaderMode({ id: 'Tunnel',
 let vortex = new ShaderMode({ id: 'Vortex',
                               title: 'Vortex PS',
                               fragmentShader: require('./shaders/vortex.frag.glsl'),
-                              loadUniforms: function() {
+                              uniformExtras: (() => {
 	                        var tex = loader.load('static/images/tex16.png');
 	                        tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                 var res = new Three.Vector2(256.0, 256.0);
                                 return { input_channel0: { type: "t", value: tex },
                                          input_channel0_resolution: { type: "v2", value: res } };
-                              }
+                              })()
                             });
 
 let worms = new ShaderMode({ id: 'Worms',

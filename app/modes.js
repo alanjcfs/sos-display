@@ -1,6 +1,7 @@
 'use strict';
 
 let shaders = require('./modes/shaders');
+let image = require('./modes/image');
 
 module.exports = [ shaders.bubbles,
                    shaders.caustic,
@@ -9,6 +10,7 @@ module.exports = [ shaders.bubbles,
                    shaders.echoplex,
                    shaders.flame,
                    shaders.hell,
+                   image,
                    shaders.nyan,
                    shaders.ribbon,
                    shaders.seascape,

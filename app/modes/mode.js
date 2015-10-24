@@ -18,21 +18,22 @@ function onDocumentMouseMove(event) {
 let Mode = function(id, title) {
   this.id = id;
   this.title = title;
+  this.audio = null;
   this.renderID = null;
   this.rendererType = "PIXI";
   this.kinectEnabled = true;
 };
 
 let ShaderMode = function(args) {
+
   this.id = args.id;
   this.title = args.title;
   this.audio = args.audio;
   this.renderID = null;
   this.rendererType = 'THREE';
-  this.inputs = _(16).times(function() { return 0.0; });
   this.kinectEnabled = args.disableKinect ? false : true; // default to true
 
-  var uniformExtras = null;
+  this.inputs = _(16).times(function() { return 0.0; });
 
   this.start = (renderer) => {
 
@@ -42,10 +43,7 @@ let ShaderMode = function(args) {
     this.fragmentShader = args.fragmentShader;
     this.uniforms = null;
 
-    // optionally load extra stuff that the shader needs.
-    if (args.loadUniforms) {
-      uniformExtras = args.loadUniforms();
-    }
+    let uniformExtras = args.uniformExtras || {};
 
     if (this.audio) {
       this.audio.start();

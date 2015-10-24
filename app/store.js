@@ -65,7 +65,7 @@ module.exports = Reflux.createStore({
   },
 
   getInitialState: function() {
-    let index = 0;
+    let index = 7;
     this.data = {
       control: {
         development: true,
