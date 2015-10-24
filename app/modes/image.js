@@ -5,15 +5,15 @@ let Mode = require('./mode').Mode;
 let Pixi = require('pixi.js');
 
 let image = new Mode("image", "Sample Image");
+let texture = Pixi.Texture.fromImage('static/images/winter-is-coming.jpg');
+let sprite = new Pixi.Sprite(texture);
+let container = new Pixi.Container();
+sprite.width = 192 / sprite.width;
+sprite.height = 320 / sprite.height;
 
 image.start = function(renderer) {
-  let texture = Pixi.Texture.fromImage('static/images/winter-is-coming.jpg');
-  let image = new Pixi.Sprite(texture);
-  let container = new Pixi.Container();
 
-  console.log(renderer);
-
-  container.addChild(image);
+  container.addChild(sprite);
 
   var render = () => {
     renderer.render(container);

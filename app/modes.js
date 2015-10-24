@@ -2,6 +2,7 @@
 
 let shaders = require('./modes/shaders');
 let image = require('./modes/image');
+let slowclap = require('./modes/slowclap');
 
 module.exports = [ shaders.bubbles,
                    shaders.caustic,
@@ -14,6 +15,7 @@ module.exports = [ shaders.bubbles,
                    shaders.nyan,
                    shaders.ribbon,
                    shaders.seascape,
+                   slowclap,
                    shaders.stardust,
                    shaders.storm,
                    shaders.truchet,

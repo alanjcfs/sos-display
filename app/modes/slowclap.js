@@ -1,98 +1,47 @@
 'use strict';
 
-let Mode = require('../mode');
+let Mode = require('./mode').Mode;
 
-let Pixi = require('pixi.js').PIXI;
+let Pixi = require('pixi.js');
 
-var mode = angular.module('sos.modes');
-mode.factory('modeSlowClap', function($log) {
+let slowclap = new Mode("Slow Clap", "Slow Clap (GIF example)");
+slowclap.container = new Pixi.Container();
 
-  var count = 0;
-  var mode = new Mode("modeSlowClap", "Slow Clap");
-  var loader = Pixi.loader;
+// we need to load the spritesheet once so do it on load.
+let setupMovie = () => {
 
-  mode.spritesheetJSON = null;
-  mode.movie = null;
-  mode.filter = null;
+  let frames = [];
+  for (var i = 0; i < 7; i++) {
+    let val = i < 10 ? '0' + i : i;
+    frames.push(Pixi.Texture.fromFrame('citizen-kane-clapping_0' + val + '.png'));
+  }
 
-  mode.init = function(parentScope) {
+  let movie = new Pixi.extras.MovieClip(frames);
+  let scale = new Pixi.Point(192 / movie.width,
+                             320 / movie.height);
+  movie.position.set(0);
+  movie.anchor.set(0);
+  movie.scale = scale;
+  movie.animationSpeed = 0.5;
+  movie.play();
 
-    mode.setParentScope(parentScope);
-    mode.container = new Pixi.Container();
+  slowclap.container.addChild(movie);
+};
 
-    if(!loader.resources.spritesheet) {
-      Pixi.loader.add('spritesheet', 'media/slow-clap.json').load(mode.initAnimation);
-    } else {
-      mode.initAnimation();
-    }
+Pixi.loader.add('spritesheet', 'static/images/slow-clap.json').load(setupMovie);
+
+slowclap.start = function(renderer) {
+
+  let update = () => {
+    renderer.render(this.container);
+    this.renderID = requestAnimationFrame(update);
   };
 
-  mode.initAnimation = function() {
+  this.renderID = requestAnimationFrame(update);
+};
 
-    // create an array of textures from an image path
-    var frames = [];
+slowclap.stop = function() {
+  cancelAnimationFrame(this.renderID);
+};
 
-    for (var i = 0; i < 7; i++) {
-      var val = i < 10 ? '0' + i : i;
-
-      // magically works since the spritesheet was loaded with the pixi loader
-      var spritesheet;
-      frames.push(Pixi.Texture.fromFrame('citizen-kane-clapping_0' + val + '.png'));
-    }
-
-
-    // create a MovieClip (brings back memories from the days of Flash, right ?)
-    mode.movie = new Pixi.extras.MovieClip(frames);
-
-    /*
-     * A MovieClip inherits all the properties of a PIXI sprite
-     * so you can change its position, its anchor, mask it, etc
-     */
-    mode.movie.position.set(0);
-    mode.movie.anchor.set(0);
-
-  // $scope.getWidthScaleFactor = function(origWidth) {
-  //   return $scope.wallDisplay.width / origWidth;
-  // };
-
-  // $scope.getHeightScaleFactor = function(origHeight) {
-  //   return $scope.wallDisplay.height / origHeight;
-  // };
-
-    var newScale = new Pixi.Point(mode.parentScope.getWidthScaleFactor(mode.movie.width), mode.parentScope.getHeightScaleFactor(mode.movie.height));
-
-    mode.movie.scale = newScale;
-    mode.movie.animationSpeed = 0.5;
-    mode.movie.play();
-    mode.container.addChild(mode.movie);
-
-    // set up color filter
-    mode.filter = new Pixi.filters.ColorMatrixFilter();
-    mode.container.filters = [mode.filter];
-
-    mode.renderID = requestAnimationFrame(mode.update);
-  };
-
-  mode.update = function() {
-
-    var matrix = mode.filter.matrix;
-
-    count += 0.1;
-    matrix[1] = Math.sin(count) * 3;
-    matrix[2] = Math.cos(count);
-    matrix[3] = Math.cos(count) * 1.5;
-    matrix[4] = Math.sin(count / 3) * 2;
-    matrix[5] = Math.sin(count / 2);
-    matrix[6] = Math.sin(count / 4);
-
-
-    mode.parentScope.pixijs.renderer.render(mode.container);
-    requestAnimationFrame(mode.update);
-  };
-
-  mode.deinit = function() {
-    cancelAnimationFrame(this.renderID);
-  };
-
-  return mode;
-});
+module.exports = slowclap;
