@@ -1,8 +1,8 @@
 'use strict';
 
 // get rid of jshint errors
-let Pixi = require('pixi.js').PIXI;
-let Three = require('three.js').THREE;
+let Pixi = require('pixi.js');
+let Three = require('three.js');
 
 {
   var $scope = {};

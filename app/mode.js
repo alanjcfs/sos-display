@@ -1,6 +1,6 @@
 'use strict';
 
-let Three = require('three.js').THREE;
+let Three = require('three.js');
 
 var mouse = {};
 
