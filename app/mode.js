@@ -31,7 +31,7 @@ let ShaderMode = function(args) {
 
   var uniformExtras = null;
 
-  this.init = () => {
+  this.start = () => {
 
     // WebGL will throw a hissyfit if you reuse shaders/patterns
     // from a previous canvas/context, so we need to explicitly
@@ -142,7 +142,7 @@ let ShaderMode = function(args) {
     this.renderID = requestAnimationFrame(render);
   };
 
-  this.deinit = () => {
+  this.stop = () => {
     cancelAnimationFrame(this.renderID);
     if(this.audio) {
       this.audio.stop();

@@ -8,9 +8,12 @@ module.exports = Reflux.createActions([
   "adjustOffset",
 
   // modes
+  "setMode",
+  "resetMode",
   "previousMode",
   "nextMode",
   "randomMode",
+  "toggleModeJumps",
 
   // kinect
   "toggleKinect",

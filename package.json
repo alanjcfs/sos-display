@@ -6,6 +6,7 @@
   "repository": "https://github.com/timkettering/sos-display",
   "license": "MIT",
   "devDependencies": {
+    "underscore": "latest",
     "bower": "latest",
     "browser-sync": "latest",
     "gulp": "latest",

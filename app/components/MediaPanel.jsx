@@ -3,33 +3,41 @@ let React = require('react');
 let Panel = require('react-bootstrap').Panel;
 let ListGroup = require('react-bootstrap').ListGroup;
 let ListGroupItem = require('react-bootstrap').ListGroupItem;
-let ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+let ButtonGroup = require('react-bootstrap').ButtonGroup;
 let Button = require('react-bootstrap').Button;
+let DropdownButton = require('react-bootstrap').DropdownButton;
+let MenuItem = require('react-bootstrap').MenuItem;
 
-// <a href="#" className="list-group-item" ng-repeat="mode in loadedModes" ng-click="showMode(mode.id)" ng-className='{"active":(activeMode.id == mode.id) }'>mode.title</a>
+let actions = require('../actions');
 
 module.exports = React.createClass({
     render: function() {
-        let modeListing = this.props.data.map(function(mode) {
+        let modeListing = this.props.data.list.map(function(mode) {
             return (
-                <ListGroupItem>
+                <MenuItem key={mode.id} onClick={actions.setMode.bind(this, mode.id)}>
                   {mode.title}
-                </ListGroupItem>
+                </MenuItem>
             );
         });
         return (
-            <Panel header="Select Mode">
-              <ListGroup>
+            <Panel header="Mode Controls">
+              <DropdownButton title="Select Mode" id="select-mode">
                 {modeListing}
-              </ListGroup>
-              <ButtonToolbar>
-                <Button>
-                  Clear Mode
+              </DropdownButton>
+              <h4>
+                Currently showing <strong>{this.props.data.current.title}</strong>.
+              </h4>
+              <ButtonGroup vertical>
+                <Button onClick={actions.resetMode.bind(this)}>
+                  Reset Mode
                 </Button>
                 <Button>
                   Toggle Kinect Off
                 </Button>
-              </ButtonToolbar>
+                <Button>
+                  Disable Random Jumps
+                </Button>
+              </ButtonGroup>
           </Panel>
         );
     }

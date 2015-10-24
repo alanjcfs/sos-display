@@ -21,7 +21,7 @@ module.exports = React.createClass({
                   Development Mode
                 </Button>
                 <Button onClick={actions.setProductionMode.bind(this, false)} active={!this.props.data.development} bsStyle="primary">
-                  LED Display Mode (rotated)
+                  LED Display Mode
                 </Button>
               </ButtonGroup>
               <h4>

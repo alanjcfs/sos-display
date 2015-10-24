@@ -4,16 +4,16 @@ let Three = require('three.js').THREE;
 
 let ShaderMode = require('../mode').ShaderMode;
 
-let bubbles = new ShaderMode({ id: 'modeBubbles',
-                               title: 'Bubbles',
+let bubbles = new ShaderMode({ id: 'Bubbles',
+                               title: 'Bubbles PS',
                                pixelShaderName: 'bubblesFrag' });
 
-let caustic = new ShaderMode({ id: 'modeCaustic',
-                               title: 'Caustic',
+let caustic = new ShaderMode({ id: 'Caustic',
+                               title: 'Caustic PS',
                                pixelShaderName: 'causticFrag' });
 
-let cloudten = new ShaderMode({ id: 'modeCloudTen',
-                                title: 'Cloud Ten',
+let cloudten = new ShaderMode({ id: 'CloudTen',
+                                title: 'Cloud Ten PS',
                                 pixelShaderName: 'cloudTenFrag',
                                 loadUniforms: function() {
 	                          var tex = Three.ImageUtils.loadTexture('media/tex16.png');
@@ -24,13 +24,13 @@ let cloudten = new ShaderMode({ id: 'modeCloudTen',
                                 }
                               });
 
-let disco = new ShaderMode({ id: 'modeDisco',
-                             title: 'Disco',
+let disco = new ShaderMode({ id: 'Disco',
+                             title: 'Disco PS',
                              // audio: audioDisco,
                              pixelShaderName: 'discoFrag' });
 
-let echoplex = new ShaderMode({ id: 'modeEchoplex',
-                                title: 'Echoplex',
+let echoplex = new ShaderMode({ id: 'Echoplex',
+                                title: 'Echoplex PS',
                                 pixelShaderName: 'echoplexFrag',
                                 loadUniforms: function() {
 	                          var tex = Three.ImageUtils.loadTexture('media/tex07.jpg');
@@ -39,12 +39,12 @@ let echoplex = new ShaderMode({ id: 'modeEchoplex',
                                 }
                               });
 
-let flame = new ShaderMode({ id: 'modeFlame',
-                             title: 'Flame',
+let flame = new ShaderMode({ id: 'Flame',
+                             title: 'Flame PS',
                              pixelShaderName: 'flameFrag' });
 
-let hell = new ShaderMode({ id: 'modeHell',
-                            title: 'Hell',
+let hell = new ShaderMode({ id: 'Hell',
+                            title: 'Hell PS',
                             pixelShaderName: 'hellFrag',
                             loadUniforms: function() {
 	                      var tex = Three.ImageUtils.loadTexture('media/tex16.png');
@@ -55,8 +55,8 @@ let hell = new ShaderMode({ id: 'modeHell',
                             }
                           });
 
-let nyan = new ShaderMode({ id: 'modeNyan',
-                            title: 'Nyan',
+let nyan = new ShaderMode({ id: 'Nyan',
+                            title: 'Nyan PS',
                             pixelShaderName: 'nyanFrag',
                             disableKinect: true,
                             loadUniforms: function() {
@@ -73,20 +73,20 @@ let nyan = new ShaderMode({ id: 'modeNyan',
                           });
 
 
-let ribbon = new ShaderMode({ id: 'modeRibbon',
-                              title: 'Ribbon',
+let ribbon = new ShaderMode({ id: 'Ribbon',
+                              title: 'Ribbon PS',
                               pixelShaderName: 'ribbonFrag' });
 
-let seascape = new ShaderMode({ id: 'modeSeascape',
-                                title: 'Seascape',
+let seascape = new ShaderMode({ id: 'Seascape',
+                                title: 'Seascape PS',
                                 pixelShaderName: 'seascapeFrag' });
 
-let stardust = new ShaderMode({ id: 'modeStardust',
-                                title: 'Stardust',
+let stardust = new ShaderMode({ id: 'Stardust',
+                                title: 'Stardust PS',
                                 pixelShaderName: 'stardustFrag' });
 
-let storm = new ShaderMode({ id: 'modeStorm',
-                             title: 'Storm',
+let storm = new ShaderMode({ id: 'Storm',
+                             title: 'Storm PS',
                              pixelShaderName: 'stormFrag',
                              loadUniforms: function() {
 	                       var tex = Three.ImageUtils.loadTexture('media/tex16.png');
@@ -97,8 +97,8 @@ let storm = new ShaderMode({ id: 'modeStorm',
                              }
                         });
 
-let truchet = new ShaderMode({ id: 'modeTruchet',
-                               title: 'Truchet',
+let truchet = new ShaderMode({ id: 'Truchet',
+                               title: 'Truchet PS',
                                pixelShaderName: 'truchetFrag',
                                loadUniforms: function() {
                                  var cube = Three.ImageUtils.loadTextureCube(['media/cube00.png',
@@ -117,12 +117,12 @@ let truchet = new ShaderMode({ id: 'modeTruchet',
                              });
 
 
-let tunnel = new ShaderMode({ id: 'modeTunnel',
-                              title: 'Tunnel',
+let tunnel = new ShaderMode({ id: 'Tunnel',
+                              title: 'Tunnel PS',
                               pixelShaderName: 'tunnelFrag' });
 
-let vortex = new ShaderMode({ id: 'modeVortex',
-                              title: 'Vortex',
+let vortex = new ShaderMode({ id: 'Vortex',
+                              title: 'Vortex PS',
                               pixelShaderName: 'vortexFrag',
                               loadUniforms: function() {
 	                        var tex = Three.ImageUtils.loadTexture('media/tex16.png');
@@ -133,8 +133,8 @@ let vortex = new ShaderMode({ id: 'modeVortex',
                               }
                             });
 
-let worms = new ShaderMode({ id: 'modeWorms',
-                             title: 'Worms',
+let worms = new ShaderMode({ id: 'Worms',
+                             title: 'Worms PS',
                              pixelShaderName: 'wormsFrag' });
 
 module.exports = {

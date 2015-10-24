@@ -2,6 +2,7 @@
 
 let Reflux = require('reflux');
 let keyboard = require('keyboardjs');
+let _ = require('underscore');
 
 let actions = require('./actions');
 
@@ -58,6 +59,21 @@ module.exports = Reflux.createStore({
     });
   },
 
+  onSetMode: function(id) {
+    let chosen = _.find(this.data.modes.list, function(mode) {
+      return mode.id === id;
+    });
+    if (chosen) {
+      this.data.modes.current = chosen;
+      this.trigger(this.data);
+    }
+  },
+
+  onResetMode: function() {
+    this.data.modes.current.stop();
+    this.data.modes.current.start();
+  },
+
   onSetProductionMode: function(value) {
     this.data.control.development = value;
     this.trigger(this.data);
@@ -70,12 +86,14 @@ module.exports = Reflux.createStore({
 
   getInitialState: function() {
     this.data = {
-      mode: 'truchet',
       control: {
         development: true,
         offsets: { x: 0, y: 15 }
       },
-      modes: modes
+      modes: {
+        current: modes[0],
+        list: modes
+      }
     };
     return this.data;
   }

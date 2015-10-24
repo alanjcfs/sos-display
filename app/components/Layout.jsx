@@ -4,6 +4,7 @@ let Reflux = require('reflux');
 
 let Col = require('react-bootstrap').Col;
 let Row = require('react-bootstrap').Row;
+let Grid = require('react-bootstrap').Grid;
 
 let Header = require('./Header');
 let Canvas = require('./Canvas');
@@ -19,21 +20,21 @@ let Layout = React.createClass({
 
     render: function() {
         return (
-            <Col fluid={true}>
+            <Grid fluid={true}>
               <Header />
               <Row>
-                <Col xs={5}>
+                <Col xs={5} md={4}>
                   <Canvas />
                 </Col>
-                <Col xs={4}>
+                <Col xs={4} md={2}>
                   <MediaPanel data={this.state.data.modes} />
                   <ControlPanel data={this.state.data.control} />
                 </Col>
-                <Col xs={3}>
+                <Col xs={9} md={6}>
                   <ModeInformation />
                 </Col>
               </Row>
-            </Col>
+            </Grid>
         );
     }
 });
