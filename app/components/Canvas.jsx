@@ -18,13 +18,14 @@ module.exports = React.createClass({
     kinectOverlay: null,
 
     setModeCanvas: function(mode) {
-        let renderer = mode.renderType == "PIXI" ? this.pixiRenderer.view : this.threeRenderer.domElement;
+        let renderer = mode.renderType == "PIXI" ? this.pixiRenderer : this.threeRenderer;
         let child = canvas.children[0];
         if (child) {
-            canvas.replaceChild(renderer, child);
+            canvas.replaceChild(renderer.view, child);
         } else {
-            canvas.appendChild(renderer);
+            canvas.appendChild(renderer.view);
         }
+        return renderer;
     },
 
     componentDidMount: function() {
@@ -32,22 +33,23 @@ module.exports = React.createClass({
         this.pixiRenderer = Pixi.autoDetectRenderer(this.width, this.height, args);
         this.threeRenderer = new Three.WebGLRenderer();
         this.threeRenderer.setSize(this.width, this.height);
+        this.threeRenderer.view = this.threeRenderer.domElement; // for consistency with PIXI
 
         this.canvas = document.getElementById("canvas");
         this.kinectOverlay = document.getElementById("kinect-overlay");
 
         // go ahead and run the current mode.
         let mode = this.props.data.modes.current;
-        this.setModeCanvas(mode);
-        mode.start();
+        let renderer = this.setModeCanvas(mode);
+        mode.start(renderer);
 
         actions.setMode.listen(this.onSetMode);
     },
 
     onSetMode: function(oldMode, newMode) {
         oldMode.stop();
-        this.setModeCanvas(newMode);
-        newMode.start();
+        let renderer = this.setModeCanvas(newMode);
+        newMode.start(renderer);
     },
 
     render: function() {

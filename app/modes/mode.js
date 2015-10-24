@@ -1,7 +1,9 @@
 'use strict';
 
+let _ = require('underscore');
 let Three = require('three.js');
-let vertexShader = require('./modes/shaders/generic.vert.glsl');
+
+let vertexShader = require('./shaders/generic.vert.glsl');
 
 var mouse = {};
 
@@ -27,18 +29,17 @@ let ShaderMode = function(args) {
   this.audio = args.audio;
   this.renderID = null;
   this.rendererType = 'THREE';
-  this.inputs = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+  this.inputs = _(16).times(function() { return 0.0; });
   this.kinectEnabled = args.disableKinect ? false : true; // default to true
 
   var uniformExtras = null;
 
-  this.start = () => {
+  this.start = (renderer) => {
 
-    // WebGL will throw a hissyfit if you reuse shaders/patterns
-    // from a previous canvas/context, so we need to explicitly
-    // null out everything and re-init.
-    this.vertexShader = null;
-    this.fragmentShader = null;
+    // WebGL will throw a hissyfit if you reuse shaders/patterns from
+    // a previous canvas/context, so we need to explicitly re-init.
+    this.vertexShader = vertexShader;
+    this.fragmentShader = args.fragmentShader;
     this.uniforms = null;
 
     // optionally load extra stuff that the shader needs.
@@ -46,14 +47,9 @@ let ShaderMode = function(args) {
       uniformExtras = args.loadUniforms();
     }
 
-    this.vertexShader = vertexShader;
-    this.fragmentShader = args.fragmentShader;
-
     if (this.audio) {
       this.audio.start();
     }
-
-    this.startRender();
 
     /*
     // grab skeletal input
@@ -80,11 +76,8 @@ let ShaderMode = function(args) {
       }
     });
     */
-  };
 
-  this.startRender = () => {
-
-    var camera = new Three.PerspectiveCamera(7, this.parentScope.threejs.renderer.domElement.width / this.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
+    var camera = new Three.PerspectiveCamera(7, renderer.domElement.width / renderer.domElement.height, 0.1, 100000);
     camera.position.z = 1;
 
     var scene = new Three.Scene();
@@ -125,7 +118,7 @@ let ShaderMode = function(args) {
     var render = () => {
       this.uniforms.input_globalTime.value += 0.05;
       this.uniforms.input_skeletons.value = this.inputs;
-      this.parentScope.threejs.renderer.render(scene, camera);
+      renderer.render(scene, camera);
       this.renderID = requestAnimationFrame(render);
     };
 
