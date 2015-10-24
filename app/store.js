@@ -51,7 +51,7 @@ module.exports = Reflux.createStore({
 
   onResetMode: function() {
     let current = this.data.modes.current;
-    this.onSetMode(current, current);
+    actions.setMode(current, current);
   },
 
   onSetProductionMode: function(value) {

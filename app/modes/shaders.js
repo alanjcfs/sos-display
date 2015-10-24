@@ -4,6 +4,8 @@ let Three = require('three.js');
 
 let ShaderMode = require('./mode').ShaderMode;
 
+let loader = new Three.TextureLoader();
+
 let bubbles = new ShaderMode({ id: 'Bubbles',
                                title: 'Bubbles PS',
                                fragmentShader: require('./shaders/bubbles.frag.glsl') });
@@ -16,7 +18,7 @@ let cloudten = new ShaderMode({ id: 'CloudTen',
                                 title: 'Cloud Ten PS',
                                 fragmentShader: require('./shaders/cloudten.frag.glsl'),
                                 loadUniforms: function() {
-	                          var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+                                  var tex = loader.load('static/images/tex16.png');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   var res = new Three.Vector2(256.0, 256.0);
                                   return { input_channel0: { type: "t", value: tex },
@@ -33,7 +35,7 @@ let echoplex = new ShaderMode({ id: 'Echoplex',
                                 title: 'Echoplex PS',
                                 fragmentShader: require('./shaders/echoplex.frag.glsl'),
                                 loadUniforms: function() {
-	                          var tex = Three.ImageUtils.loadTexture('media/tex07.jpg');
+	                          var tex = loader.load('static/images/tex07.jpg');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   return { input_channel0: { type: "t", value: tex } };
                                 }
@@ -47,7 +49,7 @@ let hell = new ShaderMode({ id: 'Hell',
                             title: 'Hell PS',
                             fragmentShader: require('./shaders/hell.frag.glsl'),
                             loadUniforms: function() {
-	                      var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                      var tex = loader.load('static/images/tex16.png');
 	                      tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                               var res = new Three.Vector2(256.0, 256.0);
                               return { input_channel0: { type: "t", value: tex },
@@ -60,8 +62,8 @@ let nyan = new ShaderMode({ id: 'Nyan',
                             fragmentShader: require('./shaders/nyan.frag.glsl'),
                             disableKinect: true,
                             loadUniforms: function() {
-	                      var anim = Three.ImageUtils.loadTexture('media/tex14.png');
-                              var stars = Three.ImageUtils.loadTexture('media/tex03.jpg');
+	                      var anim = loader.load('static/images/tex14.png');
+                              var stars = loader.load('static/images/tex03.jpg');
 	                      stars.wrapS = stars.wrapT = Three.RepeatWrapping;
 	                      anim.wrapS = anim.wrapT = Three.RepeatWrapping;
                               anim.minFilter = anim.magFilter = Three.NearestFilter;
@@ -71,7 +73,6 @@ let nyan = new ShaderMode({ id: 'Nyan',
                                      };
                             }
                           });
-
 
 let ribbon = new ShaderMode({ id: 'Ribbon',
                               title: 'Ribbon PS',
@@ -89,7 +90,7 @@ let storm = new ShaderMode({ id: 'Storm',
                              title: 'Storm PS',
                              fragmentShader: require('./shaders/storm.frag.glsl'),
                              loadUniforms: function() {
-	                       var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                       var tex = loader.load('static/images/tex16.png');
 	                       tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                var res = new Three.Vector2(256.0, 256.0);
                                return { input_channel0: { type: "t", value: tex },
@@ -101,12 +102,12 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                title: 'Truchet PS',
                                fragmentShader: require('./shaders/truchet.frag.glsl'),
                                loadUniforms: function() {
-                                 var cube = Three.ImageUtils.loadTextureCube(['media/cube00.png',
-	                                                                      'media/cube01.png',
-	                                                                      'media/cube02.png',
-	                                                                      'media/cube03.png',
-	                                                                      'media/cube04.png',
-	                                                                      'media/cube05.png']);
+                                 var cube = new Three.CubeTextureLoader(['static/images/cube00.png',
+	                                                                 'static/images/cube01.png',
+	                                                                 'static/images/cube02.png',
+	                                                                 'static/images/cube03.png',
+	                                                                 'static/images/cube04.png',
+	                                                                 'static/images/cube05.png']);
                                  // yes, the resolution given is not correct. this is because the
                                  // original shader code has a bug in it when x-res > y-res.
                                  return {
@@ -116,7 +117,6 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                }
                              });
 
-
 let tunnel = new ShaderMode({ id: 'Tunnel',
                               title: 'Tunnel PS',
                               fragmentShader: require('./shaders/tunnel.frag.glsl') });
@@ -125,7 +125,7 @@ let vortex = new ShaderMode({ id: 'Vortex',
                               title: 'Vortex PS',
                               fragmentShader: require('./shaders/vortex.frag.glsl'),
                               loadUniforms: function() {
-	                        var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                        var tex = loader.load('static/images/tex16.png');
 	                        tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                 var res = new Three.Vector2(256.0, 256.0);
                                 return { input_channel0: { type: "t", value: tex },
