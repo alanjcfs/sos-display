@@ -16,7 +16,6 @@
     "webpack-dev-server": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hot-loader": "latest",
     "react-bootstrap": "latest",
     "reflux": "latest",
     "babel-loader": "latest",
@@ -28,8 +27,7 @@
     "pako": "latest"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
+    "postinstall": "npm install",
     "start": "gulp",
     "pretest": "npm install"
   }
