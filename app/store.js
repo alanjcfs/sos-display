@@ -5,6 +5,25 @@ let keyboard = require('keyboardjs');
 
 let actions = require('./actions');
 
+let shaders = require('./modes/shaders');
+let modes = [ shaders.bubbles,
+              shaders.caustic,
+              shaders.cloudten,
+              shaders.disco,
+              shaders.echoplex,
+              shaders.flame,
+              shaders.hell,
+              shaders.nyan,
+              shaders.ribbon,
+              shaders.seascape,
+              shaders.stardust,
+              shaders.storm,
+              shaders.truchet,
+              shaders.tunnel,
+              shaders.vortex,
+              shaders.worms,
+            ];
+
 module.exports = Reflux.createStore({
   listenables: actions,
 
@@ -55,7 +74,8 @@ module.exports = Reflux.createStore({
       control: {
         development: true,
         offsets: { x: 0, y: 15 }
-      }
+      },
+      modes: modes
     };
     return this.data;
   }

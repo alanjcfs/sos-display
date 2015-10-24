@@ -26,7 +26,7 @@ let Layout = React.createClass({
                   <Canvas />
                 </Col>
                 <Col xs={4}>
-                  <MediaPanel />
+                  <MediaPanel data={this.state.data.modes} />
                   <ControlPanel data={this.state.data.control} />
                 </Col>
                 <Col xs={3}>

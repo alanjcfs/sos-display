@@ -13,28 +13,16 @@ function onDocumentMouseMove(event) {
 }
 
 let Mode = function(id, title) {
-
-  // get reference to self
-  var self = this;
-
-  // class properties
   this.id = id;
   this.title = title;
-  this.container = null;
   this.renderID = null;
   this.rendererType = "PIXI";
   this.kinectEnabled = true;
 };
 
 let ShaderMode = function(args) {
-
-  // get reference to self
-  var self = this;
-
-  // class properties
   this.id = args.id;
   this.title = args.title;
-  this.container = null;
   this.audio = args.audio;
   this.renderID = null;
   this.rendererType = 'THREE';
@@ -43,14 +31,14 @@ let ShaderMode = function(args) {
 
   var uniformExtras = null;
 
-  this.init = function() {
+  this.init = () => {
 
     // WebGL will throw a hissyfit if you reuse shaders/patterns
     // from a previous canvas/context, so we need to explicitly
     // null out everything and re-init.
-    self.vertexShader = null;
-    self.fragmentShader = null;
-    self.uniforms = null;
+    this.vertexShader = null;
+    this.fragmentShader = null;
+    this.uniforms = null;
 
     // optionally load extra stuff that the shader needs.
     if (args.loadUniforms) {
@@ -58,52 +46,54 @@ let ShaderMode = function(args) {
     }
 
     var xhrLoader = new Three.XHRLoader();
-    xhrLoader.load(document.getElementById('genericVert').src, function(resp) {
-      self.vertexShader = resp;
-      xhrLoader.load(document.getElementById(args.pixelShaderName).src, function(resp) {
-        self.fragmentShader = resp;
-        if (self.audio) {
-          self.audio.start();
+    xhrLoader.load(document.getElementById('genericVert').src, (resp) => {
+      this.vertexShader = resp;
+      xhrLoader.load(document.getElementById(args.pixelShaderName).src, (resp) => {
+        this.fragmentShader = resp;
+        if (this.audio) {
+          this.audio.start();
         }
-        self.startRender();
+        this.startRender();
       });
     });
 
+    /*
     // grab skeletal input
-    self.parentScope.$on('kinectInput', function(events, inputs) {
+    this.parentScope.$on('kinectInput', function(events, inputs) {
       // override input if we are in dev mode (for easier testing).
-      if(self.parentScope.wallDisplayMode === 'DEV') {
-        self.inputs[0] = (mouse.X - self.parentScope.urlParamConfig.x) / self.parentScope.canvasDim.width;
-        self.inputs[1] = (mouse.Y - self.parentScope.urlParamConfig.y) / self.parentScope.canvasDim.height;
+      if(this.parentScope.wallDisplayMode === 'DEV') {
+        this.inputs[0] = (mouse.X - this.parentScope.urlParamConfig.x) / this.parentScope.canvasDim.width;
+        this.inputs[1] = (mouse.Y - this.parentScope.urlParamConfig.y) / this.parentScope.canvasDim.height;
         return;
       }
       // normalize.
       for (var i = 0; i < inputs.length; i++) {
         if ((i % 2) === 0) {
-          self.inputs[i] = inputs[i] / parentScope.wallDisplay.width;
+          this.inputs[i] = inputs[i] / parentScope.wallDisplay.width;
           // clamp
-          self.inputs[i] = Math.max(self.inputs[i], 0.0);
-          self.inputs[i] = Math.min(self.inputs[i], 1.0);
+          this.inputs[i] = Math.max(this.inputs[i], 0.0);
+          this.inputs[i] = Math.min(this.inputs[i], 1.0);
         } else {
-          self.inputs[i] = inputs[i] / parentScope.wallDisplay.height;
+          this.inputs[i] = inputs[i] / parentScope.wallDisplay.height;
         }
       }
       for (var j = inputs.length; j < 16; j++) {
-        self.inputs[j] = 0.0;
+        this.inputs[j] = 0.0;
       }
     });
+    */
   };
 
   this.startRender = () => {
 
-    var camera = new Three.PerspectiveCamera(7, self.parentScope.threejs.renderer.domElement.width / self.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
+    var camera = new Three.PerspectiveCamera(7, this.parentScope.threejs.renderer.domElement.width / this.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
     camera.position.z = 1;
 
     var scene = new Three.Scene();
 
     var geometry = new Three.PlaneBufferGeometry(2, 2);
 
-    self.uniforms = {
+    this.uniforms = {
       input_resolution: {
         type: "v2",
         value: new Three.Vector2(192.0, 320.0)
@@ -114,48 +104,48 @@ let ShaderMode = function(args) {
       },
       input_skeletons: {
         type: "fv1",
-        value: self.inputs
+        value: this.inputs
       }
     };
 
     // merge, and optionally override.
     if (uniformExtras) {
       for (var attr in uniformExtras) {
-        self.uniforms[attr] = uniformExtras[attr];
+        this.uniforms[attr] = uniformExtras[attr];
       }
     }
 
     var material = new Three.ShaderMaterial({
-      uniforms: self.uniforms,
-      vertexShader: self.vertexShader,
-      fragmentShader: self.fragmentShader
+      uniforms: this.uniforms,
+      vertexShader: this.vertexShader,
+      fragmentShader: this.fragmentShader
     });
 
     var mesh = new Three.Mesh(geometry, material);
     scene.add(mesh);
 
     // poor man's mutex
-    self.blocking = false;
+    this.blocking = false;
 
     var render = () => {
-      if(self.blocking) {
+      if(this.blocking) {
         return; // wait!
       }
-      self.blocking = true;
-      self.uniforms.input_globalTime.value += 0.05;
-      self.uniforms.input_skeletons.value = self.inputs;
-      self.parentScope.threejs.renderer.render(scene, camera);
-      self.renderID = requestAnimationFrame(render);
-      self.blocking = false;
+      this.blocking = true;
+      this.uniforms.input_globalTime.value += 0.05;
+      this.uniforms.input_skeletons.value = this.inputs;
+      this.parentScope.threejs.renderer.render(scene, camera);
+      this.renderID = requestAnimationFrame(render);
+      this.blocking = false;
     };
 
-    self.renderID = requestAnimationFrame(render);
+    this.renderID = requestAnimationFrame(render);
   };
 
   this.deinit = () => {
-    cancelAnimationFrame(self.renderID);
-    if(self.audio) {
-      self.audio.stop();
+    cancelAnimationFrame(this.renderID);
+    if(this.audio) {
+      this.audio.stop();
     }
   };
 };

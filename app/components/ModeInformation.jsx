@@ -1,12 +1,11 @@
 let React = require('react');
 
+let Panel = require('react-bootstrap').Panel;
+
 module.exports = React.createClass({
     render: function() {
         return (
-            <div className="panel panel-default">
-            <div className="panel-heading">
-              <h3 className="panel-title">Mode Information</h3>
-            </div>
+            <Panel header="Mode Information">
             <div className="panel-body">
               <table className="table table-striped">
                 <tbody>
@@ -25,7 +24,7 @@ module.exports = React.createClass({
                 </tbody>
               </table>
             </div>
-          </div>
+          </Panel>
         );
     }
 });
