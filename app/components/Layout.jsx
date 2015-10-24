@@ -2,6 +2,9 @@
 let React = require('react');
 let Reflux = require('reflux');
 
+let Col = require('react-bootstrap').Col;
+let Row = require('react-bootstrap').Row;
+
 let Header = require('./Header');
 let Canvas = require('./Canvas');
 let MediaPanel = require('./MediaPanel');
@@ -16,21 +19,21 @@ let Layout = React.createClass({
 
     render: function() {
         return (
-            <div className="container-fluid">
+            <Col fluid={true}>
               <Header />
-              <div className="row" ng-controller="CanvasCtrl">
-                <div className="col-md-5">
+              <Row>
+                <Col xs={5}>
                   <Canvas />
-                </div>
-                <div className="col-md-4">
+                </Col>
+                <Col xs={4}>
                   <MediaPanel />
                   <ControlPanel data={this.state.data.control} />
-                </div>
-                <div className="col-md-3">
+                </Col>
+                <Col xs={3}>
                   <ModeInformation />
-                </div>
-              </div>
-            </div>
+                </Col>
+              </Row>
+            </Col>
         );
     }
 });

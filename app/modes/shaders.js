@@ -135,7 +135,7 @@ let worms = new ShaderMode({ id: 'modeWorms',
                              title: 'Worms',
                              pixelShaderName: 'wormsFrag' });
 
-export default {
+module.exports = {
   'bubbles': bubbles,
   'caustic': caustic,
   'cloudten': cloudten,

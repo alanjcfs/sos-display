@@ -71,28 +71,9 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
     switchRandomly();
   }, $scope.switchTimeout);
 
-  // debug object
-  $scope.debugInfo = {
-
-  };
-
   $scope.modeList = [];
 
   $scope.$watch('wallDisplayMode', function(newMode) {
-
-    if(newMode == "DEV") {
-      // if newMode is true, dev mode is enabled
-      $log.info("DEV MODE");
-      $scope.devModeInputGroupClass = "btn-primary active";
-      $scope.prodModeInputGroupClass = "btn-default";
-      angular.element($scope.canvasEl);
-      $scope.rotateForProduction = false;
-    } else {
-      $log.info("PROD (WALL) MODE");
-      $scope.devModeInputGroupClass = "btn-default";
-      $scope.prodModeInputGroupClass = "btn-primary active";
-      $scope.rotateForProduction = true;
-    }
 
     $scope.updateLocationURLParam('wallDisplayMode', newMode);
 
@@ -110,63 +91,9 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
     $scope.updateLocationURLParam('y', newValue);
   });
 
-  // keyboard bindings to move the canvas
-  // in 1px increments
-  keyboardJS.bind('w', function(e) {
-    $scope.offsetStyle.top--;
-    $scope.$digest();
-  });
-  keyboardJS.bind('s', function(e) {
-    $scope.offsetStyle.top++;
-    $scope.$digest();
-  });
-  keyboardJS.bind('a', function(e) {
-    $scope.offsetStyle.left--;
-    $scope.$digest();
-  });
-  keyboardJS.bind('d', function(e) {
-    $scope.offsetStyle.left++;
-    $scope.$digest();
-  });
-
-  keyboardJS.bind('n', function(n) {
-    $scope.goToNextMode();
-  });
-
-  // binding to rotate display between DEV/PROD
-  keyboardJS.bind('r', function(e) {
-    // check if metaKey is active (to ignore CMD-R)
-    if(!e.metaKey) {
-      $scope.toggleDisplayMode();
-      $scope.$digest();
-    }
-  });
-
   $scope.$on("error", function(err) {
     $log.warn("Registered error:", err);
   });
-
-  $scope.postDebugInfo = function(name, value) {
-    $scope.debugInfo[name] = value;
-  };
-
-  $scope.getWidthScaleFactor = function(origWidth) {
-    return $scope.wallDisplay.width / origWidth;
-  };
-
-  $scope.getHeightScaleFactor = function(origHeight) {
-    return $scope.wallDisplay.height / origHeight;
-  };
-
-  $scope.toggleDisplayMode = function() {
-    if($scope.wallDisplayMode == "DEV") {
-      $scope.wallDisplayMode = "PROD";
-    } else {
-      $scope.wallDisplayMode = "DEV";
-    }
-
-    // update config and url
-  };
 
   $scope.updateLocationURLParam = function(paramName, paramValue) {
     $timeout(function() {

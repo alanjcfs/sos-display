@@ -49,6 +49,14 @@ mode.factory('modeSlowClap', function($log) {
     mode.movie.position.set(0);
     mode.movie.anchor.set(0);
 
+  // $scope.getWidthScaleFactor = function(origWidth) {
+  //   return $scope.wallDisplay.width / origWidth;
+  // };
+
+  // $scope.getHeightScaleFactor = function(origHeight) {
+  //   return $scope.wallDisplay.height / origHeight;
+  // };
+
     var newScale = new PIXI.Point(mode.parentScope.getWidthScaleFactor(mode.movie.width), mode.parentScope.getHeightScaleFactor(mode.movie.height));
 
     mode.movie.scale = newScale;
