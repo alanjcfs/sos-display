@@ -46,32 +46,31 @@ module.exports = Reflux.createStore({
       this.trigger(this.data);
     });
     keyboard.bind('n', (e) => {
-
+      this.data.modes.index++;
+      this.data.modes.index %= this.data.modes.list.length;
+      this.data.modes.current = this.data.modes.list[this.data.modes.index];
+      this.trigger(this.data);
     });
     keyboard.bind('p', (e) => {
-
+      this.data.modes.index = (this.data.modes.index === 0) ? this.data.modes.list.length - 1 : this.data.modes.index - 1;
+      this.data.modes.current = this.data.modes.list[this.data.modes.index];
+      this.trigger(this.data);
     });
-    keyboard.bind('r', (e) => {
-      if(!e.metaKey && !e.controlKey) {
-        this.data.control.development = !this.data.control.development;
-        this.trigger(this.data);
-      }
+    keyboard.bind('x', (e) => {
+      this.data.control.development = !this.data.control.development;
+      this.trigger(this.data);
     });
   },
 
-  onSetMode: function(id) {
-    let chosen = _.find(this.data.modes.list, function(mode) {
-      return mode.id === id;
-    });
-    if (chosen) {
-      this.data.modes.current = chosen;
-      this.trigger(this.data);
-    }
+  onSetMode: function(old, chosen) {
+    this.data.modes.current = chosen;
+    this.data.modes.index = _.indexOf(this.data.modes.list, chosen);
+    this.trigger(this.data);
   },
 
   onResetMode: function() {
-    this.data.modes.current.stop();
-    this.data.modes.current.start();
+    let current = this.data.modes.current;
+    this.onSetMode(current, current);
   },
 
   onSetProductionMode: function(value) {
@@ -85,13 +84,15 @@ module.exports = Reflux.createStore({
   },
 
   getInitialState: function() {
+    let index = 0;
     this.data = {
       control: {
         development: true,
         offsets: { x: 0, y: 15 }
       },
       modes: {
-        current: modes[0],
+        index: index,
+        current: modes[index],
         list: modes
       }
     };
