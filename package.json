@@ -19,7 +19,10 @@
     "react-bootstrap": "latest",
     "reflux": "latest",
     "babel-loader": "latest",
-    "keyboardjs": "latest"
+    "json-loader": "latest",
+    "keyboardjs": "latest",
+    "three.js": "latest",
+    "pixi.js": "latest"
   },
   "scripts": {
     "postinstall": "bower install",

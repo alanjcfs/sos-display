@@ -1,5 +1,7 @@
 'use strict';
 
+let Pixi = require('pixi.js').PIXI;
+
 var SkeletalBody = function() {
 
   var self = this;
@@ -15,22 +17,22 @@ var SkeletalBody = function() {
   self.handPointer = new HandPointer();
   self.getHandPointerFn = null;
 
-  self.pointer = new PIXI.Graphics();
-  self.torso = new PIXI.Graphics();
-  self.leftHand = new PIXI.Graphics();
-  self.rightHand = new PIXI.Graphics();
-  self.head = new PIXI.Graphics();
+  self.pointer = new Pixi.Graphics();
+  self.torso = new Pixi.Graphics();
+  self.leftHand = new Pixi.Graphics();
+  self.rightHand = new Pixi.Graphics();
+  self.head = new Pixi.Graphics();
 
-  self.leftShoulderToElbow = new PIXI.Graphics();
-  self.leftElbowToWrist = new PIXI.Graphics();
-  self.leftWristToHand = new PIXI.Graphics();
-  self.rightShoulderToElbow = new PIXI.Graphics();
-  self.rightElbowToWrist = new PIXI.Graphics();
-  self.rightWristToHand = new PIXI.Graphics();
-  self.leftHipToKnee = new PIXI.Graphics();
-  self.leftKneeToAnkle = new PIXI.Graphics();
-  self.rightHipToKnee = new PIXI.Graphics();
-  self.rightKneeToAnkle = new PIXI.Graphics();
+  self.leftShoulderToElbow = new Pixi.Graphics();
+  self.leftElbowToWrist = new Pixi.Graphics();
+  self.leftWristToHand = new Pixi.Graphics();
+  self.rightShoulderToElbow = new Pixi.Graphics();
+  self.rightElbowToWrist = new Pixi.Graphics();
+  self.rightWristToHand = new Pixi.Graphics();
+  self.leftHipToKnee = new Pixi.Graphics();
+  self.leftKneeToAnkle = new Pixi.Graphics();
+  self.rightHipToKnee = new Pixi.Graphics();
+  self.rightKneeToAnkle = new Pixi.Graphics();
 
   this.SHAPESXOFFSET = -180;
   this.SHAPESYOFFSET = -150;
@@ -43,8 +45,8 @@ var SkeletalBody = function() {
     self._lineConfig = { color: self._color };
 
     // set up shapes
-    // 		_container = new PIXI.Container();
-    self._shapesData = new PIXI.Container();
+    // 		_container = new Pixi.Container();
+    self._shapesData = new Pixi.Container();
     self._shapesData.x = self._shapesData.x + self.SHAPESXOFFSET;
     self._shapesData.y = self._shapesData.y + self.SHAPESYOFFSET;
     self._shapesData.alpha = self._alpha;

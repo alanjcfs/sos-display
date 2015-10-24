@@ -2,6 +2,8 @@
 
 let Mode = require('../mode');
 
+let Pixi = require('pixi.js').PIXI;
+
 var mode = angular.module('sos.modes');
 mode.factory('modeSkeletalFun', function($log, skeletalService) {
 
@@ -37,11 +39,11 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
     console.log("initializing kinect overlay");
     mode.setParentScope(parentScope);
 
-    mode.kinect.renderer = PIXI.autoDetectRenderer(mode.parentScope.canvasDim.width, mode.parentScope.canvasDim.height, {antialias: true, transparent: true});
+    mode.kinect.renderer = Pixi.autoDetectRenderer(mode.parentScope.canvasDim.width, mode.parentScope.canvasDim.height, {antialias: true, transparent: true});
     var overlayDiv = document.getElementById("kinect-overlay");
     overlayDiv.appendChild(mode.kinect.renderer.view);
 
-    mode.container = new PIXI.Container();
+    mode.container = new Pixi.Container();
 
     // initialize socket w/ socket.io skeletal data
     mode.initSocket();
@@ -49,8 +51,8 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
       mode.trackedSkeletons = bodies;
     });
 
-    var texture = PIXI.Texture.fromImage("media/particle.png");
-    var sprite = new PIXI.Sprite(texture);
+    var texture = Pixi.Texture.fromImage("media/particle.png");
+    var sprite = new Pixi.Sprite(texture);
 
     mode.parentScope.$on('kinectNewSkeleton', function(events, skel) {
 
@@ -75,12 +77,12 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
 
     //mode.drawHitBoxes();
 
-    //mode.drawTestAngledPolygon(new PIXI.Point(10,10), new PIXI.Point(50,50), -10);
+    //mode.drawTestAngledPolygon(new Pixi.Point(10,10), new Pixi.Point(50,50), -10);
   };
 
   mode.drawTestAngledPolygon = function(p1, p2, degrees) {
 
-    var ap = new PIXI.Graphics();
+    var ap = new Pixi.Graphics();
     mode.ap = ap;
 
     ap.lineStyle(2, 0xFFFFFF);
@@ -91,7 +93,7 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
 
   mode.drawTestAngledPolygon2 = function(p1, p2, degrees) {
 
-    var ap = new PIXI.Graphics();
+    var ap = new Pixi.Graphics();
     ap.lineStyle(2, 0xFFFFFF);
     ap.beginFill(0xDEDEDE);
     ap.drawRect(10,10,10,50);
@@ -113,7 +115,7 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
 	// get hand pointer
 	// var hp = skel.getHandPointerPoint();
 	// apply offset to correct x
-	// hp = new PIXI.Point(hp.x - 150, hp.y);
+	// hp = new Pixi.Point(hp.x - 150, hp.y);
 	// if(mode.topHitBox.containsPoint(hp)) {
 	//   mode.parentScope.postDebugInfo("topHitBox active", "true");
 	// } else {
@@ -134,7 +136,7 @@ mode.factory('modeSkeletalFun', function($log, skeletalService) {
     var width = mode.parentScope.canvasDim.width * 0.5;
     var height = 80;
 
-    mode.topHitBox = new PIXI.Graphics();
+    mode.topHitBox = new Pixi.Graphics();
     mode.topHitBox.lineStyle(2, 0xFFFFFF);
     mode.topHitBox.beginFill(0xFFFFFF);
     mode.topHitBox.drawRect(width * 0.5,0,width,height);

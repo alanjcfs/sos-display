@@ -2,12 +2,14 @@
 
 let Mode = require('../mode');
 
+let Pixi = require('pixi.js').PIXI;
+
 var mode = angular.module('sos.modes');
 mode.factory('modeSlowClap', function($log) {
 
   var count = 0;
   var mode = new Mode("modeSlowClap", "Slow Clap");
-  var loader = PIXI.loader;
+  var loader = Pixi.loader;
 
   mode.spritesheetJSON = null;
   mode.movie = null;
@@ -16,10 +18,10 @@ mode.factory('modeSlowClap', function($log) {
   mode.init = function(parentScope) {
 
     mode.setParentScope(parentScope);
-    mode.container = new PIXI.Container();
+    mode.container = new Pixi.Container();
 
     if(!loader.resources.spritesheet) {
-      PIXI.loader.add('spritesheet', 'media/slow-clap.json').load(mode.initAnimation);
+      Pixi.loader.add('spritesheet', 'media/slow-clap.json').load(mode.initAnimation);
     } else {
       mode.initAnimation();
     }
@@ -35,12 +37,12 @@ mode.factory('modeSlowClap', function($log) {
 
       // magically works since the spritesheet was loaded with the pixi loader
       var spritesheet;
-      frames.push(PIXI.Texture.fromFrame('citizen-kane-clapping_0' + val + '.png'));
+      frames.push(Pixi.Texture.fromFrame('citizen-kane-clapping_0' + val + '.png'));
     }
 
 
     // create a MovieClip (brings back memories from the days of Flash, right ?)
-    mode.movie = new PIXI.extras.MovieClip(frames);
+    mode.movie = new Pixi.extras.MovieClip(frames);
 
     /*
      * A MovieClip inherits all the properties of a PIXI sprite
@@ -57,7 +59,7 @@ mode.factory('modeSlowClap', function($log) {
   //   return $scope.wallDisplay.height / origHeight;
   // };
 
-    var newScale = new PIXI.Point(mode.parentScope.getWidthScaleFactor(mode.movie.width), mode.parentScope.getHeightScaleFactor(mode.movie.height));
+    var newScale = new Pixi.Point(mode.parentScope.getWidthScaleFactor(mode.movie.width), mode.parentScope.getHeightScaleFactor(mode.movie.height));
 
     mode.movie.scale = newScale;
     mode.movie.animationSpeed = 0.5;
@@ -65,7 +67,7 @@ mode.factory('modeSlowClap', function($log) {
     mode.container.addChild(mode.movie);
 
     // set up color filter
-    mode.filter = new PIXI.filters.ColorMatrixFilter();
+    mode.filter = new Pixi.filters.ColorMatrixFilter();
     mode.container.filters = [mode.filter];
 
     mode.renderID = requestAnimationFrame(mode.update);

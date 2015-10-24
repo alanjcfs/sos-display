@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     app: ['./app/app.js', 'webpack-dev-server/client?http://localhost:8080']
   },
+  node: { fs: "empty" }, // PIXI does require('fs')
   output: {
     path: build,
     filename: 'bundle.js',
@@ -25,6 +26,10 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },

@@ -1,7 +1,11 @@
 'use strict';
 
-angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$injector', '$document', '$location', '$timeout', function($scope, $log, $injector, $document, $location, $timeout) {
+// get rid of jshint errors
+let Pixi = require('pixi.js').PIXI;
+let Three = require('three.js').THREE;
 
+{
+  var $scope = {};
   $scope.wallDisplay = {
     width: 192,
     height: 320
@@ -134,10 +138,10 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
 
   // don't recreate contexts needlessly.
   $scope.threejs = {};
-  $scope.threejs.renderer = new THREE.WebGLRenderer();
+  $scope.threejs.renderer = new Three.WebGLRenderer();
   $scope.threejs.renderer.setSize($scope.canvasDim.width, $scope.canvasDim.height);
   $scope.pixijs = {};
-  $scope.pixijs.renderer = PIXI.autoDetectRenderer($scope.canvasDim.width, $scope.canvasDim.height, {backgroundColor : 0x1099bb, antialias: true});
+  $scope.pixijs.renderer = Pixi.autoDetectRenderer($scope.canvasDim.width, $scope.canvasDim.height, {backgroundColor : 0x1099bb, antialias: true});
 
   // initializers for two types of canvas
   $scope.createCanvas = function(rendererType) {
@@ -217,4 +221,4 @@ angular.module('sos.canvas', []).controller('CanvasCtrl', ['$scope', '$log', '$i
 
   // lastly, call init() to kick things off
   $scope.init();
-}]);
+}

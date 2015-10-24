@@ -1,5 +1,7 @@
 'use strict';
 
+let Three = require('three.js').THREE;
+
 let Mode = require('../mode');
 
 var mode = angular.module('sos.modes');
@@ -16,17 +18,17 @@ mode.factory('modeSampleThree', function($log) {
   // rendering modes
   mode.render3DCube = function() {
 
-    var scene = new THREE.Scene();
-    scene.fog = new THREE.Fog( 0xffffff, 1000, 4000 );
+    var scene = new Three.Scene();
+    scene.fog = new Three.Fog( 0xffffff, 1000, 4000 );
 
     // lights
-    scene.add( new THREE.AmbientLight( 0x222222 ) );
+    scene.add( new Three.AmbientLight( 0x222222 ) );
 
-    var camera = new THREE.PerspectiveCamera( 75, mode.parentScope.threejs.renderer.domElement.width / mode.parentScope.threejs.renderer.domElement.height, 0.1, 1000 );
+    var camera = new Three.PerspectiveCamera( 75, mode.parentScope.threejs.renderer.domElement.width / mode.parentScope.threejs.renderer.domElement.height, 0.1, 1000 );
 
-    var geometry = new THREE.BoxGeometry( 2, 2, 2 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    var cube = new THREE.Mesh( geometry, material );
+    var geometry = new Three.BoxGeometry( 2, 2, 2 );
+    var material = new Three.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cube = new Three.Mesh( geometry, material );
     scene.add( cube );
 
     camera.position.z = 5;

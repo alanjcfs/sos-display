@@ -1,5 +1,7 @@
 'use strict';
 
+let Three = require('three.js').THREE;
+
 var mouse = {};
 
 document.addEventListener('mousemove', onDocumentMouseMove, false);
@@ -10,7 +12,7 @@ function onDocumentMouseMove(event) {
   mouse.Y = event.clientY;
 }
 
-exports.Mode = (id, title) => {
+let Mode = function(id, title) {
 
   // get reference to self
   var self = this;
@@ -18,18 +20,13 @@ exports.Mode = (id, title) => {
   // class properties
   this.id = id;
   this.title = title;
-  this.parentScope = null;
   this.container = null;
   this.renderID = null;
   this.rendererType = "PIXI";
   this.kinectEnabled = true;
-
-  this.setParentScope = function(scope) {
-    self.parentScope = scope;
-  };
 };
 
-exports.ShaderMode = (args) => {
+let ShaderMode = function(args) {
 
   // get reference to self
   var self = this;
@@ -37,7 +34,6 @@ exports.ShaderMode = (args) => {
   // class properties
   this.id = args.id;
   this.title = args.title;
-  this.parentScope = null;
   this.container = null;
   this.audio = args.audio;
   this.renderID = null;
@@ -47,9 +43,7 @@ exports.ShaderMode = (args) => {
 
   var uniformExtras = null;
 
-  this.init = function(parentScope) {
-
-    self.parentScope = parentScope;
+  this.init = function() {
 
     // WebGL will throw a hissyfit if you reuse shaders/patterns
     // from a previous canvas/context, so we need to explicitly
@@ -63,7 +57,7 @@ exports.ShaderMode = (args) => {
       uniformExtras = args.loadUniforms();
     }
 
-    var xhrLoader = new THREE.XHRLoader();
+    var xhrLoader = new Three.XHRLoader();
     xhrLoader.load(document.getElementById('genericVert').src, function(resp) {
       self.vertexShader = resp;
       xhrLoader.load(document.getElementById(args.pixelShaderName).src, function(resp) {
@@ -102,17 +96,17 @@ exports.ShaderMode = (args) => {
 
   this.startRender = () => {
 
-    var camera = new THREE.PerspectiveCamera(7, self.parentScope.threejs.renderer.domElement.width / self.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
+    var camera = new Three.PerspectiveCamera(7, self.parentScope.threejs.renderer.domElement.width / self.parentScope.threejs.renderer.domElement.height, 0.1, 100000);
     camera.position.z = 1;
 
-    var scene = new THREE.Scene();
+    var scene = new Three.Scene();
 
-    var geometry = new THREE.PlaneBufferGeometry(2, 2);
+    var geometry = new Three.PlaneBufferGeometry(2, 2);
 
     self.uniforms = {
       input_resolution: {
         type: "v2",
-        value: new THREE.Vector2(192.0, 320.0)
+        value: new Three.Vector2(192.0, 320.0)
       },
       input_globalTime: {
         type: "f",
@@ -131,13 +125,13 @@ exports.ShaderMode = (args) => {
       }
     }
 
-    var material = new THREE.ShaderMaterial({
+    var material = new Three.ShaderMaterial({
       uniforms: self.uniforms,
       vertexShader: self.vertexShader,
       fragmentShader: self.fragmentShader
     });
 
-    var mesh = new THREE.Mesh(geometry, material);
+    var mesh = new Three.Mesh(geometry, material);
     scene.add(mesh);
 
     // poor man's mutex
@@ -164,4 +158,9 @@ exports.ShaderMode = (args) => {
       self.audio.stop();
     }
   };
+};
+
+module.exports = {
+  Mode: Mode,
+  ShaderMode: ShaderMode
 };

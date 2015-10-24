@@ -1,6 +1,8 @@
 'use strict';
 
-let ShaderMode = require('../mode.js').ShaderMode;
+let Three = require('three.js').THREE;
+
+let ShaderMode = require('../mode').ShaderMode;
 
 let bubbles = new ShaderMode({ id: 'modeBubbles',
                                title: 'Bubbles',
@@ -14,9 +16,9 @@ let cloudten = new ShaderMode({ id: 'modeCloudTen',
                                 title: 'Cloud Ten',
                                 pixelShaderName: 'cloudTenFrag',
                                 loadUniforms: function() {
-	                          var tex = THREE.ImageUtils.loadTexture('media/tex16.png');
-	                          tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-                                  var res = new THREE.Vector2(256.0, 256.0);
+	                          var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
+                                  var res = new Three.Vector2(256.0, 256.0);
                                   return { input_channel0: { type: "t", value: tex },
                                            input_channel0_resolution: { type: "v2", value: res } };
                                 }
@@ -31,8 +33,8 @@ let echoplex = new ShaderMode({ id: 'modeEchoplex',
                                 title: 'Echoplex',
                                 pixelShaderName: 'echoplexFrag',
                                 loadUniforms: function() {
-	                          var tex = THREE.ImageUtils.loadTexture('media/tex07.jpg');
-	                          tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+	                          var tex = Three.ImageUtils.loadTexture('media/tex07.jpg');
+	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   return { input_channel0: { type: "t", value: tex } };
                                 }
                               });
@@ -45,9 +47,9 @@ let hell = new ShaderMode({ id: 'modeHell',
                             title: 'Hell',
                             pixelShaderName: 'hellFrag',
                             loadUniforms: function() {
-	                      var tex = THREE.ImageUtils.loadTexture('media/tex16.png');
-	                      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-                              var res = new THREE.Vector2(256.0, 256.0);
+	                      var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                      tex.wrapS = tex.wrapT = Three.RepeatWrapping;
+                              var res = new Three.Vector2(256.0, 256.0);
                               return { input_channel0: { type: "t", value: tex },
                                        input_channel0_resolution: { type: "v2", value: res } };
                             }
@@ -58,14 +60,14 @@ let nyan = new ShaderMode({ id: 'modeNyan',
                             pixelShaderName: 'nyanFrag',
                             disableKinect: true,
                             loadUniforms: function() {
-	                      var anim = THREE.ImageUtils.loadTexture('media/tex14.png');
-                              var stars = THREE.ImageUtils.loadTexture('media/tex03.jpg');
-	                      stars.wrapS = stars.wrapT = THREE.RepeatWrapping;
-	                      anim.wrapS = anim.wrapT = THREE.RepeatWrapping;
-                              anim.minFilter = anim.magFilter = THREE.NearestFilter;
+	                      var anim = Three.ImageUtils.loadTexture('media/tex14.png');
+                              var stars = Three.ImageUtils.loadTexture('media/tex03.jpg');
+	                      stars.wrapS = stars.wrapT = Three.RepeatWrapping;
+	                      anim.wrapS = anim.wrapT = Three.RepeatWrapping;
+                              anim.minFilter = anim.magFilter = Three.NearestFilter;
                               return { input_channel0: { type: "t", value: anim },
                                        input_channel1: { type: "t", value: stars },
-                                       input_resolution: { type: "v2", value: new THREE.Vector2(240.0, 140.0) }
+                                       input_resolution: { type: "v2", value: new Three.Vector2(240.0, 140.0) }
                                      };
                             }
                           });
@@ -87,9 +89,9 @@ let storm = new ShaderMode({ id: 'modeStorm',
                              title: 'Storm',
                              pixelShaderName: 'stormFrag',
                              loadUniforms: function() {
-	                       var tex = THREE.ImageUtils.loadTexture('media/tex16.png');
-	                       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-                               var res = new THREE.Vector2(256.0, 256.0);
+	                       var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                       tex.wrapS = tex.wrapT = Three.RepeatWrapping;
+                               var res = new Three.Vector2(256.0, 256.0);
                                return { input_channel0: { type: "t", value: tex },
                                         input_channel0_resolution: { type: "v2", value: res } };
                              }
@@ -99,7 +101,7 @@ let truchet = new ShaderMode({ id: 'modeTruchet',
                                title: 'Truchet',
                                pixelShaderName: 'truchetFrag',
                                loadUniforms: function() {
-                                 var cube = THREE.ImageUtils.loadTextureCube(['media/cube00.png',
+                                 var cube = Three.ImageUtils.loadTextureCube(['media/cube00.png',
 	                                                                      'media/cube01.png',
 	                                                                      'media/cube02.png',
 	                                                                      'media/cube03.png',
@@ -108,7 +110,7 @@ let truchet = new ShaderMode({ id: 'modeTruchet',
                                  // yes, the resolution given is not correct. this is because the
                                  // original shader code has a bug in it when x-res > y-res.
                                  return {
-                                   input_resolution: { type: "v2", value: new THREE.Vector2(320.0, 480.0) },
+                                   input_resolution: { type: "v2", value: new Three.Vector2(320.0, 480.0) },
                                    input_channel0: { type: "t", value: cube }
                                  };
                                }
@@ -123,9 +125,9 @@ let vortex = new ShaderMode({ id: 'modeVortex',
                               title: 'Vortex',
                               pixelShaderName: 'vortexFrag',
                               loadUniforms: function() {
-	                        var tex = THREE.ImageUtils.loadTexture('media/tex16.png');
-	                        tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-                                var res = new THREE.Vector2(256.0, 256.0);
+	                        var tex = Three.ImageUtils.loadTexture('media/tex16.png');
+	                        tex.wrapS = tex.wrapT = Three.RepeatWrapping;
+                                var res = new Three.Vector2(256.0, 256.0);
                                 return { input_channel0: { type: "t", value: tex },
                                          input_channel0_resolution: { type: "v2", value: res } };
                               }
@@ -136,8 +138,20 @@ let worms = new ShaderMode({ id: 'modeWorms',
                              pixelShaderName: 'wormsFrag' });
 
 module.exports = {
-  'bubbles': bubbles,
-  'caustic': caustic,
-  'cloudten': cloudten,
-  'worms': worms
+  bubbles: bubbles,
+  caustic: caustic,
+  cloudten: cloudten,
+  disco: disco,
+  echoplex: echoplex,
+  flame: flame,
+  hell: hell,
+  nyan: nyan,
+  ribbon: ribbon,
+  seascape: seascape,
+  stardust: stardust,
+  storm: storm,
+  truchet: truchet,
+  tunnel: tunnel,
+  vortex: vortex,
+  worms: worms
 };

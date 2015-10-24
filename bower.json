@@ -8,9 +8,7 @@
   "dependencies": {
     "easeljs": "0.8.1",
     "preloadjs": "*",
-    "pako": "*",
-    "three.js": "~0.71.0",
-    "pixi.js": "~3.0.7"
+    "pako": "*"
   },
   "devDependencies": {
     "bootstrap": "~3.3.4"

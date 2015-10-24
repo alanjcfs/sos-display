@@ -2,6 +2,8 @@
 
 let Mode = require('../mode');
 
+let Pixi = require('pixi.js').PIXI;
+
 var mode = angular.module('sos.modes');
 mode.factory('modeSampleImage', function($log) {
 
@@ -10,12 +12,12 @@ mode.factory('modeSampleImage', function($log) {
   mode.init = function(parentScope) {
 
     this.setParentScope(parentScope);
-    this.container = new PIXI.Container();
+    this.container = new Pixi.Container();
 
     // create a texture from an image path
-    var texture = PIXI.Texture.fromImage('media/winter-is-coming.JPEG');
+    var texture = Pixi.Texture.fromImage('media/winter-is-coming.JPEG');
     // create a new Sprite using the texture
-    var image = new PIXI.Sprite(texture);
+    var image = new Pixi.Sprite(texture);
 
     this.container.addChild(image);
     this.renderID = requestAnimationFrame(this.update);

@@ -12,9 +12,6 @@
     "module": false,
     "inject": false,
 
-    "THREE": false,
-    "PIXI": false,
-    "MIDI": false,
     "XMLHttpRequest": false,
     "document": false,
     "window": false,

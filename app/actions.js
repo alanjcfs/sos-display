@@ -6,7 +6,6 @@ module.exports = Reflux.createActions([
   // configuration
   "setProductionMode",
   "adjustOffset",
-  "rotateDisplay",
 
   // modes
   "previousMode",
