@@ -24,7 +24,7 @@ let Layout = React.createClass({
               <Header />
               <Row>
                 <Col xs={5} md={4}>
-                  <Canvas data={this.state.data.control.offsets} />
+                  <Canvas data={this.state.data} />
                 </Col>
                 <Col xs={4} md={2}>
                   <ModePanel data={this.state.data.modes} />

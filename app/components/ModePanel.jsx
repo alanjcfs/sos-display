@@ -12,9 +12,10 @@ let actions = require('../actions');
 
 module.exports = React.createClass({
     render: function() {
+        let current = this.props.data.current;
         let modeListing = this.props.data.list.map(function(mode) {
             return (
-                <MenuItem key={mode.id} onClick={actions.setMode.bind(this, mode.id)}>
+                <MenuItem key={mode.id} onClick={actions.setMode.bind(this, current, mode)}>
                   {mode.title}
                 </MenuItem>
             );
@@ -25,7 +26,7 @@ module.exports = React.createClass({
                 {modeListing}
               </DropdownButton>
               <h4>
-                Currently showing <strong>{this.props.data.current.title}</strong>.
+                Currently showing <strong>{current.title}</strong>.
               </h4>
               <ButtonGroup vertical>
                 <Button onClick={actions.resetMode.bind(this)}>
