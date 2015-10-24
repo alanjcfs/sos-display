@@ -6,15 +6,15 @@ let ShaderMode = require('../mode').ShaderMode;
 
 let bubbles = new ShaderMode({ id: 'Bubbles',
                                title: 'Bubbles PS',
-                               pixelShaderName: 'bubblesFrag' });
+                               pixelShader: require('./shaders/bubbles.frag.glsl') });
 
 let caustic = new ShaderMode({ id: 'Caustic',
                                title: 'Caustic PS',
-                               pixelShaderName: 'causticFrag' });
+                               pixelShader: require('./shaders/caustic.frag.glsl') });
 
 let cloudten = new ShaderMode({ id: 'CloudTen',
                                 title: 'Cloud Ten PS',
-                                pixelShaderName: 'cloudTenFrag',
+                                pixelShader: require('./shaders/cloudten.frag.glsl'),
                                 loadUniforms: function() {
 	                          var tex = Three.ImageUtils.loadTexture('media/tex16.png');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
@@ -27,11 +27,11 @@ let cloudten = new ShaderMode({ id: 'CloudTen',
 let disco = new ShaderMode({ id: 'Disco',
                              title: 'Disco PS',
                              // audio: audioDisco,
-                             pixelShaderName: 'discoFrag' });
+                             pixelShader: require('./shaders/disco.frag.glsl') });
 
 let echoplex = new ShaderMode({ id: 'Echoplex',
                                 title: 'Echoplex PS',
-                                pixelShaderName: 'echoplexFrag',
+                                pixelShader: require('./shaders/echoplex.frag.glsl'),
                                 loadUniforms: function() {
 	                          var tex = Three.ImageUtils.loadTexture('media/tex07.jpg');
 	                          tex.wrapS = tex.wrapT = Three.RepeatWrapping;
@@ -41,11 +41,11 @@ let echoplex = new ShaderMode({ id: 'Echoplex',
 
 let flame = new ShaderMode({ id: 'Flame',
                              title: 'Flame PS',
-                             pixelShaderName: 'flameFrag' });
+                             pixelShader: require('./shaders/flame.frag.glsl') });
 
 let hell = new ShaderMode({ id: 'Hell',
                             title: 'Hell PS',
-                            pixelShaderName: 'hellFrag',
+                            pixelShader: require('./shaders/hell.frag.glsl'),
                             loadUniforms: function() {
 	                      var tex = Three.ImageUtils.loadTexture('media/tex16.png');
 	                      tex.wrapS = tex.wrapT = Three.RepeatWrapping;
@@ -57,7 +57,7 @@ let hell = new ShaderMode({ id: 'Hell',
 
 let nyan = new ShaderMode({ id: 'Nyan',
                             title: 'Nyan PS',
-                            pixelShaderName: 'nyanFrag',
+                            pixelShader: require('./shaders/nyan.frag.glsl'),
                             disableKinect: true,
                             loadUniforms: function() {
 	                      var anim = Three.ImageUtils.loadTexture('media/tex14.png');
@@ -75,19 +75,19 @@ let nyan = new ShaderMode({ id: 'Nyan',
 
 let ribbon = new ShaderMode({ id: 'Ribbon',
                               title: 'Ribbon PS',
-                              pixelShaderName: 'ribbonFrag' });
+                              pixelShader: require('./shaders/ribbon.frag.glsl') });
 
 let seascape = new ShaderMode({ id: 'Seascape',
                                 title: 'Seascape PS',
-                                pixelShaderName: 'seascapeFrag' });
+                                pixelShader: require('./shaders/seascape.frag.glsl') });
 
 let stardust = new ShaderMode({ id: 'Stardust',
                                 title: 'Stardust PS',
-                                pixelShaderName: 'stardustFrag' });
+                                pixelShader: require('./shaders/stardust.frag.glsl') });
 
 let storm = new ShaderMode({ id: 'Storm',
                              title: 'Storm PS',
-                             pixelShaderName: 'stormFrag',
+                             pixelShader: require('./shaders/storm.frag.glsl'),
                              loadUniforms: function() {
 	                       var tex = Three.ImageUtils.loadTexture('media/tex16.png');
 	                       tex.wrapS = tex.wrapT = Three.RepeatWrapping;
@@ -99,7 +99,7 @@ let storm = new ShaderMode({ id: 'Storm',
 
 let truchet = new ShaderMode({ id: 'Truchet',
                                title: 'Truchet PS',
-                               pixelShaderName: 'truchetFrag',
+                               pixelShader: require('./shaders/truchet.frag.glsl'),
                                loadUniforms: function() {
                                  var cube = Three.ImageUtils.loadTextureCube(['media/cube00.png',
 	                                                                      'media/cube01.png',
@@ -119,11 +119,11 @@ let truchet = new ShaderMode({ id: 'Truchet',
 
 let tunnel = new ShaderMode({ id: 'Tunnel',
                               title: 'Tunnel PS',
-                              pixelShaderName: 'tunnelFrag' });
+                              pixelShader: require('./shaders/tunnel.frag.glsl') });
 
 let vortex = new ShaderMode({ id: 'Vortex',
                               title: 'Vortex PS',
-                              pixelShaderName: 'vortexFrag',
+                              pixelShader: require('./shaders/vortex.frag.glsl'),
                               loadUniforms: function() {
 	                        var tex = Three.ImageUtils.loadTexture('media/tex16.png');
 	                        tex.wrapS = tex.wrapT = Three.RepeatWrapping;
@@ -135,7 +135,7 @@ let vortex = new ShaderMode({ id: 'Vortex',
 
 let worms = new ShaderMode({ id: 'Worms',
                              title: 'Worms PS',
-                             pixelShaderName: 'wormsFrag' });
+                             pixelShader: require('./shaders/worms.frag.glsl') });
 
 module.exports = {
   bubbles: bubbles,

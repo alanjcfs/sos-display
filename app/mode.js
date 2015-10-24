@@ -1,6 +1,7 @@
 'use strict';
 
 let Three = require('three.js');
+let vertexShader = require('./modes/shaders/generic.vert.glsl');
 
 var mouse = {};
 
@@ -45,17 +46,14 @@ let ShaderMode = function(args) {
       uniformExtras = args.loadUniforms();
     }
 
-    var xhrLoader = new Three.XHRLoader();
-    xhrLoader.load(document.getElementById('genericVert').src, (resp) => {
-      this.vertexShader = resp;
-      xhrLoader.load(document.getElementById(args.pixelShaderName).src, (resp) => {
-        this.fragmentShader = resp;
-        if (this.audio) {
-          this.audio.start();
-        }
-        this.startRender();
-      });
-    });
+    this.vertexShader = vertexShader;
+    this.fragmentShader = args.fragmentShader;
+
+    if (this.audio) {
+      this.audio.start();
+    }
+
+    this.startRender();
 
     /*
     // grab skeletal input
@@ -124,19 +122,11 @@ let ShaderMode = function(args) {
     var mesh = new Three.Mesh(geometry, material);
     scene.add(mesh);
 
-    // poor man's mutex
-    this.blocking = false;
-
     var render = () => {
-      if(this.blocking) {
-        return; // wait!
-      }
-      this.blocking = true;
       this.uniforms.input_globalTime.value += 0.05;
       this.uniforms.input_skeletons.value = this.inputs;
       this.parentScope.threejs.renderer.render(scene, camera);
       this.renderID = requestAnimationFrame(render);
-      this.blocking = false;
     };
 
     this.renderID = requestAnimationFrame(render);

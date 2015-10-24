@@ -21,9 +21,11 @@
     "reflux": "latest",
     "babel-loader": "latest",
     "json-loader": "latest",
+    "webpack-glsl-loader": "latest",
     "keyboardjs": "latest",
     "three.js": "latest",
-    "pixi.js": "latest"
+    "pixi.js": "latest",
+    "pako": "latest"
   },
   "scripts": {
     "postinstall": "bower install",

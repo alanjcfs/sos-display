@@ -30,6 +30,10 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json-loader'
+      },
+      {
+        test: /\.glsl$/,
+        loader: 'webpack-glsl'
       }
     ]
   },

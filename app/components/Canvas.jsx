@@ -18,7 +18,6 @@ module.exports = React.createClass({
     kinectOverlay: null,
 
     setModeCanvas: function(mode) {
-        console.log(this.threeRenderer);
         let renderer = mode.renderType == "PIXI" ? this.pixiRenderer.view : this.threeRenderer.domElement;
         let child = canvas.children[0];
         if (child) {
