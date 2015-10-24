@@ -15,7 +15,7 @@ image.start = function(renderer) {
 
   container.addChild(sprite);
 
-  var render = () => {
+  let render = () => {
     renderer.render(container);
     requestAnimationFrame(render);
   };

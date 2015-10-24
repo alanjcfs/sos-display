@@ -13,3 +13,4 @@ startup/daemon/
 /GRTAGS
 /GTAGS
 *.log
+/todo.org

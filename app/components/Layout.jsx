@@ -31,7 +31,7 @@ let Layout = React.createClass({
                   <ControlPanel data={this.state.data.control} />
                 </Col>
                 <Col xs={9} md={6}>
-                  <ModeInformation />
+                  <ModeInformation data={this.state.data.information} />
                 </Col>
               </Row>
             </Grid>

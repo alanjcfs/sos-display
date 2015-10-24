@@ -11,7 +11,7 @@ slowclap.container = new Pixi.Container();
 let setupMovie = () => {
 
   let frames = [];
-  for (var i = 0; i < 7; i++) {
+  for (let i = 0; i < 7; i++) {
     let val = i < 10 ? '0' + i : i;
     frames.push(Pixi.Texture.fromFrame('citizen-kane-clapping_0' + val + '.png'));
   }

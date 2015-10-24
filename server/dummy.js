@@ -4,7 +4,7 @@ var io = require('socket.io')(8008);
 var json = require('json-file');
 var _ = require('lodash');
 
-var output = json.read('./skeletal-output-01.json');
+var output = json.read('./dummy-data/skeletal-output-01.json');
 var array = output.get('bodiesData');
 
 console.log("Dummy Kinect Server started.  Listening for connections.");

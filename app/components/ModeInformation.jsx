@@ -1,29 +1,24 @@
 let React = require('react');
 
 let Panel = require('react-bootstrap').Panel;
+let Table = require('react-bootstrap').Table;
 
 module.exports = React.createClass({
     render: function() {
         return (
             <Panel header="Mode Information">
-            <div className="panel-body">
-              <table className="table table-striped">
-                <tbody>
+            <Table striped bordered condensed hover>
+              <tbody>
                 <tr>
-                  <th>Name</th>
-                  <th>Value</th>
+                  <th>FPS</th>
+                  <th>{this.props.data.fps}</th>
                 </tr>
-                <tr ng-repeat="(key,value) in debugInfo">
-                  <td>
-                    <samp>key</samp>
-                  </td>
-                  <td>
-                    <samp>value</samp>
-                  </td>
+                <tr>
+                  <th>Number of detected figures</th>
+                  <th>{this.props.data.skeletons.length}</th>
                 </tr>
-                </tbody>
-              </table>
-            </div>
+              </tbody>
+            </Table>
           </Panel>
         );
     }

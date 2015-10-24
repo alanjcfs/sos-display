@@ -64,6 +64,11 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onUpdateSkeletons: function(data) {
+    this.data.information.skeletons = data;
+    this.trigger(this.data);
+  },
+
   getInitialState: function() {
     let index = 0;
     this.data = {
@@ -75,6 +80,11 @@ module.exports = Reflux.createStore({
         index: index,
         current: modes[index],
         list: modes
+      },
+      information: {
+        fps: 0.0,
+        skeletons: [],
+        mode: {}
       }
     };
     return this.data;

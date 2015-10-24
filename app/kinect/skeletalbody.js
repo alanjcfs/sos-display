@@ -1,6 +1,9 @@
 'use strict';
 
-let Pixi = require('pixi.js').PIXI;
+let Pixi = require('pixi.js');
+
+let SHAPESXOFFSET = -180;
+let SHAPESYOFFSET = -150;
 
 var SkeletalBody = function() {
 
@@ -34,9 +37,6 @@ var SkeletalBody = function() {
   self.rightHipToKnee = new Pixi.Graphics();
   self.rightKneeToAnkle = new Pixi.Graphics();
 
-  this.SHAPESXOFFSET = -180;
-  this.SHAPESYOFFSET = -150;
-
   this.init = function(parentContainer, color) {
 
     // set up stage reference
@@ -47,8 +47,8 @@ var SkeletalBody = function() {
     // set up shapes
     // 		_container = new Pixi.Container();
     self._shapesData = new Pixi.Container();
-    self._shapesData.x = self._shapesData.x + self.SHAPESXOFFSET;
-    self._shapesData.y = self._shapesData.y + self.SHAPESYOFFSET;
+    self._shapesData.x = self._shapesData.x + SHAPESXOFFSET;
+    self._shapesData.y = self._shapesData.y + SHAPESYOFFSET;
     self._shapesData.alpha = self._alpha;
 
     // toggle pointer
@@ -263,4 +263,11 @@ var HandPointer = function() {
     self.alpha = self.alpha + self.alphaIncrement;
     return self.alpha;
   };
+};
+
+module.exports = {
+  SHAPESXOFFSET: SHAPESXOFFSET,
+  SHAPESYOFFSET: SHAPESYOFFSET,
+  SkeletalBody: SkeletalBody,
+  HandPointer: HandPointer
 };
