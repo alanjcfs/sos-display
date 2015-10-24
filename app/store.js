@@ -5,25 +5,7 @@ let keyboard = require('keyboardjs');
 let _ = require('underscore');
 
 let actions = require('./actions');
-
-let shaders = require('./modes/shaders');
-let modes = [ shaders.bubbles,
-              shaders.caustic,
-              shaders.cloudten,
-              shaders.disco,
-              shaders.echoplex,
-              shaders.flame,
-              shaders.hell,
-              shaders.nyan,
-              shaders.ribbon,
-              shaders.seascape,
-              shaders.stardust,
-              shaders.storm,
-              shaders.truchet,
-              shaders.tunnel,
-              shaders.vortex,
-              shaders.worms,
-            ];
+let modes = require('./modes');
 
 module.exports = Reflux.createStore({
   listenables: actions,
@@ -46,15 +28,14 @@ module.exports = Reflux.createStore({
       this.trigger(this.data);
     });
     keyboard.bind('n', (e) => {
-      this.data.modes.index++;
-      this.data.modes.index %= this.data.modes.list.length;
-      this.data.modes.current = this.data.modes.list[this.data.modes.index];
-      this.trigger(this.data);
+      let index = (this.data.modes.index + 1) % this.data.modes.list.length;
+      let next = this.data.modes.list[index];
+      actions.setMode(this.data.modes.current, next);
     });
     keyboard.bind('p', (e) => {
-      this.data.modes.index = (this.data.modes.index === 0) ? this.data.modes.list.length - 1 : this.data.modes.index - 1;
-      this.data.modes.current = this.data.modes.list[this.data.modes.index];
-      this.trigger(this.data);
+      let index = (this.data.modes.index === 0) ? this.data.modes.list.length - 1 : this.data.modes.index - 1;
+      let prev = this.data.modes.list[index];
+      actions.setMode(this.data.modes.current, prev);
     });
     keyboard.bind('x', (e) => {
       this.data.control.development = !this.data.control.development;
