@@ -35,7 +35,7 @@ actions.updateSkeletons.listen(function(bodies) {
       skeleton = new SkeletalBody();
       skeletons[id] = skeleton;
 
-      var color = 0xff00ff; // Color.random();
+      var color = Math.random() * 0x1000000;
       skeleton.init(color);
       skeleton.setBodyData(body);
     }
