@@ -26,6 +26,7 @@ actions.setProductionMode.listen(function(on) {
 
 let processHands = function(hands) {
   if (mousemove) {
+    hands = hands || [];
     hands[0].x = mouse.x;
     hands[0].y = mouse.y;
   }

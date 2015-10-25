@@ -115,11 +115,19 @@ module.exports = Reflux.createStore({
   },
 
   onUpdateKinectFPS: function(fps) {
+    this.data.information.kinectFPSHistory.push(fps);
+    if (this.data.information.kinectFPSHistory.length > 20) {
+      this.data.information.kinectFPSHistory.shift();
+    }
     this.data.information.kinectFPS = fps;
     this.trigger(this.data);
   },
 
   onUpdateModeFPS: function(fps) {
+    this.data.information.modeFPSHistory.push(fps);
+    if (this.data.information.modeFPSHistory.length > 20) {
+      this.data.information.modeFPSHistory.shift();
+    }
     this.data.information.modeFPS = fps;
     this.trigger(this.data);
   },
@@ -145,7 +153,9 @@ module.exports = Reflux.createStore({
         started: new Date().getTime(),
         elapsed: 0.0,
         kinectFPS: 0.0,
+        kinectFPSHistory: [],
         modeFPS: 0.0,
+        modeFPSHistory: [],
         kinect: {
           skeletons: [],
           hands: []

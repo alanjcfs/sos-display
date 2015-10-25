@@ -17,6 +17,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-bootstrap": "latest",
+    "react-sparklines": "latest",
+    "react-bootstrap-treeview": "latest",
     "reflux": "latest",
     "babel-loader": "latest",
     "json-loader": "latest",
@@ -27,8 +29,7 @@
     "pako": "latest"
   },
   "scripts": {
-    "postinstall": "npm install",
-    "start": "gulp",
-    "pretest": "npm install"
+    "preinstall": "npm install",
+    "start": "gulp"
   }
 }

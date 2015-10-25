@@ -38,9 +38,11 @@ module.exports = React.createClass({
         return (
             <Table striped bordered condensed>
               <thead>
-                <th>Mode Key</th>
-                <th>Type</th>
-                <th>Value</th>
+                <tr>
+                  <th>Mode Key</th>
+                  <th>Type</th>
+                  <th>Value</th>
+                </tr>
               </thead>
               <tbody>
                 {info}

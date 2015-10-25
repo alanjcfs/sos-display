@@ -6,9 +6,9 @@ let Table = require('react-bootstrap').Table;
 
 module.exports = React.createClass({
     render: function() {
-        let hands = _.map(this.props.data.hands, function(hand) {
+        let hands = _.map(this.props.data.hands, function(hand, index) {
             return (
-                <tr>
+                <tr key={index}>
                   <th>{hand.x}</th>
                   <th>{hand.y}</th>
                 </tr>
@@ -26,8 +26,10 @@ module.exports = React.createClass({
                   <th>
                     <Table striped bordered condensed >
                       <thead>
-                        <th>x</th>
-                        <th>y</th>
+                        <tr>
+                          <th>x</th>
+                          <th>y</th>
+                        </tr>
                       </thead>
                       <tbody>
                         {hands}
