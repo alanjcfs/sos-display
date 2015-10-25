@@ -3,6 +3,7 @@
 let Pixi = require('pixi.js');
 
 let Mode = require('./mode').Mode;
+let Timer = require('../util').Timer;
 let actions = require('../actions');
 
 let slowclap = new Mode("Slow Clap", "Slow Clap (GIF example)");
@@ -33,7 +34,13 @@ Pixi.loader.add('spritesheet', 'static/images/slow-clap.json').load(setupMovie);
 
 slowclap.start = function(renderer) {
 
-  let update = () => {
+  let timer = new Timer();
+  setInterval(function() {
+    actions.updateModeFPS(timer.fps());
+  }, 1000);
+
+  let update = (now) => {
+    timer.tick(now);
     renderer.render(this.container);
     actions.updateModeInformation({});
     this.renderID = requestAnimationFrame(update);

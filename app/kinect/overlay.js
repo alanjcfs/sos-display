@@ -4,6 +4,7 @@ let Pixi = require('pixi.js');
 let _ = require('underscore');
 
 let SkeletalBody = require('./skeletalbody').SkeletalBody;
+let Timer = require('../util').Timer;
 let actions = require('../actions');
 
 let XOFFSET = require('./skeletalbody').SHAPESXOFFSET;
@@ -51,13 +52,19 @@ actions.updateSkeletons.listen(function(bodies) {
   actions.updateHands(hands);
 });
 
+let timer = new Timer();
+setInterval(function() {
+  actions.updateKinectFPS(timer.fps());
+}, 1000);
+
 // wrapper to draw the current skeleton bodies.
 let Overlay = {
   container: new Pixi.Container(),
 
   start: function(renderer) {
 
-    let draw = () => {
+    let draw = (now) => {
+      timer.tick(now);
       _.each(skeletons, (skeleton, key) => {
         if(skeleton.getActiveStatus()) {
           skeleton.drawToStage(this.container);

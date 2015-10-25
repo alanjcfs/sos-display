@@ -3,6 +3,7 @@
 let Pixi = require('pixi.js');
 
 let Mode = require('./mode').Mode;
+let Timer = require('../util').Timer;
 let actions = require('../actions');
 
 let image = new Mode("image", "Sample Image");
@@ -16,7 +17,13 @@ image.start = function(renderer) {
 
   container.addChild(sprite);
 
-  let render = () => {
+  let timer = new Timer();
+  setInterval(function() {
+    actions.updateModeFPS(timer.fps());
+  }, 1000);
+
+  let render = (now) => {
+    timer.tick(now);
     renderer.render(container);
     actions.updateModeInformation({});
     requestAnimationFrame(render);

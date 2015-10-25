@@ -15,9 +15,11 @@ module.exports = Reflux.createActions([
   "randomMode",
   "toggleModeJumps",
   "updateModeInformation",
+  "updateModeFPS",
 
   // kinect
   "toggleKinect",
   "updateSkeletons",
-  "updateHands"
+  "updateHands",
+  "updateKinectFPS"
 ]);

@@ -87,6 +87,16 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onUpdateKinectFPS: function(fps) {
+    this.data.information.kinectFPS = fps;
+    this.trigger(this.data);
+  },
+
+  onUpdateModeFPS: function(fps) {
+    this.data.information.modeFPS = fps;
+    this.trigger(this.data);
+  },
+
   getInitialState: function() {
     let index = 0;
     this.data = {
@@ -103,10 +113,11 @@ module.exports = Reflux.createStore({
       information: {
         width: 192,
         height: 320,
-        fps: 0.0,
         started: new Date().getTime(),
         elapsed: 0.0,
         skeletons: [],
+        kinectFPS: 0.0,
+        modeFPS: 0.0,
         mode: {}
       }
     };

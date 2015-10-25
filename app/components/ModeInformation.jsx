@@ -34,7 +34,11 @@ module.exports = React.createClass({
               <tbody>
                 <tr>
                   <th>Kinect FPS</th>
-                  <th>{this.props.data.fps}</th>
+                  <th>{this.props.data.kinectFPS}</th>
+                </tr>
+                <tr>
+                  <th>Mode FPS</th>
+                  <th>{this.props.data.modeFPS}</th>
                 </tr>
                 <tr>
                   <th>Elapsed Time (s)</th>

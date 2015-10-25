@@ -4,6 +4,7 @@ let _ = require('underscore');
 let Three = require('three.js');
 
 let actions = require('../actions');
+let Timer = require('../util').Timer;
 let vertexShader = require('./shaders/generic.vert.glsl');
 
 let Mode = function(id, title) {
@@ -74,7 +75,13 @@ let ShaderMode = function(args) {
     camera.position.z = 1;
     scene.add(mesh);
 
-    let render = () => {
+    let timer = new Timer();
+    setInterval(function() {
+      actions.updateModeFPS(timer.fps());
+    }, 1000);
+
+    let render = (now) => {
+      timer.tick(now);
       this.uniforms.input_globalTime.value += 0.05;
       this.uniforms.input_skeletons.value = this.inputs;
       actions.updateModeInformation(this.uniforms);
