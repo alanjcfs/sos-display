@@ -17,7 +17,9 @@
     "window": false,
     "console": false,
     "setTimeout": false,
+    "addEventListener": false,
     "requestAnimationFrame": false,
-    "cancelAnimationFrame": false
+    "cancelAnimationFrame": false,
+    "Uint8Array": false
   }
 }

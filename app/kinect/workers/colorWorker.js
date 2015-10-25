@@ -2,33 +2,34 @@
 
 var pako = require('pako.inflate.min');
 
-(function(){
+let worker = {
+  imageData: undefined,
 
-    var imageData = null;
+  init: function() {
+    addEventListener('message', function (event) {
+      switch (event.data.message) {
+      case "estimated":
+        this.imageData = event.data.imageData;
+        break;
+      case "processImageData":
+        this.process(event.data.imageBuffer);
+        break;
+      }
+    });
+  },
 
-    function init() {
-        addEventListener('message', function (event) {
-            switch (event.data.message) {
-            case "setImageData":
-                imageData = event.data.imageData;
-                break;
-            case "processImageData":
-                processImageData(event.data.imageBuffer);
-                break;
-            }
-        });
+  process: function(compressed) {
+    var imageBuffer = pako.inflate(window.atob(compressed));
+    var pixelArray = this.imageData.data;
+    var newPixelData = new Uint8Array(imageBuffer);
+    var imageDataSize = this.imageData.data.length;
+    for (var i = 0; i < this.imageDataSize; i++) {
+      this.imageData.data[i] = newPixelData[i];
     }
+    this.postMessage({ "message": "imageReady", "this.imageData": this.imageData });
+  }
+};
 
-    function processImageData(compressedData) {
-        var imageBuffer = pako.inflate(atob(compressedData));
-        var pixelArray = imageData.data;
-        var newPixelData = new Uint8Array(imageBuffer);
-        var imageDataSize = imageData.data.length;
-        for (var i = 0; i < imageDataSize; i++) {
-            imageData.data[i] = newPixelData[i];
-        }
-      this.postMessage({ "message": "imageReady", "imageData": imageData });
-    }
+worker.init();
 
-    init();
-})();
+module.exports = worker;
