@@ -3,6 +3,7 @@
 let _ = require('underscore');
 let Three = require('three.js');
 
+let actions = require('../actions');
 let vertexShader = require('./shaders/generic.vert.glsl');
 
 let Mode = function(id, title) {
@@ -76,6 +77,7 @@ let ShaderMode = function(args) {
     let render = () => {
       this.uniforms.input_globalTime.value += 0.05;
       this.uniforms.input_skeletons.value = this.inputs;
+      actions.updateModeInformation(this.uniforms);
       renderer.render(scene, camera);
       this.renderID = requestAnimationFrame(render);
     };

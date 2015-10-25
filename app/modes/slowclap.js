@@ -1,8 +1,9 @@
 'use strict';
 
-let Mode = require('./mode').Mode;
-
 let Pixi = require('pixi.js');
+
+let Mode = require('./mode').Mode;
+let actions = require('../actions');
 
 let slowclap = new Mode("Slow Clap", "Slow Clap (GIF example)");
 slowclap.container = new Pixi.Container();
@@ -34,6 +35,7 @@ slowclap.start = function(renderer) {
 
   let update = () => {
     renderer.render(this.container);
+    actions.updateModeInformation({});
     this.renderID = requestAnimationFrame(update);
   };
 

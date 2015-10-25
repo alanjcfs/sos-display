@@ -1,8 +1,9 @@
 'use strict';
 
-let Mode = require('./mode').Mode;
-
 let Pixi = require('pixi.js');
+
+let Mode = require('./mode').Mode;
+let actions = require('../actions');
 
 let image = new Mode("image", "Sample Image");
 let texture = Pixi.Texture.fromImage('static/images/winter-is-coming.jpg');
@@ -17,6 +18,7 @@ image.start = function(renderer) {
 
   let render = () => {
     renderer.render(container);
+    actions.updateModeInformation({});
     requestAnimationFrame(render);
   };
 

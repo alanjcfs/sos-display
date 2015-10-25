@@ -41,6 +41,11 @@ module.exports = Reflux.createStore({
       this.data.control.development = !this.data.control.development;
       this.trigger(this.data);
     });
+
+    setInterval(() => {
+      let t = new Date().getTime();
+      this.data.information.elapsed = (t - this.data.information.started) / 1000.0;
+    }, 1000);
   },
 
   onSetMode: function(old, chosen) {
@@ -61,6 +66,9 @@ module.exports = Reflux.createStore({
 
   onToggleKinect: function(on) {
     this.data.modes.kinect = on;
+    if(!on) {
+      this.data.information.fps = 0;
+    }
     this.trigger(this.data);
   },
 
@@ -71,6 +79,11 @@ module.exports = Reflux.createStore({
 
   onUpdateSkeletons: function(data) {
     this.data.information.skeletons = data;
+    this.trigger(this.data);
+  },
+
+  onUpdateModeInformation: function(data) {
+    this.data.information.mode = data;
     this.trigger(this.data);
   },
 
@@ -91,6 +104,7 @@ module.exports = Reflux.createStore({
         width: 192,
         height: 320,
         fps: 0.0,
+        started: new Date().getTime(),
         elapsed: 0.0,
         skeletons: [],
         mode: {}

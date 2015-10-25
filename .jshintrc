@@ -17,6 +17,7 @@
     "window": false,
     "console": false,
     "setTimeout": false,
+    "setInterval": false,
     "addEventListener": false,
     "requestAnimationFrame": false,
     "cancelAnimationFrame": false,
