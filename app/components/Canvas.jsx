@@ -49,15 +49,14 @@ module.exports = React.createClass({
 
         actions.setMode.listen(this.onSetMode);
         actions.toggleKinect.listen(this.onToggleKinect);
-
-        actions.toggleKinect(true); // testing
+        actions.toggleKinect(this.props.data.modes.kinect);
     },
 
     onToggleKinect: function(on) {
         if(on) {
             overlay.start(this.pixiKinectRenderer);
         } else {
-            overlay.stop();
+            overlay.stop(this.pixiKinectRenderer);
         }
     },
 

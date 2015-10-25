@@ -60,7 +60,7 @@ module.exports = Reflux.createStore({
   },
 
   onToggleKinect: function(on) {
-    this.data.control.kinect = on;
+    this.data.modes.kinect = on;
     this.trigger(this.data);
   },
 
@@ -78,11 +78,11 @@ module.exports = Reflux.createStore({
     let index = 0;
     this.data = {
       control: {
-        kinect: true,
         development: true,
         offsets: { x: 0, y: 15 }
       },
       modes: {
+        kinect: true,
         index: index,
         current: modes[index],
         list: modes

@@ -74,8 +74,11 @@ let Overlay = {
     this.renderID = requestAnimationFrame(draw);
   },
 
-  stop: function() {
+  stop: function(renderer) {
+    this.container.removeChildren();
     cancelAnimationFrame(this.renderID);
+    // clear out the last frame.
+    requestAnimationFrame(() => { renderer.render(this.container); });
   }
 };
 
