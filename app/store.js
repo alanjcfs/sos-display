@@ -59,6 +59,19 @@ module.exports = Reflux.createStore({
     actions.setMode(current, current);
   },
 
+  onRandomMode: function() {
+    if(this.data.modes.jumps) {
+      var index = Math.floor(Math.random() * this.data.modes.list.length);
+      let chosen = this.data.modes.list[index];
+      actions.setMode(this.data.modes.current, chosen);
+    }
+  },
+
+  onToggleModeJumps: function(on) {
+    this.data.modes.jumps = on;
+    this.trigger(this.data);
+  },
+
   onSetProductionMode: function(value) {
     this.data.control.development = value;
     this.trigger(this.data);
@@ -112,11 +125,12 @@ module.exports = Reflux.createStore({
     this.data = {
       control: {
         development: true,
-        offsets: { x: 0, y: 15 }
+        offsets: { x: 10, y: 15 }
       },
       modes: {
         kinect: true,
         debug: false,
+        jumps: false,
         index: index,
         current: modes[index],
         list: modes

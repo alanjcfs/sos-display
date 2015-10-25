@@ -32,14 +32,14 @@ module.exports = React.createClass({
                 <Button onClick={actions.resetMode.bind(this)}>
                   Reset Mode
                 </Button>
-                <Button onClick={actions.toggleKinect.bind(this, !this.props.data.kinect)} active={this.props.data.kinect}>
+                <Button onClick={actions.toggleKinect.bind(this, !this.props.data.kinect)} active={!this.props.data.kinect}>
                   Toggle Kinect {this.props.data.kinect ? "Off" : "On"}
                 </Button>
-                <Button onClick={actions.toggleModeInformation.bind(this, !this.props.data.debug)} active={this.props.data.debug}>
+                <Button onClick={actions.toggleModeInformation.bind(this, !this.props.data.debug)} active={!this.props.data.debug}>
                   {this.props.data.debug ? "Hide" : "Show"} Mode Information
                 </Button>
-                <Button>
-                  Disable Random Jumps
+                <Button onClick={actions.toggleModeJumps.bind(this, !this.props.data.jumps)} active={!this.props.data.jumps}>
+                  {this.props.data.jumps ? "Disable" : "Enable"} Random Jumps
                 </Button>
               </ButtonGroup>
           </Panel>

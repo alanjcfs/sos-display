@@ -7,6 +7,8 @@ let actions = require('../actions');
 let Timer = require('../util').Timer;
 let vertexShader = require('./shaders/generic.vert.glsl');
 
+let jumpInterval = 5 * 60; // in seconds
+
 let Mode = function(id, title) {
   this.id = id;
   this.title = title;
@@ -99,6 +101,19 @@ let ShaderMode = function(args) {
     }
   };
 };
+
+// functionality for jumping randomly.
+let jumping = undefined;
+actions.toggleModeJumps.listen(function(on) {
+  console.log("on", on);
+  if(on) {
+    jumping = setInterval(function() {
+      actions.randomMode();
+    }, 1000 * jumpInterval);
+  } else {
+    clearInterval(jumping);
+  }
+});
 
 module.exports = {
   Mode: Mode,
