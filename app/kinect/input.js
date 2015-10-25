@@ -7,7 +7,7 @@ let actions = require('../actions');
 // if we are in development mode, use the mouse as a substitution for
 // the hands of the first kinect skeleton.
 
-let mouse = {};
+let mouse = { x: 0, y: 0 };
 let mousemove = false;
 function onDocumentMouseMove(event) {
   event.preventDefault();

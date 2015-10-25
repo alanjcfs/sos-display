@@ -2,7 +2,7 @@ let React = require('react');
 
 let Panel = require('react-bootstrap').Panel;
 let Table = require('react-bootstrap').Table;
-// let KinectInformation = require('./KinectInformation');
+let KinectInformation = require('./KinectInformation');
 let ModeInformation = require('./ModeInformation');
 
 module.exports = React.createClass({
@@ -25,9 +25,9 @@ module.exports = React.createClass({
                 </tr>
               </tbody>
             </Table>
+            <KinectInformation data={this.props.data.kinect} />
             <ModeInformation data={this.props.data.mode} />
           </Panel>
         );
     }
 });
-            // <KinectInformation data={this.props.data.kinect} />
