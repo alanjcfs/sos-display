@@ -35,6 +35,9 @@ module.exports = React.createClass({
                 <Button onClick={actions.toggleKinect.bind(this, !this.props.data.kinect)} active={this.props.data.kinect}>
                   Toggle Kinect {this.props.data.kinect ? "Off" : "On"}
                 </Button>
+                <Button onClick={actions.toggleModeInformation.bind(this, !this.props.data.debug)} active={this.props.data.debug}>
+                  {this.props.data.debug ? "Hide" : "Show"} Mode Information
+                </Button>
                 <Button>
                   Disable Random Jumps
                 </Button>

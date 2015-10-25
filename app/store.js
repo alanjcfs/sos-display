@@ -83,7 +83,17 @@ module.exports = Reflux.createStore({
   },
 
   onUpdateModeInformation: function(data) {
-    this.data.information.mode = data;
+    if(this.data.modes.debug) {
+      this.data.information.mode = data;
+      this.trigger(this.data);
+    }
+  },
+
+  onToggleModeInformation: function(on) {
+    this.data.modes.debug = on;
+    if(!this.data.modes.debug) {
+      this.data.information.mode = {};
+    }
     this.trigger(this.data);
   },
 
@@ -106,6 +116,7 @@ module.exports = Reflux.createStore({
       },
       modes: {
         kinect: true,
+        debug: false,
         index: index,
         current: modes[index],
         list: modes
