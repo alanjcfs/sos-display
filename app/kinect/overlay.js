@@ -1,177 +1,82 @@
 'use strict';
 
-let Mode = require('../mode');
+let Pixi = require('pixi.js');
+let _ = require('underscore');
 
-let Pixi = require('pixi.js').PIXI;
+let SkeletalBody = require('./skeletalbody').SkeletalBody;
+let actions = require('../actions');
 
-var mode = angular.module('sos.modes');
-mode.factory('modeSkeletalFun', function($log, skeletalService) {
+let XOFFSET = require('./skeletalbody').SHAPESXOFFSET;
+let YOFFSET = require('./skeletalbody').SHAPESYOFFSET;
+let TRACKINGID_PREFIX = "skel-";
 
-  var mode = new Mode("modeSkeletalFun", "Skeletal Fun!");
-  mode.rendererType = "PIXI";
+let skeletons = {};
 
-  mode.TRACKINGID_PREFIX = "skel-";
+// process all the raw kinect data and turn them into skeleton bodies
+// we can work with.
+actions.updateSkeletons.listen(function(bodies) {
 
-  mode.trackedSkeletons = {};
-  mode.trackedEmitters = {};
-  mode.spineBoy = {};
-  mode.rope = null;
-  mode.ropePoints = [];
-  mode.container = null;
-  mode.socket = null;
+  // sweep all tracked skeletons to mark as false (for eventual removal)
+  _.each(skeletons, function(skeleton) {
+    skeleton.setActiveStatus(false);
+  });
 
-  mode.kinect = {
-    renderer: null,
-    rendererID: null
-  };
+  _.each(bodies, function(body) {
+    let id = TRACKINGID_PREFIX + body.id;
+    let skeleton = skeletons[id];
 
-  mode.debug = {
-    id: mode.id,
-    title: mode.title,
-    skeletonsTracked: 0,
-    bodiesOnScreen: 0,
-    bodiesOffScreen: 0,
-    containerChildren: 0
-  };
+    // if skeleton exists, just set active status to true and
+    // update the data payload
+    if(skeleton) {
+      skeletons[id].setActiveStatus(true);
+      skeletons[id].setBodyData(body);
+    } else {
+      skeleton = new SkeletalBody();
+      skeletons[id] = skeleton;
 
-  mode.init = function(parentScope) {
-
-    console.log("initializing kinect overlay");
-    mode.setParentScope(parentScope);
-
-    mode.kinect.renderer = Pixi.autoDetectRenderer(mode.parentScope.canvasDim.width, mode.parentScope.canvasDim.height, {antialias: true, transparent: true});
-    var overlayDiv = document.getElementById("kinect-overlay");
-    overlayDiv.appendChild(mode.kinect.renderer.view);
-
-    mode.container = new Pixi.Container();
-
-    // initialize socket w/ socket.io skeletal data
-    mode.initSocket();
-    mode.parentScope.$on('kinectBodiesUpdate', function(events, bodies) {
-      mode.trackedSkeletons = bodies;
-    });
-
-    var texture = Pixi.Texture.fromImage("media/particle.png");
-    var sprite = new Pixi.Sprite(texture);
-
-    mode.parentScope.$on('kinectNewSkeleton', function(events, skel) {
-
-      var color = Color.random();
-      skel.init(mode.container, color);
-
-    });
-
-    // assign renderid from animation frame (for future deinit call)
-    mode.renderID = requestAnimationFrame(mode.update);
-  };
-
-  mode.initSocket = function() {
-
-    mode.socket = skeletalService.createSocket();
-
-    mode.socket.on('disconnect', function(err) {
-      $log.warn('disconnect error', err);
-      // set bodies array to empty.
-      mode.trackedSkeletons.length = 0;
-    });
-
-    //mode.drawHitBoxes();
-
-    //mode.drawTestAngledPolygon(new Pixi.Point(10,10), new Pixi.Point(50,50), -10);
-  };
-
-  mode.drawTestAngledPolygon = function(p1, p2, degrees) {
-
-    var ap = new Pixi.Graphics();
-    mode.ap = ap;
-
-    ap.lineStyle(2, 0xFFFFFF);
-    ap.moveTo(p1.x, p1.y);
-    ap.lineTo(p2.x, p2.y);
-    mode.container.addChild(ap);
-  };
-
-  mode.drawTestAngledPolygon2 = function(p1, p2, degrees) {
-
-    var ap = new Pixi.Graphics();
-    ap.lineStyle(2, 0xFFFFFF);
-    ap.beginFill(0xDEDEDE);
-    ap.drawRect(10,10,10,50);
-
-    ap.boundsPadding = 0;
-    var texture = ap.generateTexture();
-
-    mode.container.addChild(texture);
-  };
-
-  mode.drawSkeletons = function() {
-
-    angular.forEach(mode.trackedSkeletons, function(skel, key) {
-
-      if(skel.getActiveStatus()) {
-
-	skel.drawToStage();
-
-	// get hand pointer
-	// var hp = skel.getHandPointerPoint();
-	// apply offset to correct x
-	// hp = new Pixi.Point(hp.x - 150, hp.y);
-	// if(mode.topHitBox.containsPoint(hp)) {
-	//   mode.parentScope.postDebugInfo("topHitBox active", "true");
-	// } else {
-	//   mode.parentScope.postDebugInfo("topHitBox active", "false");
-	// }
-
-      } else {
-	//console.log("removing self from container");
-	skel.removeSelfFromContainer();
-	delete mode.trackedSkeletons[key];
-      }
-    });
-  };
-
-  mode.drawHitBoxes = function() {
-
-    // place hitbox at top center
-    var width = mode.parentScope.canvasDim.width * 0.5;
-    var height = 80;
-
-    mode.topHitBox = new Pixi.Graphics();
-    mode.topHitBox.lineStyle(2, 0xFFFFFF);
-    mode.topHitBox.beginFill(0xFFFFFF);
-    mode.topHitBox.drawRect(width * 0.5,0,width,height);
-    mode.topHitBox.alpha = 0.25;
-    mode.container.addChild(mode.topHitBox);
-  };
-
-  // poor man's mutex
-  this.blocking = false;
-
-  mode.update = function() {
-    if(this.blocking) {
-      return; // wait!
+      var color = 0xff00ff; // Color.random();
+      skeleton.init(color);
+      skeleton.setBodyData(body);
     }
-    this.blocking = true;
+  });
 
-    mode.drawSkeletons();
+  let hands = _.map(skeletons, function(skel, key) {
+    let hand = skel.getHandPointerPoint();
+    return {
+      x: hand.x + XOFFSET,
+      y: hand.y + YOFFSET
+    };
+  });
 
-    mode.parentScope.postDebugInfo('skeletonsTracked', Object.keys(mode.trackedSkeletons).length);
-    mode.parentScope.postDebugInfo('kinectChildren', mode.container.children.length);
-    mode.parentScope.$digest();
-
-    mode.kinect.renderer.render(mode.container);
-    requestAnimationFrame(mode.update);
-    this.blocking = false;
-  };
-
-  // override deinit because we need to do
-  // additional work
-  mode.deinit = function() {
-    cancelAnimationFrame(this.renderID);
-    if(mode.socket) {
-      mode.socket.disconnect();
-    }
-  };
-
-  return mode;
+  actions.updateHands(hands);
 });
+
+// wrapper to draw the current skeleton bodies.
+let Overlay = {
+  container: new Pixi.Container(),
+
+  start: function(renderer) {
+
+    let draw = () => {
+      _.each(skeletons, (skeleton, key) => {
+        if(skeleton.getActiveStatus()) {
+          skeleton.drawToStage(this.container);
+        } else {
+          skeleton.remove();
+          delete skeletons[key];
+        }
+      });
+
+      renderer.render(this.container);
+      this.renderID = requestAnimationFrame(draw);
+    };
+
+    this.renderID = requestAnimationFrame(draw);
+  },
+
+  stop: function() {
+    cancelAnimationFrame(this.renderID);
+  }
+};
+
+module.exports = Overlay;

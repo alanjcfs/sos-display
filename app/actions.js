@@ -17,7 +17,6 @@ module.exports = Reflux.createActions([
 
   // kinect
   "toggleKinect",
-  "newSkeleton",
   "updateSkeletons",
   "updateHands"
 ]);

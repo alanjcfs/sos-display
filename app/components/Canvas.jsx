@@ -4,6 +4,7 @@ let Pixi = require('pixi.js');
 let Three = require('three.js');
 
 let actions = require('../actions');
+let overlay = require('../kinect/overlay');
 
 module.exports = React.createClass({
     width: 192,
@@ -29,14 +30,17 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        let args = { backgroundColor : 0x1099bb, antialias: true };
-        this.pixiRenderer = Pixi.autoDetectRenderer(this.width, this.height, args);
+        let args1 = { backgroundColor : 0x1099bb, antialias: true };
+        let args2 = { antialias: true, transparent: true };
+        this.pixiRenderer = Pixi.autoDetectRenderer(this.width, this.height, args1);
+        this.pixiKinectRenderer = Pixi.autoDetectRenderer(this.width, this.height, args2);
         this.threeRenderer = new Three.WebGLRenderer();
         this.threeRenderer.setSize(this.width, this.height);
         this.threeRenderer.view = this.threeRenderer.domElement; // for consistency with PIXI
 
         this.canvas = document.getElementById("canvas");
         this.kinectOverlay = document.getElementById("kinect-overlay");
+        this.kinectOverlay.appendChild(this.pixiKinectRenderer.view);
 
         // go ahead and run the current mode.
         let mode = this.props.data.modes.current;
@@ -44,6 +48,17 @@ module.exports = React.createClass({
         mode.start(renderer);
 
         actions.setMode.listen(this.onSetMode);
+        actions.toggleKinect.listen(this.onToggleKinect);
+
+        actions.toggleKinect(true); // testing
+    },
+
+    onToggleKinect: function(on) {
+        if(on) {
+            overlay.start(this.pixiKinectRenderer);
+        } else {
+            overlay.stop();
+        }
     },
 
     onSetMode: function(oldMode, newMode) {

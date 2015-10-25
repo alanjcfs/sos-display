@@ -8,7 +8,6 @@ let SHAPESYOFFSET = -150;
 var SkeletalBody = function() {
 
   var self = this;
-  self._parentContainer = null;
   self._container = null;
   self._bodyData = {};
   self._shapesData = null;
@@ -37,10 +36,9 @@ var SkeletalBody = function() {
   self.rightHipToKnee = new Pixi.Graphics();
   self.rightKneeToAnkle = new Pixi.Graphics();
 
-  this.init = function(parentContainer, color) {
+  this.init = function(color) {
 
     // set up stage reference
-    self._parentContainer = parentContainer;
     self._color = color;
     self._lineConfig = { color: self._color };
 
@@ -59,7 +57,7 @@ var SkeletalBody = function() {
     self._bodyData = bodyData;
   };
 
-  this.removeSelfFromContainer = function() {
+  this.remove = function() {
     self._shapesData.removeChildren();
     //_shapesData.destroy();
   };
@@ -151,7 +149,7 @@ var SkeletalBody = function() {
     return self.getJointAsPoint("HandRight");
   };
 
-  this.drawToStage = function() {
+  this.drawToStage = function(container) {
 
     self._shapesData.removeChildren();
 
@@ -216,7 +214,7 @@ var SkeletalBody = function() {
   	self._shapesData.alpha = self._alpha;
       }
 
-      self._parentContainer.addChild(self._shapesData);
+      container.addChild(self._shapesData);
     }
   };
 };

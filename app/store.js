@@ -12,11 +12,11 @@ module.exports = Reflux.createStore({
 
   init: function() {
     keyboard.bind('w', (e) => {
-      this.data.control.offsets.y++;
+      this.data.control.offsets.y--;
       this.trigger(this.data);
     });
     keyboard.bind('s', (e) => {
-      this.data.control.offsets.y--;
+      this.data.control.offsets.y++;
       this.trigger(this.data);
     });
     keyboard.bind('a', (e) => {
@@ -59,6 +59,11 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onToggleKinect: function(on) {
+    this.data.control.kinect = on;
+    this.trigger(this.data);
+  },
+
   onAdjustOffset: function(coord, value) {
     this.data.control.offsets[coord] = value;
     this.trigger(this.data);
@@ -73,6 +78,7 @@ module.exports = Reflux.createStore({
     let index = 0;
     this.data = {
       control: {
+        kinect: true,
         development: true,
         offsets: { x: 0, y: 15 }
       },
@@ -82,7 +88,10 @@ module.exports = Reflux.createStore({
         list: modes
       },
       information: {
+        width: 192,
+        height: 320,
         fps: 0.0,
+        elapsed: 0.0,
         skeletons: [],
         mode: {}
       }
