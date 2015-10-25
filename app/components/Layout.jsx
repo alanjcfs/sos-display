@@ -10,7 +10,7 @@ let Header = require('./Header');
 let Canvas = require('./Canvas');
 let ModePanel = require('./ModePanel');
 let ControlPanel = require('./ControlPanel');
-let ModeInformation = require('./ModeInformation');
+let Statistics = require('./Statistics');
 
 let store = require('../store');
 
@@ -31,7 +31,7 @@ let Layout = React.createClass({
                   <ControlPanel data={this.state.data.control} />
                 </Col>
                 <Col xs={9} md={6}>
-                  <ModeInformation data={this.state.data.information} />
+                  <Statistics data={this.state.data.information} />
                 </Col>
               </Row>
             </Grid>

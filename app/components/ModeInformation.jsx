@@ -6,7 +6,7 @@ let Table = require('react-bootstrap').Table;
 
 module.exports = React.createClass({
     render: function() {
-        let info = _.map(this.props.data.mode, function(elem, key) {
+        let info = _.map(this.props.data, function(elem, key) {
             let value = elem.value;
             if(value.image) {
                 // `JSON.stringify` for this particular value doesn't work well
@@ -28,39 +28,24 @@ module.exports = React.createClass({
             );
         });
 
+        if(info.length === 0) {
+            info = (
+                <tr>
+                  <th colSpan="3">No mode information available.</th>
+                </tr>
+            )
+        }
         return (
-            <Panel header="Mode Information">
-            <Table striped bordered condensed hover>
+            <Table striped bordered condensed>
+              <thead>
+                <th>Mode Key</th>
+                <th>Type</th>
+                <th>Value</th>
+              </thead>
               <tbody>
-                <tr>
-                  <th>Kinect FPS</th>
-                  <th>{this.props.data.kinectFPS}</th>
-                </tr>
-                <tr>
-                  <th>Mode FPS</th>
-                  <th>{this.props.data.modeFPS}</th>
-                </tr>
-                <tr>
-                  <th>Elapsed Time (s)</th>
-                  <th>{this.props.data.elapsed}</th>
-                </tr>
-                <tr>
-                  <th>Number of detected figures</th>
-                  <th>{this.props.data.skeletons.length}</th>
-                </tr>
-                <tr>
-                  <th>Mode information</th>
-                  <th>
-                    <Table striped bordered>
-                      <tbody>
-                        {info}
-                      </tbody>
-                    </Table>
-                  </th>
-                </tr>
+                {info}
               </tbody>
             </Table>
-          </Panel>
-        );
+        )
     }
 });

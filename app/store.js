@@ -90,12 +90,12 @@ module.exports = Reflux.createStore({
   },
 
   onUpdateSkeletons: function(skeletons) {
-    this.data.information.skeletons = skeletons || [];
+    this.data.information.kinect.skeletons = skeletons || [];
     this.trigger(this.data);
   },
 
   onUpdateHands: function(hands) {
-    this.data.information.hands = hands || [];
+    this.data.information.kinect.hands = hands || [];
     this.trigger(this.data);
   },
 
@@ -144,10 +144,12 @@ module.exports = Reflux.createStore({
       information: {
         started: new Date().getTime(),
         elapsed: 0.0,
-        skeletons: [],
-        hands: [],
         kinectFPS: 0.0,
         modeFPS: 0.0,
+        kinect: {
+          skeletons: [],
+          hands: []
+        },
         mode: {}
       }
     };
