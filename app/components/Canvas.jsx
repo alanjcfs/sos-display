@@ -73,8 +73,8 @@ module.exports = React.createClass({
         };
         return (
             <div>
-              <div id="kinect-overlay" style={style}></div>
-              <div id="canvas" style={style}></div>
+              <div id="kinect-overlay" style={style} className={this.props.data.control.development ? "" : "rotate"}></div>
+              <div id="canvas" style={style} className={this.props.data.control.development ? "" : "rotate"}></div>
             </div>
         );
     }
