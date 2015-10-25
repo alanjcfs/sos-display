@@ -4,6 +4,7 @@ let Pixi = require('pixi.js');
 let _ = require('underscore');
 
 let SkeletalBody = require('./skeletalbody').SkeletalBody;
+let input = require('./input');
 let Timer = require('../util').Timer;
 let actions = require('../actions');
 
@@ -49,7 +50,7 @@ actions.updateSkeletons.listen(function(bodies) {
     };
   });
 
-  actions.updateHands(hands);
+  input.processHands(hands);
 });
 
 let timer = new Timer();

@@ -4,10 +4,11 @@ let _ = require('underscore');
 let Three = require('three.js');
 
 let actions = require('../actions');
-let Timer = require('../util').Timer;
+let util = require('../util');
 let vertexShader = require('./shaders/generic.vert.glsl');
 
 let jumpInterval = 5 * 60; // in seconds
+let inputs = _(32).times(function() { return 0.0; }); // shader inputs
 
 let Mode = function(id, title) {
   this.id = id;
@@ -26,8 +27,6 @@ let ShaderMode = function(args) {
   this.renderID = null;
   this.rendererType = 'THREE';
   this.kinectEnabled = args.disableKinect ? false : true; // default to true
-
-  this.inputs = _(16).times(function() { return 0.0; });
 
   this.start = (renderer) => {
 
@@ -52,7 +51,7 @@ let ShaderMode = function(args) {
       },
       input_skeletons: {
         type: "fv1",
-        value: this.inputs
+        value: inputs
       }
     };
 
@@ -77,7 +76,7 @@ let ShaderMode = function(args) {
     camera.position.z = 1;
     scene.add(mesh);
 
-    let timer = new Timer();
+    let timer = new util.Timer();
     setInterval(function() {
       actions.updateModeFPS(timer.fps());
     }, 1000);
@@ -85,7 +84,7 @@ let ShaderMode = function(args) {
     let render = (now) => {
       timer.tick(now);
       this.uniforms.input_globalTime.value += 0.05;
-      this.uniforms.input_skeletons.value = this.inputs;
+      this.uniforms.input_skeletons.value = inputs;
       actions.updateModeInformation(this.uniforms);
       renderer.render(scene, camera);
       this.renderID = requestAnimationFrame(render);
@@ -103,15 +102,22 @@ let ShaderMode = function(args) {
 };
 
 // functionality for jumping randomly.
-let jumping = undefined;
+let jumping;
 actions.toggleModeJumps.listen(function(on) {
-  console.log("on", on);
   if(on) {
     jumping = setInterval(function() {
       actions.randomMode();
     }, 1000 * jumpInterval);
   } else {
     clearInterval(jumping);
+  }
+});
+
+// normalize for shader inputs.
+actions.updateHands.listen(function(hands) {
+  for(let i=0; i<Math.min(hands.length, 16); i++) {
+    inputs[i*2+0] = util.clamp(hands[i].x / 192);
+    inputs[i*2+1] = util.clamp(hands[i].y / 320);
   }
 });
 

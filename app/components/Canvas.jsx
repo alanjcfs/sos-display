@@ -7,8 +7,6 @@ let actions = require('../actions');
 let overlay = require('../kinect/overlay');
 
 module.exports = React.createClass({
-    width: 192,
-    height: 320,
 
     // we want to set up the renderers exactly once, otherwise we will
     // get a "too many opengl contexts" error.
@@ -30,12 +28,15 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
+        let width = this.props.data.control.width;
+        let height = this.props.data.control.height;
+
         let args1 = { backgroundColor : 0x1099bb, antialias: true };
         let args2 = { antialias: true, transparent: true };
-        this.pixiRenderer = Pixi.autoDetectRenderer(this.width, this.height, args1);
-        this.pixiKinectRenderer = Pixi.autoDetectRenderer(this.width, this.height, args2);
+        this.pixiRenderer = Pixi.autoDetectRenderer(width, height, args1);
+        this.pixiKinectRenderer = Pixi.autoDetectRenderer(width, height, args2);
         this.threeRenderer = new Three.WebGLRenderer();
-        this.threeRenderer.setSize(this.width, this.height);
+        this.threeRenderer.setSize(width, height);
         this.threeRenderer.view = this.threeRenderer.domElement; // for consistency with PIXI
 
         this.canvas = document.getElementById("canvas");

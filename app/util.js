@@ -16,6 +16,15 @@ Timer.prototype = {
   }
 };
 
+let clamp = (val, min, max) => {
+  min = min || 0.0;
+  max = max || 1.0;
+  val = Math.max(val, min);
+  val = Math.min(val, max);
+  return val;
+};
+
 module.exports = {
-  Timer: Timer
+  Timer: Timer,
+  clamp: clamp
 };

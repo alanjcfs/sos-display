@@ -38,8 +38,7 @@ module.exports = Reflux.createStore({
       actions.setMode(this.data.modes.current, prev);
     });
     keyboard.bind('x', (e) => {
-      this.data.control.development = !this.data.control.development;
-      this.trigger(this.data);
+      actions.setProductionMode(!this.data.control.development);
     });
 
     setInterval(() => {
@@ -72,8 +71,8 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onSetProductionMode: function(value) {
-    this.data.control.development = value;
+  onSetProductionMode: function(on) {
+    this.data.control.development = on;
     this.trigger(this.data);
   },
 
@@ -90,14 +89,19 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUpdateSkeletons: function(data) {
-    this.data.information.skeletons = data;
+  onUpdateSkeletons: function(skeletons) {
+    this.data.information.skeletons = skeletons || [];
+    this.trigger(this.data);
+  },
+
+  onUpdateHands: function(hands) {
+    this.data.information.hands = hands || [];
     this.trigger(this.data);
   },
 
   onUpdateModeInformation: function(data) {
     if(this.data.modes.debug) {
-      this.data.information.mode = data;
+      this.data.information.mode = data || {};
       this.trigger(this.data);
     }
   },
@@ -124,6 +128,8 @@ module.exports = Reflux.createStore({
     let index = 0;
     this.data = {
       control: {
+        width: 192,
+        height: 320,
         development: true,
         offsets: { x: 10, y: 15 }
       },
@@ -136,11 +142,10 @@ module.exports = Reflux.createStore({
         list: modes
       },
       information: {
-        width: 192,
-        height: 320,
         started: new Date().getTime(),
         elapsed: 0.0,
         skeletons: [],
+        hands: [],
         kinectFPS: 0.0,
         modeFPS: 0.0,
         mode: {}

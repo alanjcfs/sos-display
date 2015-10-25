@@ -12,6 +12,10 @@ module.exports = React.createClass({
     dev_message: 'The canvas element on your left is displaying in the same manner that it would appear on the LED wall.',
     prod_message: 'The canvas element on your left is rotated -90 degrees, so it will appear correctly on the LED wall.',
 
+    componentDidMount: function() {
+        actions.setProductionMode(this.props.data.development);
+    },
+
     render: function() {
         let message = this.props.data.development ? this.dev_message : this.prod_message;
         return (
