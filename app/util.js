@@ -12,7 +12,7 @@ Timer.prototype = {
   },
   fps: function () {
     // invert seconds per frame to get fps
-    if(this.elapsed < 0.001) {
+    if(this.elapsed < 0.01) {
       return 0.0;
     }
     return Math.round(1.0 / this.elapsed);
