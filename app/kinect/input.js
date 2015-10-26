@@ -26,10 +26,12 @@ actions.setProductionMode.listen(function(on) {
 
 let processHands = function(hands) {
   if (mousemove) {
-    hands = hands || [];
-    if(!hands) console.log(hands);
-    hands[0].x = mouse.x;
-    hands[0].y = mouse.y;
+    if(hands.length !== 0) {
+      hands[0].x = mouse.x;
+      hands[0].y = mouse.y;
+    } else {
+      hands = [mouse];
+    }
   }
 
   actions.updateHands(hands);

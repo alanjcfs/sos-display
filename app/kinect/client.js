@@ -5,6 +5,7 @@ let io = require('socket.io-client');
 let actions = require('../actions');
 
 let skeletons = {};
+let attempts = 0;
 
 let socket = io.connect('http://localhost:8008', {
   'reconnect': true,
@@ -23,8 +24,14 @@ socket.on('disconnect', (disc) => {
 });
 
 socket.on('reconnect_attempt', (attempt) => {
-  console.error("socket.io reconnect attempt");
-  actions.updateSkeletons([]);
+  if(attempts >= 3) {
+    console.error("socket.io failure. disconnecting.");
+    socket.disconnect();
+  } else {
+    console.error("socket.io reconnect attempt: ", attempt);
+    actions.updateSkeletons([]);
+    attempts++;
+  }
 });
 
 socket.on('bodyFrame', function(bodies){
