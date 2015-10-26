@@ -5,40 +5,6 @@ let Panel = require('react-bootstrap').Panel;
 let Table = require('react-bootstrap').Table;
 let TreeView = require('./react-bootstrap-treeview').TreeView;
 
-var data = [
-  {
-    text: 'Parent 1',
-    nodes: [
-      {
-        text: 'Child 1',
-        nodes: [
-          {
-            text: 'Grandchild 1'
-          },
-          {
-            text: 'Grandchild 2'
-          }
-        ]
-      },
-      {
-        text: 'Child 2'
-      }
-    ]
-  },
-  {
-    text: 'Parent 2'
-  },
-  {
-    text: 'Parent 3'
-  },
-  {
-    text: 'Parent 4'
-  },
-  {
-    text: 'Parent 5'
-  }
-];
-
 module.exports = React.createClass({
     render: function() {
         let hands = _.map(this.props.data.hands, function(hand, index) {
@@ -68,13 +34,14 @@ module.exports = React.createClass({
                       </thead>
                       <tbody>
                         {hands}
-                        <tr>
-                          <th colSpan="2">
-                            <TreeView data={data} />
-                          </th>
-                        </tr>
                       </tbody>
                     </Table>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Skeleton Data</th>
+                  <th>
+                    <TreeView data={this.props.data.skeletons} />
                   </th>
                 </tr>
               </tbody>

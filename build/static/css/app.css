@@ -56,21 +56,25 @@
     transform: translateX(320px) rotate(90deg);
 }
 
+.treeview .list-group {
+    margin-bottom: 5px;
+}
+
 .treeview .list-group-item {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .treeview span {
-	width: 1rem;
-	height: 1rem;
+    width: 1rem;
+    height: 1rem;
 }
 
 .treeview span.indent {
-	margin-left: 10px;
-	margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .treeview span.icon {
-	margin-left: 10px;
-	margin-right: 5px;
+    margin-left: 10px;
+    margin-right: 5px;
 }
