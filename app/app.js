@@ -1,14 +1,12 @@
 'use strict';
 
-// instance empty modes module, they will be 
-// extended in other file imports
-angular.module('sos.modes', []);
-angular.module('sos.services', []);
+var ReactDOM = require('react-dom');
+let Layout = require('./components/Layout');
 
-// Declare app level module which depends on views, and components
-angular.module('sos', [
-  'sos.canvas',
-  'sos.modes',
-  'sos.services'
-]);
+// start off the kinect server listener.
+let client = require('./kinect/client');
 
+ReactDOM.render(
+  Layout,
+  document.getElementById('main')
+);

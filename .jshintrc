@@ -1,13 +1,28 @@
 {
   "globalstrict": true,
+  "esnext": true,
   "globals": {
-    "angular": false,
+    "require": false,
+    "exports": false,
     "describe": false,
     "it": false,
     "expect": false,
     "beforeEach": false,
     "afterEach": false,
     "module": false,
-    "inject": false
+    "inject": false,
+
+    "XMLHttpRequest": false,
+    "document": false,
+    "window": false,
+    "console": false,
+    "setTimeout": false,
+    "clearTimeout": false,
+    "setInterval": false,
+    "clearInterval": false,
+    "addEventListener": false,
+    "requestAnimationFrame": false,
+    "cancelAnimationFrame": false,
+    "Uint8Array": false
   }
 }
