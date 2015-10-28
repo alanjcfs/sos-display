@@ -10,6 +10,7 @@
     "bower": "latest",
     "browser-sync": "latest",
     "gulp": "latest",
+    "gulp-util": "latest",
     "gulp-jshint": "latest",
     "socket.io-client": "latest",
     "webpack": "latest",
