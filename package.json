@@ -29,7 +29,7 @@
     "pako": "latest"
   },
   "scripts": {
-    "preinstall": "npm install",
+    "prestart": "npm install",
     "start": "gulp"
   }
 }
