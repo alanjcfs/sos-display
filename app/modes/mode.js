@@ -2,12 +2,13 @@
 
 let _ = require('underscore');
 let Three = require('three.js');
+let Pixi = require('pixi.js');
 
-let actions = require('../actions');
 let util = require('../util');
+let actions = require('../actions');
 let vertexShader = require('./shaders/generic.vert.glsl');
 
-let jumpInterval = 5 * 60; // in seconds
+const jumpInterval = 5 * 60; // in seconds
 let inputs = _(32).times(function() { return 0.0; }); // shader inputs
 
 let Mode = function(id, title) {
@@ -17,6 +18,28 @@ let Mode = function(id, title) {
   this.renderID = null;
   this.rendererType = "PIXI";
   this.kinectEnabled = true;
+  this.container = new Pixi.Container();
+
+  this.start = (renderer) => {
+
+    let timer = new util.Timer();
+    setInterval(function() {
+      actions.updateModeFPS(timer.fps());
+    }, 1000);
+
+    let render = (now) => {
+      timer.tick(now);
+      renderer.render(this.container);
+      actions.updateModeInformation({});
+      requestAnimationFrame(render);
+    };
+
+    this.renderID = requestAnimationFrame(render);
+  };
+
+  this.stop = () => {
+    cancelAnimationFrame(this.renderID);
+  };
 };
 
 let ShaderMode = function(args) {
