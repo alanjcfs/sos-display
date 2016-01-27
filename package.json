@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "description": "Sanctuary of Self from Six Second Monks",
-  "repository": "https://github.com/timkettering/sos-display",
+  "repository": "https://github.com/SixSecondMonks/sos-display",
   "license": "MIT",
   "devDependencies": {
     "underscore": "latest",
