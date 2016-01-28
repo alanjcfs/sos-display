@@ -1,7 +1,7 @@
 
 let React = require('react');
 let Pixi = require('pixi.js');
-let Three = require('three.js');
+let Three = require('three');
 
 let actions = require('../actions');
 let overlay = require('../kinect/overlay');

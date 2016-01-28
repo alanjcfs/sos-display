@@ -1,6 +1,6 @@
 'use strict';
 
-let Three = require('three.js');
+let Three = require('three');
 
 let ShaderMode = require('./mode').ShaderMode;
 

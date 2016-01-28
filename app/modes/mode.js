@@ -1,7 +1,7 @@
 'use strict';
 
 let _ = require('underscore');
-let Three = require('three.js');
+let Three = require('three');
 let Pixi = require('pixi.js');
 
 let util = require('../util');

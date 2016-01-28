@@ -25,7 +25,7 @@
     "json-loader": "latest",
     "webpack-glsl-loader": "latest",
     "keyboardjs": "latest",
-    "three.js": "latest",
+    "three": "latest",
     "pixi.js": "latest",
     "pako": "latest"
   },
