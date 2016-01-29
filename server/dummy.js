@@ -17,7 +17,7 @@ io.on('connection', function(socket){
 	term.colorGrayscale(200)("Connection established, serving dummy data: '" + KINECT_DATA_FILE + "'").nextLine();
 	var counter = 0;
 
-	setInterval(function() {
+	var intervalID = setInterval(function() {
 		socket.emit("bodyFrame", array[counter]);
 
 		counter++;
@@ -34,6 +34,8 @@ io.on('connection', function(socket){
 
 	// disconnect event handler
 	socket.on('disconnect', function() {
+		// stop the interval timer
+		clearInterval(intervalID);
 		term.nextLine().bold.red("Disconnected from client.").nextLine();
 	});
 });
