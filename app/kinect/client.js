@@ -4,7 +4,6 @@ let io = require('socket.io-client');
 
 let actions = require('../actions');
 
-let skeletons = {};
 let attempts = 0;
 
 let socket = io.connect('http://localhost:8008', {
