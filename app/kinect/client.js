@@ -12,12 +12,21 @@ let socket = io.connect('http://localhost:8008', {
   'forceNew': true
 });
 
+var socketConnected = false;
+
+socket.on('connect', function() {
+  // reset attempts if connected, and update flag
+  attempts = 0;
+  socketConnected = true;
+});
+
 socket.on('error', (err) => {
   console.error("socket.io error:", err);
   actions.updateSkeletons([]);
 });
 
 socket.on('disconnect', (disc) => {
+  socketConnected = false;
   console.error("socket.io disconnect:", disc);
   actions.updateSkeletons([]);
 });
@@ -45,3 +54,10 @@ socket.on('bodyFrame', function(bodies){
     data = null;
   });
 });
+
+module.exports = {
+  socket: socket,
+  connected: function() {
+    return socketConnected;
+  }
+};

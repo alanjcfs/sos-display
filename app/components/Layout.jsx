@@ -11,6 +11,7 @@ let Canvas = require('./Canvas');
 let ModePanel = require('./ModePanel');
 let ControlPanel = require('./ControlPanel');
 let Statistics = require('./Statistics');
+let SocketIOPanel = require('./SocketIOPanel');
 
 let store = require('../store');
 
@@ -29,6 +30,7 @@ let Layout = React.createClass({
                 <Col xs={4} md={2}>
                   <ModePanel data={this.state.data.modes} />
                   <ControlPanel data={this.state.data.control} />
+                  <SocketIOPanel />
                 </Col>
                 <Col xs={9} md={6}>
                   <Statistics data={this.state.data.information} />
