@@ -1,9 +1,10 @@
 {
   "dependencies": {
-    "express": "latest",
-    "socket.io": "latest",
     "edge": "latest",
+    "express": "latest",
+    "json-file": "latest",
     "lodash": "latest",
-    "json-file": "latest"
+    "socket.io": "latest",
+    "terminal-kit": "^0.22.7"
   }
 }

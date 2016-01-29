@@ -13,7 +13,8 @@ module.exports = React.createClass({
 
         return (
             <Panel header="Socket.io Controls">
-                connected: {client.connected() ? "true" : "false"}
+                <p>connected: {client.connected() ? "true" : "false"}</p>
+                <p>websocket frames count: {client.frameCount()}</p>
             </Panel>
         );
     }

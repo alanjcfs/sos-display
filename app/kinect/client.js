@@ -4,7 +4,8 @@ let io = require('socket.io-client');
 
 let actions = require('../actions');
 
-let attempts = 0;
+let ATTEMPTS = 0;
+let MAX_ATTEMPTS = 3;
 
 let socket = io.connect('http://localhost:8008', {
   'reconnect': true,
@@ -12,11 +13,12 @@ let socket = io.connect('http://localhost:8008', {
   'forceNew': true
 });
 
-var socketConnected = false;
+let socketConnected = false;
+let frameCount = 0;
 
 socket.on('connect', function() {
   // reset attempts if connected, and update flag
-  attempts = 0;
+  ATTEMPTS = 0;
   socketConnected = true;
 });
 
@@ -32,19 +34,20 @@ socket.on('disconnect', (disc) => {
 });
 
 socket.on('reconnect_attempt', (attempt) => {
-  if(attempts >= 3) {
+  if(ATTEMPTS >= MAX_ATTEMPTS) {
     console.error("socket.io failure. disconnecting.");
     socket.disconnect();
   } else {
-    console.error("socket.io reconnect attempt: ", attempt);
+    console.error("socket.io reconnect attempt: ", ATTEMPTS);
     actions.updateSkeletons([]);
-    attempts++;
+    ATTEMPTS++;
   }
 });
 
 socket.on('bodyFrame', function(bodies){
 
   // update skeletons
+  frameCount++;
   actions.updateSkeletons(bodies);
 
   // we need to send a refresh because socket.io might not flush?
@@ -59,5 +62,8 @@ module.exports = {
   socket: socket,
   connected: function() {
     return socketConnected;
+  },
+  frameCount: function() {
+    return frameCount;
   }
 };
