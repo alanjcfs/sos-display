@@ -39,4 +39,4 @@ let Layout = React.createClass({
     }
 });
 
-module.exports = <Layout />
+module.exports = <Layout />;

@@ -1,9 +1,9 @@
 let React = require('react');
 
 let _ = require('underscore');
-let Panel = require('react-bootstrap').Panel;
 let Table = require('react-bootstrap').Table;
-let TreeView = require('./react-bootstrap-treeview').TreeView;
+let SkeletalDebug = require('./SkeletalDebug');
+let overlay = require('../kinect/overlay');
 
 module.exports = React.createClass({
     render: function() {
@@ -20,7 +20,7 @@ module.exports = React.createClass({
               <tbody>
                 <tr>
                   <th>Number of detected figures</th>
-                  <th>{this.props.data.skeletons.length}</th>
+                  <th>{overlay.skeletonsCount()}</th>
                 </tr>
                 <tr>
                   <th>Hand coordinates</th>
@@ -41,7 +41,7 @@ module.exports = React.createClass({
                 <tr>
                   <th>Skeleton Data</th>
                   <th>
-                    <TreeView data={this.props.data.skeletons} />
+                    <SkeletalDebug />
                   </th>
                 </tr>
               </tbody>

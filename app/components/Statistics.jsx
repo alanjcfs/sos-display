@@ -5,6 +5,7 @@ let Table = require('react-bootstrap').Table;
 let Sparklines = require('react-sparklines').Sparklines;
 let SparklinesLine = require('react-sparklines').SparklinesLine;
 let SparklinesSpots = require('react-sparklines').SparklinesSpots;
+let SparklinesReferenceLine = require('react-sparklines').SparklinesReferenceLine;
 let DataProcessor = require('react-sparklines').DataProcessor;
 
 let KinectInformation = require('./KinectInformation');
@@ -18,7 +19,8 @@ Sparklines.prototype.shouldComponentUpdate = () => {
 module.exports = React.createClass({
     render: function() {
         return (
-            <Panel header="Statistics">
+            <div>
+            <Panel header="Display Stats">
             <Table striped bordered condensed hover>
               <tbody>
                 <tr>
@@ -26,8 +28,9 @@ module.exports = React.createClass({
                   <th>
                     {this.props.data.kinectFPS}
                     &nbsp;
-                    <Sparklines data={this.props.data.kinectFPSHistory} limit={20} width={200} height={60}>
+                    <Sparklines data={this.props.data.kinectFPSHistory} limit={200} width={200} height={60}>
                       <SparklinesLine color="#1c8cdc" />
+                        <SparklinesReferenceLine type="avg" />
                       <SparklinesSpots />
                     </Sparklines>
                    </th>
@@ -37,8 +40,9 @@ module.exports = React.createClass({
                   <th>
                     {this.props.data.modeFPS}
                     &nbsp;
-                    <Sparklines data={this.props.data.modeFPSHistory} limit={20} width={200} height={60}>
+                    <Sparklines data={this.props.data.modeFPSHistory} limit={200} width={200} height={60}>
                       <SparklinesLine color="#fa7e17" />
+                        <SparklinesReferenceLine type="avg" />
                       <SparklinesSpots />
                     </Sparklines>
                    </th>
@@ -49,9 +53,12 @@ module.exports = React.createClass({
                 </tr>
               </tbody>
             </Table>
+            </Panel>
+            <Panel header="Kinect Stats">
             <KinectInformation data={this.props.data.kinect} />
             <ModeInformation data={this.props.data.mode} />
-          </Panel>
+            </Panel>
+            </div>
         );
     }
 });

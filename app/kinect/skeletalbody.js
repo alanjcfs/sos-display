@@ -53,6 +53,10 @@ var SkeletalBody = function() {
     this.randomizeHandPointer();
   };
 
+  this.getColor = function() {
+    return self._color;
+  };
+
   this.setBodyData = function(bodyData) {
     self._bodyData = bodyData;
   };

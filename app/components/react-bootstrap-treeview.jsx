@@ -1,9 +1,9 @@
-
 // https://github.com/jonmiles/react-bootstrap-treeview
 // fixed and modified with use for kinect sample data.
 
 let React = require('react');
 let _ = require('underscore');
+let overlay = require("../kinect/overlay");
 
 var TreeView = React.createClass({
 
@@ -16,6 +16,7 @@ var TreeView = React.createClass({
     nodeIcon: React.PropTypes.string,
 
     showBorder: React.PropTypes.bool,
+    backColor: React.PropTypes.string,
 
     nodes: React.PropTypes.arrayOf(React.PropTypes.number)
   },
@@ -28,7 +29,6 @@ var TreeView = React.createClass({
       collapseIcon: 'glyphicon glyphicon-minus',
       emptyIcon: 'glyphicon',
       nodeIcon: 'glyphicon glyphicon-stop',
-
       showBorder: true,
 
       nodes: []
@@ -40,8 +40,12 @@ var TreeView = React.createClass({
     let data = this.props.data;
     let children = _.map(data, (skeleton, i) => {
         let name = "Skeleton " + i;
+        let kSkel = overlay.getSkeleton(skeleton.trackingId);
+        let kSkelColor = Math.floor(kSkel._color).toString(16);
+        //this.props.color = "green";
         return (<TreeNode node={name}
                           value={skeleton}
+                          backColor={"#"+ kSkelColor}
                           key={skeleton.trackingId}
                           level={1}
                           visible={true}
@@ -80,6 +84,7 @@ var TreeNode = React.createClass({
     var node = this.props.node;
     var value = this.props.value;
     var options = this.props.options;
+    var backColor = this.props.backColor;
 
     var style;
     if (!this.props.visible) {
@@ -90,7 +95,10 @@ var TreeNode = React.createClass({
     }
     else {
 
-      style = {};
+      style = {
+        //color: color || options.color,
+        backgroundColor: backColor || options.backColor
+      };
 
       if (!options.showBorder) {
         style.border = 'none';

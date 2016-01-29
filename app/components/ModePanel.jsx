@@ -25,10 +25,10 @@ module.exports = React.createClass({
               <DropdownButton title="Select Mode" id="select-mode">
                 {modeListing}
               </DropdownButton>
-              <h4>
+              <h6>
                 Currently showing <strong>{current.title}</strong>.
-              </h4>
-              <ButtonGroup vertical>
+              </h6>
+              <ButtonGroup vertical bsSize="sm">
                 <Button onClick={actions.resetMode.bind(this)}>
                   Reset Mode
                 </Button>

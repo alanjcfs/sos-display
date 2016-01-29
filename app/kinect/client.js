@@ -35,6 +35,8 @@ socket.on('reconnect_attempt', (attempt) => {
 });
 
 socket.on('bodyFrame', function(bodies){
+
+  // update skeletons
   actions.updateSkeletons(bodies);
 
   // we need to send a refresh because socket.io might not flush?
