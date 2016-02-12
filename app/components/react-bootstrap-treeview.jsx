@@ -1,6 +1,6 @@
 // https://github.com/jonmiles/react-bootstrap-treeview
 // fixed and modified with use for kinect sample data.
-
+'use strict';
 let React = require('react');
 let _ = require('underscore');
 let overlay = require("../kinect/overlay");

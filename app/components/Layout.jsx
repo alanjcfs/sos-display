@@ -1,4 +1,4 @@
-
+'use strict';
 let React = require('react');
 let Reflux = require('reflux');
 
@@ -21,22 +21,22 @@ let Layout = React.createClass({
 
     render: function() {
         return (
-            <Grid fluid={true}>
-              <Header />
-              <Row>
-                <Col xs={5} md={4}>
-                  <Canvas data={this.state.data} />
-                </Col>
-                <Col xs={4} md={2}>
-                  <ModePanel data={this.state.data.modes} />
-                  <ControlPanel data={this.state.data.control} />
-                  <SocketIOPanel />
-                </Col>
-                <Col xs={9} md={6}>
-                  <Statistics data={this.state.data.information} />
-                </Col>
-              </Row>
-            </Grid>
+          <Grid fluid={true}>
+            <Header />
+            <Row>
+              <Col xs={5} md={4}>
+                <Canvas data={this.state.data} />
+              </Col>
+              <Col xs={4} md={2}>
+                <ModePanel data={this.state.data.modes} />
+                <ControlPanel data={this.state.data.control} />
+                <SocketIOPanel />
+              </Col>
+              <Col xs={9} md={6}>
+                <Statistics data={this.state.data.information} />
+              </Col>
+            </Row>
+          </Grid>
         );
     }
 });

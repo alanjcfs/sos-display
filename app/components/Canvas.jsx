@@ -1,3 +1,4 @@
+'use strict';
 let React = require('react');
 let Pixi = require('pixi.js');
 let Three = require('three');
