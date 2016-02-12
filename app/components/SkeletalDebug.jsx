@@ -1,3 +1,4 @@
+'use strict';
 let React = require('react');
 let Reflux = require('reflux');
 let TreeView = require('./react-bootstrap-treeview').TreeView;
