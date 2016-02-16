@@ -34,7 +34,7 @@ actions.updateSkeletons.listen(function(bodies) {
       skeleton = new SkeletalBody();
       Overlay.skeletons[id] = skeleton;
 
-      var color = Math.random() * 0x1000000;
+      let color = Math.random() * 0x1000000;
       skeleton.init(color);
       skeleton.setBodyData(body);
     }

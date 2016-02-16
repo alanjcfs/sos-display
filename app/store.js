@@ -11,33 +11,33 @@ module.exports = Reflux.createStore({
   listenables: actions,
 
   init: function() {
-    keyboard.bind('w', (e) => {
+    keyboard.bind('w', () => {
       this.data.control.offsets.y--;
       this.trigger(this.data);
     });
-    keyboard.bind('s', (e) => {
+    keyboard.bind('s', () => {
       this.data.control.offsets.y++;
       this.trigger(this.data);
     });
-    keyboard.bind('a', (e) => {
+    keyboard.bind('a', () => {
       this.data.control.offsets.x--;
       this.trigger(this.data);
     });
-    keyboard.bind('d', (e) => {
+    keyboard.bind('d', () => {
       this.data.control.offsets.x++;
       this.trigger(this.data);
     });
-    keyboard.bind('n', (e) => {
+    keyboard.bind('n', () => {
       let index = (this.data.modes.index + 1) % this.data.modes.list.length;
       let next = this.data.modes.list[index];
       actions.setMode(this.data.modes.current, next);
     });
-    keyboard.bind('p', (e) => {
+    keyboard.bind('p', () => {
       let index = (this.data.modes.index === 0) ? this.data.modes.list.length - 1 : this.data.modes.index - 1;
       let prev = this.data.modes.list[index];
       actions.setMode(this.data.modes.current, prev);
     });
-    keyboard.bind('x', (e) => {
+    keyboard.bind('x', () => {
       actions.setProductionMode(!this.data.control.development);
     });
 
@@ -60,7 +60,7 @@ module.exports = Reflux.createStore({
 
   onRandomMode: function() {
     if(this.data.modes.jumps) {
-      var index = Math.floor(Math.random() * this.data.modes.list.length);
+      let index = Math.floor(Math.random() * this.data.modes.list.length);
       let chosen = this.data.modes.list[index];
       actions.setMode(this.data.modes.current, chosen);
     }

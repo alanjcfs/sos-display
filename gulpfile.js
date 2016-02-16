@@ -1,14 +1,14 @@
 var gulp = require('gulp');
 var gutil = require("gulp-util");
-var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var webpack = require('webpack');
 var webpack_dev = require('webpack-dev-server');
 var config = require('./webpack.config.js');
 
-gulp.task('jshint', function() {
-  gulp.src('./app/**/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+gulp.task('eslint', function() {
+  return gulp.src(['./app/**/*.js','!node_modules/**','!server/**'])
+    .pipe(eslint('.eslintrc'))
+    .pipe(eslint.format());
 });
 
 gulp.task('webpack', function(callback) {
@@ -27,6 +27,6 @@ gulp.task('webpack', function(callback) {
   });
 });
 
-gulp.task('default', ['jshint', 'webpack'], function() {
-  gulp.watch(['./app/**/*.js'], ['jshint']);
+gulp.task('default', ['eslint', 'webpack'], function() {
+  gulp.watch(['./app/**/*.js'], ['eslint']);
 });

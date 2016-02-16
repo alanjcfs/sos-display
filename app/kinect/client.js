@@ -33,7 +33,7 @@ socket.on('disconnect', (disc) => {
   actions.updateSkeletons([]);
 });
 
-socket.on('reconnect_attempt', (attempt) => {
+socket.on('reconnect_attempt', () => {
   if(ATTEMPTS >= MAX_ATTEMPTS) {
     console.error("socket.io failure. disconnecting.");
     socket.disconnect();

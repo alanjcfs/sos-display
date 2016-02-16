@@ -214,8 +214,8 @@ var SkeletalBody = function() {
 
       // decrement alpha if not at 1.0 yet
       if(self._alpha < 1.0) {
-  	self._alpha = self._alpha + 0.075;
-  	self._shapesData.alpha = self._alpha;
+        self._alpha = self._alpha + 0.075;
+        self._shapesData.alpha = self._alpha;
       }
 
       container.addChild(self._shapesData);

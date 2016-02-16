@@ -21,5 +21,5 @@ module.exports = [ shaders.bubbles,
                    shaders.truchet,
                    shaders.tunnel,
                    shaders.vortex,
-                   shaders.worms,
+                   shaders.worms
                  ];
