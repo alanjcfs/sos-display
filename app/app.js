@@ -1,5 +1,3 @@
-'use strict';
-
 let ReactDOM = require('react-dom');
 let Layout = require('./components/Layout');
 

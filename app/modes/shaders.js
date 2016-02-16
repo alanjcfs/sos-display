@@ -1,5 +1,3 @@
-'use strict';
-
 let Three = require('three');
 
 let ShaderMode = require('./mode').ShaderMode;
@@ -18,11 +16,11 @@ let cloudten = new ShaderMode({ id: 'CloudTen',
                                 title: 'Cloud Ten PS',
                                 fragmentShader: require('./shaders/cloudten.frag.glsl'),
                                 uniformExtras: (() => {
-                                  var tex = loader.load('static/images/tex16.png');
+                                  let tex = loader.load('static/images/tex16.png');
                                   tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                                  var res = new Three.Vector2(256.0, 256.0);
-                                  return { input_channel0: { type: "t", value: tex },
-                                           input_channel0_resolution: { type: "v2", value: res } };
+                                  let res = new Three.Vector2(256.0, 256.0);
+                                  return { input_channel0: { type: 't', value: tex },
+                                           input_channel0_resolution: { type: 'v2', value: res } };
                                 })()
                               });
 
@@ -35,9 +33,9 @@ let echoplex = new ShaderMode({ id: 'Echoplex',
                                 title: 'Echoplex PS',
                                 fragmentShader: require('./shaders/echoplex.frag.glsl'),
                                 uniformExtras: (() => {
-                                  var tex = loader.load('static/images/tex07.jpg');
+                                  let tex = loader.load('static/images/tex07.jpg');
                                   tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                                  return { input_channel0: { type: "t", value: tex } };
+                                  return { input_channel0: { type: 't', value: tex } };
                                 })()
                               });
 
@@ -49,11 +47,11 @@ let hell = new ShaderMode({ id: 'Hell',
                             title: 'Hell PS',
                             fragmentShader: require('./shaders/hell.frag.glsl'),
                             uniformExtras: (() => {
-                              var tex = loader.load('static/images/tex16.png');
+                              let tex = loader.load('static/images/tex16.png');
                               tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                              var res = new Three.Vector2(256.0, 256.0);
-                              return { input_channel0: { type: "t", value: tex },
-                                       input_channel0_resolution: { type: "v2", value: res } };
+                              let res = new Three.Vector2(256.0, 256.0);
+                              return { input_channel0: { type: 't', value: tex },
+                                       input_channel0_resolution: { type: 'v2', value: res } };
                             })()
                           });
 
@@ -62,14 +60,14 @@ let nyan = new ShaderMode({ id: 'Nyan',
                             fragmentShader: require('./shaders/nyan.frag.glsl'),
                             disableKinect: true,
                             uniformExtras: (() => {
-                              var anim = loader.load('static/images/tex14.png');
-                              var stars = loader.load('static/images/tex03.jpg');
+                              let anim = loader.load('static/images/tex14.png');
+                              let stars = loader.load('static/images/tex03.jpg');
                               stars.wrapS = stars.wrapT = Three.RepeatWrapping;
                               anim.wrapS = anim.wrapT = Three.RepeatWrapping;
                               anim.minFilter = anim.magFilter = Three.NearestFilter;
-                              return { input_channel0: { type: "t", value: anim },
-                                       input_channel1: { type: "t", value: stars },
-                                       input_resolution: { type: "v2", value: new Three.Vector2(240.0, 140.0) }
+                              return { input_channel0: { type: 't', value: anim },
+                                       input_channel1: { type: 't', value: stars },
+                                       input_resolution: { type: 'v2', value: new Three.Vector2(240.0, 140.0) }
                                      };
                             })()
                           });
@@ -90,11 +88,11 @@ let storm = new ShaderMode({ id: 'Storm',
                              title: 'Storm PS',
                              fragmentShader: require('./shaders/storm.frag.glsl'),
                              uniformExtras: (() => {
-                               var tex = loader.load('static/images/tex16.png');
+                               let tex = loader.load('static/images/tex16.png');
                                tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                               var res = new Three.Vector2(256.0, 256.0);
-                               return { input_channel0: { type: "t", value: tex },
-                                        input_channel0_resolution: { type: "v2", value: res } };
+                               let res = new Three.Vector2(256.0, 256.0);
+                               return { input_channel0: { type: 't', value: tex },
+                                        input_channel0_resolution: { type: 'v2', value: res } };
                              })()
                         });
 
@@ -102,7 +100,7 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                title: 'Truchet PS',
                                fragmentShader: require('./shaders/truchet.frag.glsl'),
                                uniformExtras: (() => {
-                                 var cube = new Three.CubeTextureLoader(['static/images/cube00.png',
+                                 let cube = new Three.CubeTextureLoader(['static/images/cube00.png',
                                                                          'static/images/cube01.png',
                                                                          'static/images/cube02.png',
                                                                          'static/images/cube03.png',
@@ -111,8 +109,8 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                  // yes, the resolution given is not correct. this is because the
                                  // original shader code has a bug in it when x-res > y-res.
                                  return {
-                                   input_resolution: { type: "v2", value: new Three.Vector2(320.0, 480.0) },
-                                   input_channel0: { type: "t", value: cube }
+                                   input_resolution: { type: 'v2', value: new Three.Vector2(320.0, 480.0) },
+                                   input_channel0: { type: 't', value: cube }
                                  };
                                })()
                              });
@@ -125,11 +123,11 @@ let vortex = new ShaderMode({ id: 'Vortex',
                               title: 'Vortex PS',
                               fragmentShader: require('./shaders/vortex.frag.glsl'),
                               uniformExtras: (() => {
-                                var tex = loader.load('static/images/tex16.png');
+                                let tex = loader.load('static/images/tex16.png');
                                 tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                                var res = new Three.Vector2(256.0, 256.0);
-                                return { input_channel0: { type: "t", value: tex },
-                                         input_channel0_resolution: { type: "v2", value: res } };
+                                let res = new Three.Vector2(256.0, 256.0);
+                                return { input_channel0: { type: 't', value: tex },
+                                         input_channel0_resolution: { type: 'v2', value: res } };
                               })()
                             });
 

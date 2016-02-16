@@ -1,5 +1,3 @@
-'use strict';
-
 let Pixi = require('pixi.js');
 let _ = require('underscore');
 
@@ -10,46 +8,7 @@ let actions = require('../actions');
 
 let XOFFSET = require('./skeletalbody').SHAPESXOFFSET;
 let YOFFSET = require('./skeletalbody').SHAPESYOFFSET;
-let TRACKINGID_PREFIX = "skel-";
-
-// process all the raw kinect data and turn them into skeleton bodies
-// we can work with.
-actions.updateSkeletons.listen(function(bodies) {
-
-  // sweep all tracked skeletons to mark as false (for eventual removal)
-  _.each(Overlay.skeletons, function(skeleton) {
-    skeleton.setActiveStatus(false);
-  });
-
-  _.each(bodies, function(body) {
-    let id = TRACKINGID_PREFIX + body.trackingId;
-    let skeleton = Overlay.skeletons[id];
-
-    // if skeleton exists, just set active status to true and
-    // update the data payload
-    if(skeleton) {
-      Overlay.skeletons[id].setActiveStatus(true);
-      Overlay.skeletons[id].setBodyData(body);
-    } else {
-      skeleton = new SkeletalBody();
-      Overlay.skeletons[id] = skeleton;
-
-      let color = Math.random() * 0x1000000;
-      skeleton.init(color);
-      skeleton.setBodyData(body);
-    }
-  });
-
-  let hands = _.map(Overlay.skeletons, function(skel) {
-    let hand = skel.getHandPointerPoint();
-    return {
-      x: hand.x + XOFFSET,
-      y: hand.y + YOFFSET
-    };
-  });
-
-  input.processHands(hands);
-});
+let TRACKINGID_PREFIX = 'skel-';
 
 let timer = new Timer();
 setInterval(function() {
@@ -94,5 +53,44 @@ let Overlay = {
     requestAnimationFrame(() => { renderer.render(this.container); });
   }
 };
+
+// process all the raw kinect data and turn them into skeleton bodies
+// we can work with.
+actions.updateSkeletons.listen(function(bodies) {
+
+  // sweep all tracked skeletons to mark as false (for eventual removal)
+  _.each(Overlay.skeletons, function(skeleton) {
+    skeleton.setActiveStatus(false);
+  });
+
+  _.each(bodies, function(body) {
+    let id = TRACKINGID_PREFIX + body.trackingId;
+    let skeleton = Overlay.skeletons[id];
+
+    // if skeleton exists, just set active status to true and
+    // update the data payload
+    if(skeleton) {
+      Overlay.skeletons[id].setActiveStatus(true);
+      Overlay.skeletons[id].setBodyData(body);
+    } else {
+      skeleton = new SkeletalBody();
+      Overlay.skeletons[id] = skeleton;
+
+      let color = Math.random() * 0x1000000;
+      skeleton.init(color);
+      skeleton.setBodyData(body);
+    }
+  });
+
+  let hands = _.map(Overlay.skeletons, function(skel) {
+    let hand = skel.getHandPointerPoint();
+    return {
+      x: hand.x + XOFFSET,
+      y: hand.y + YOFFSET
+    };
+  });
+
+  input.processHands(hands);
+});
 
 module.exports = Overlay;

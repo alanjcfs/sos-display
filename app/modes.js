@@ -1,5 +1,3 @@
-'use strict';
-
 let shaders = require('./modes/shaders');
 let image = require('./modes/image');
 let slowclap = require('./modes/slowclap');

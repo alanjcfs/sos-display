@@ -1,13 +1,55 @@
-'use strict';
-
 let Pixi = require('pixi.js');
 
 let SHAPESXOFFSET = -180;
 let SHAPESYOFFSET = -150;
 
-var SkeletalBody = function() {
+let HandPointer = function() {
 
-  var self = this;
+  let self = this;
+
+  this.visible = true;
+  this.color = 0xFFFF00;
+
+  // throbbing ball .. hee hee
+  this.minSize = 5;
+  this.maxSize = 15;
+  this.size = this.minSize;
+  this.sizeIncrement = 0.1;
+
+  // fading ball .. hee hee
+  this.minAlpha = 0.5;
+  this.maxAlpha = 1.0;
+  this.alpha = this.minAlpha;
+  this.alphaIncrement = 0.05;
+
+  this.getNextSize = function() {
+
+    if(self.size >= self.maxSize) {
+      self.sizeIncrement = -1;
+    } else if(self.size <= self.minSize) {
+      self.sizeIncrement = 1;
+    }
+
+    self.size = self.size + self.sizeIncrement;
+    return self.size;
+  };
+
+  this.getNextAlpha = function() {
+
+    if(self.alpha >= self.maxAlpha) {
+      self.alphaIncrement = -0.05;
+    } else if(self.alpha <= self.minAlpha) {
+      self.alphaIncrement = 0.05;
+    }
+
+    self.alpha = self.alpha + self.alphaIncrement;
+    return self.alpha;
+  };
+};
+
+let SkeletalBody = function() {
+
+  let self = this;
   self._container = null;
   self._bodyData = {};
   self._shapesData = null;
@@ -75,8 +117,8 @@ var SkeletalBody = function() {
   };
 
   this.drawLineBetweenJoints = function(j1Name, j2Name, config, polygon) {
-    var j1 = self._bodyData.joints[j1Name];
-    var j2 = self._bodyData.joints[j2Name];
+    let j1 = self._bodyData.joints[j1Name];
+    let j2 = self._bodyData.joints[j2Name];
 
     polygon.clear();
     polygon.position.x = j1.x;
@@ -85,12 +127,12 @@ var SkeletalBody = function() {
     polygon.beginFill(config.color);
 
     // get the normal of the line so we can extend it outwards appropriately.
-    var width = j2.x - j1.x;
-    var height = j2.y - j1.y;
-    var numerator = Math.sqrt(Math.max(height * height + width * width, 1.0));
-    var normalx = - height / numerator;
-    var normaly = width / numerator;
-    var scale = 8;
+    let width = j2.x - j1.x;
+    let height = j2.y - j1.y;
+    let numerator = Math.sqrt(Math.max(height * height + width * width, 1.0));
+    let normalx = - height / numerator;
+    let normaly = width / numerator;
+    let scale = 8;
     normalx *= scale;
     normaly *= scale;
 
@@ -106,7 +148,7 @@ var SkeletalBody = function() {
   };
 
   this.getJointAsPoint = function(jointName) {
-    var joint = self._bodyData.joints[jointName];
+    let joint = self._bodyData.joints[jointName];
     if(joint) {
       return { x : joint.x, y : joint.y };
     } else {
@@ -115,15 +157,15 @@ var SkeletalBody = function() {
   };
 
   this.getCenterPoint = function(topLeftRect, bottomRightRect) {
-    var centerX = (topLeftRect.x + bottomRightRect.x) / 2;
-    var centerY = (topLeftRect.y + bottomRightRect.y) / 2;
+    let centerX = (topLeftRect.x + bottomRightRect.x) / 2;
+    let centerY = (topLeftRect.y + bottomRightRect.y) / 2;
     return { x : centerX, y :  centerY };
   };
 
   this.drawHandPointer = function() {
 
     if(self.handPointer.visible) {
-      var pointerLoc = self.getHandPointerFn();
+      let pointerLoc = self.getHandPointerFn();
       self.pointer.clear();
       self.pointer.lineStyle(2, 0xffffff);
       self.pointer.beginFill(self.handPointer.color);
@@ -135,22 +177,22 @@ var SkeletalBody = function() {
   };
 
   this.randomizeHandPointer = function() {
-    var fns = [this.getHandPointerPoint, this.getLeftHandPointerPoint, this.getRightHandPointerPoint];
-    var index = Math.floor(Math.random() * fns.length);
+    let fns = [this.getHandPointerPoint, this.getLeftHandPointerPoint, this.getRightHandPointerPoint];
+    let index = Math.floor(Math.random() * fns.length);
     self.getHandPointerFn = fns[index];
   };
 
   this.getHandPointerPoint = function() {
-    return self.getCenterPoint(self.getJointAsPoint("HandLeft"),
-                               self.getJointAsPoint("HandRight"));
+    return self.getCenterPoint(self.getJointAsPoint('HandLeft'),
+                               self.getJointAsPoint('HandRight'));
   };
 
   this.getLeftHandPointerPoint = function() {
-    return self.getJointAsPoint("HandLeft");
+    return self.getJointAsPoint('HandLeft');
   };
 
   this.getRightHandPointerPoint = function() {
-    return self.getJointAsPoint("HandRight");
+    return self.getJointAsPoint('HandRight');
   };
 
   this.drawToStage = function(container) {
@@ -172,25 +214,25 @@ var SkeletalBody = function() {
       self._shapesData.addChild(self.torso);
 
       // neck line
-      // this.drawLineBetweenJoints("Head", "Neck", self._lineConfig);
+      // this.drawLineBetweenJoints('Head', 'Neck', self._lineConfig);
 
       // left arm
-      this.drawLineBetweenJoints("ShoulderLeft", "ElbowLeft", self._lineConfig, self.leftShoulderToElbow);
-      this.drawLineBetweenJoints("ElbowLeft", "WristLeft", self._lineConfig, self.leftElbowToWrist);
-      this.drawLineBetweenJoints("WristLeft", "HandLeft", self._lineConfig, self.leftWristToHand);
+      this.drawLineBetweenJoints('ShoulderLeft', 'ElbowLeft', self._lineConfig, self.leftShoulderToElbow);
+      this.drawLineBetweenJoints('ElbowLeft', 'WristLeft', self._lineConfig, self.leftElbowToWrist);
+      this.drawLineBetweenJoints('WristLeft', 'HandLeft', self._lineConfig, self.leftWristToHand);
 
       // right arm
-      this.drawLineBetweenJoints("ShoulderRight", "ElbowRight", self._lineConfig, self.rightShoulderToElbow);
-      this.drawLineBetweenJoints("ElbowRight", "WristRight", self._lineConfig, self.rightElbowToWrist);
-      this.drawLineBetweenJoints("WristRight", "HandRight", self._lineConfig, self.rightWristToHand);
+      this.drawLineBetweenJoints('ShoulderRight', 'ElbowRight', self._lineConfig, self.rightShoulderToElbow);
+      this.drawLineBetweenJoints('ElbowRight', 'WristRight', self._lineConfig, self.rightElbowToWrist);
+      this.drawLineBetweenJoints('WristRight', 'HandRight', self._lineConfig, self.rightWristToHand);
 
       // left leg
-      this.drawLineBetweenJoints("HipLeft", "KneeLeft", self._lineConfig, self.leftHipToKnee);
-      this.drawLineBetweenJoints("KneeLeft", "AnkleLeft", self._lineConfig, self.leftKneeToAnkle);
+      this.drawLineBetweenJoints('HipLeft', 'KneeLeft', self._lineConfig, self.leftHipToKnee);
+      this.drawLineBetweenJoints('KneeLeft', 'AnkleLeft', self._lineConfig, self.leftKneeToAnkle);
 
       // right leg
-      this.drawLineBetweenJoints("HipRight", "KneeRight", self._lineConfig, self.rightHipToKnee);
-      this.drawLineBetweenJoints("KneeRight", "AnkleRight", self._lineConfig, self.rightKneeToAnkle);
+      this.drawLineBetweenJoints('HipRight', 'KneeRight', self._lineConfig, self.rightHipToKnee);
+      this.drawLineBetweenJoints('KneeRight', 'AnkleRight', self._lineConfig, self.rightKneeToAnkle);
 
       self.leftHand.clear();
       self.leftHand.lineStyle(1, 0xFFFFFF);
@@ -220,50 +262,6 @@ var SkeletalBody = function() {
 
       container.addChild(self._shapesData);
     }
-  };
-};
-
-var HandPointer = function() {
-
-  var self = this;
-
-  this.visible = true;
-  this.color = 0xFFFF00;
-
-  // throbbing ball .. hee hee
-  this.minSize = 5;
-  this.maxSize = 15;
-  this.size = this.minSize;
-  this.sizeIncrement = 0.1;
-
-  // fading ball .. hee hee
-  this.minAlpha = 0.5;
-  this.maxAlpha = 1.0;
-  this.alpha = this.minAlpha;
-  this.alphaIncrement = 0.05;
-
-  this.getNextSize = function() {
-
-    if(self.size >= self.maxSize) {
-      self.sizeIncrement = -1;
-    } else if(self.size <= self.minSize) {
-      self.sizeIncrement = 1;
-    }
-
-    self.size = self.size + self.sizeIncrement;
-    return self.size;
-  };
-
-  this.getNextAlpha = function() {
-
-    if(self.alpha >= self.maxAlpha) {
-      self.alphaIncrement = -0.05;
-    } else if(self.alpha <= self.minAlpha) {
-      self.alphaIncrement = 0.05;
-    }
-
-    self.alpha = self.alpha + self.alphaIncrement;
-    return self.alpha;
   };
 };
 

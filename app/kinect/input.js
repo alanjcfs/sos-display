@@ -1,5 +1,3 @@
-'use strict';
-
 let actions = require('../actions');
 
 // if we are in development mode, use the mouse as a substitution for

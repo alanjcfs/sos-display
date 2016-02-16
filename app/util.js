@@ -1,5 +1,3 @@
-'use strict';
-
 function Timer () {
   this.elapsed = 0;
   this.last = null;

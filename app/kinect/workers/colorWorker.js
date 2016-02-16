@@ -1,6 +1,4 @@
-'use strict';
-
-var pako = require('pako.inflate.min');
+let pako = require('pako.inflate.min');
 
 let worker = {
   imageData: undefined,
@@ -8,10 +6,10 @@ let worker = {
   init: function() {
     addEventListener('message', function (event) {
       switch (event.data.message) {
-      case "estimated":
+      case 'estimated':
         this.imageData = event.data.imageData;
         break;
-      case "processImageData":
+      case 'processImageData':
         this.process(event.data.imageBuffer);
         break;
       }
@@ -19,13 +17,13 @@ let worker = {
   },
 
   process: function(compressed) {
-    var imageBuffer = pako.inflate(window.atob(compressed));
-    var imageDataSize = this.imageData.data.length;
-    var newPixelData = new Uint8Array(imageBuffer);
-    for (var i = 0; i < imageDataSize; i++) {
+    let imageBuffer = pako.inflate(window.atob(compressed));
+    let imageDataSize = this.imageData.data.length;
+    let newPixelData = new Uint8Array(imageBuffer);
+    for (let i = 0; i < imageDataSize; i++) {
       this.imageData.data[i] = newPixelData[i];
     }
-    this.postMessage({ "message": "imageReady", "this.imageData": this.imageData });
+    this.postMessage({ 'message': 'imageReady', 'this.imageData': this.imageData });
   }
 };
 

@@ -1,10 +1,8 @@
-'use strict';
-
 let Pixi = require('pixi.js');
 
 let Mode = require('./mode').Mode;
 
-let slowclap = new Mode("Slow Clap", "Slow Clap (GIF example)");
+let slowclap = new Mode('Slow Clap', 'Slow Clap (GIF example)');
 
 // we need to load the spritesheet once so do it on load.
 let setupMovie = () => {

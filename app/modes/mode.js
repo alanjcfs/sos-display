@@ -1,5 +1,3 @@
-'use strict';
-
 let _ = require('underscore');
 let Three = require('three');
 let Pixi = require('pixi.js');
@@ -16,7 +14,7 @@ let Mode = function(id, title) {
   this.title = title;
   this.audio = null;
   this.renderID = null;
-  this.rendererType = "PIXI";
+  this.rendererType = 'PIXI';
   this.kinectEnabled = true;
   this.container = new Pixi.Container();
 
@@ -65,15 +63,15 @@ let ShaderMode = function(args) {
     // global uniforms.
     this.uniforms = {
       input_resolution: {
-        type: "v2",
+        type: 'v2',
         value: new Three.Vector2(192.0, 320.0)
       },
       input_globalTime: {
-        type: "f",
+        type: 'f',
         value: 0.0
       },
       input_skeletons: {
-        type: "fv1",
+        type: 'fv1',
         value: inputs
       }
     };

@@ -1,5 +1,3 @@
-'use strict';
-
 let Reflux = require('reflux');
 let keyboard = require('keyboardjs');
 let _ = require('underscore');

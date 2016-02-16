@@ -1,5 +1,3 @@
-'use strict';
-
 let io = require('socket.io-client');
 
 let actions = require('../actions');
@@ -23,22 +21,22 @@ socket.on('connect', function() {
 });
 
 socket.on('error', (err) => {
-  console.error("socket.io error:", err);
+  console.error('socket.io error:', err);
   actions.updateSkeletons([]);
 });
 
 socket.on('disconnect', (disc) => {
   socketConnected = false;
-  console.error("socket.io disconnect:", disc);
+  console.error('socket.io disconnect:', disc);
   actions.updateSkeletons([]);
 });
 
 socket.on('reconnect_attempt', () => {
   if(ATTEMPTS >= MAX_ATTEMPTS) {
-    console.error("socket.io failure. disconnecting.");
+    console.error('socket.io failure. disconnecting.');
     socket.disconnect();
   } else {
-    console.error("socket.io reconnect attempt: ", ATTEMPTS);
+    console.error('socket.io reconnect attempt: ', ATTEMPTS);
     actions.updateSkeletons([]);
     ATTEMPTS++;
   }
@@ -52,7 +50,7 @@ socket.on('bodyFrame', function(bodies){
 
   // we need to send a refresh because socket.io might not flush?
   // TODO: eliminate the need for this.
-  socket.emit("refresh", "callback hell", function(data) {
+  socket.emit('refresh', 'callback hell', function(data) {
     // no-op.
     data = null;
   });
