@@ -1,8 +1,7 @@
-'use strict';
 let React = require('react');
 
 let _ = require('underscore');
-let Table = require('react-bootstrap').Table;
+let { Table } = require('react-bootstrap');
 let SkeletalDebug = require('./SkeletalDebug');
 let overlay = require('../kinect/overlay');
 

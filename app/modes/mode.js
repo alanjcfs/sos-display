@@ -4,6 +4,7 @@ let Pixi = require('pixi.js');
 
 let util = require('../util');
 let actions = require('../actions');
+let kinectActions = require('../kinect/actions');
 let vertexShader = require('./shaders/generic.vert.glsl');
 
 const jumpInterval = 5 * 60; // in seconds
@@ -135,7 +136,7 @@ actions.toggleModeJumps.listen(function(on) {
 });
 
 // normalize for shader inputs.
-actions.updateHands.listen(function(hands) {
+kinectActions.updateHands.listen(function(hands) {
   for(let i=0; i<Math.min(hands.length, 16); i++) {
     inputs[i*2+0] = util.clamp(hands[i].x / 192);
     inputs[i*2+1] = util.clamp(hands[i].y / 320);

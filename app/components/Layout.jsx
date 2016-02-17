@@ -15,10 +15,14 @@ let Statistics = require('./Statistics');
 let SocketIOPanel = require('./SocketIOPanel');
 
 let store = require('../store');
+let kinectStore = require('../kinect/store');
 
 let Layout = React.createClass({
 
-    mixins: [ Reflux.connect(store, "data") ],
+    mixins: [
+        Reflux.connect(store, 'data'),
+        Reflux.connect(kinectStore, 'kinectData')
+    ],
 
     render: function() {
         return (
@@ -34,7 +38,7 @@ let Layout = React.createClass({
                 <SocketIOPanel />
               </Col>
               <Col xs={9} md={6}>
-                <Statistics data={this.state.data.information} />
+                <Statistics data={this.state.data.information} kinectData={this.state.kinectData} />
               </Col>
             </Row>
           </Grid>

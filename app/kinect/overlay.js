@@ -1,14 +1,13 @@
 let Pixi = require('pixi.js');
 let _ = require('underscore');
 
-let SkeletalBody = require('./skeletalbody').SkeletalBody;
 let input = require('./input');
-let Timer = require('../util').Timer;
-let actions = require('../actions');
+let actions = require('./actions');
 
-let XOFFSET = require('./skeletalbody').SHAPESXOFFSET;
-let YOFFSET = require('./skeletalbody').SHAPESYOFFSET;
-let TRACKINGID_PREFIX = 'skel-';
+let { SkeletalBody, SHAPESXOFFSET, SHAPESYOFFSET } = require('./skeletalbody');
+let { Timer } = require('../util');
+
+const TRACKINGID_PREFIX = 'skel-';
 
 let timer = new Timer();
 setInterval(function() {
@@ -85,8 +84,8 @@ actions.updateSkeletons.listen(function(bodies) {
   let hands = _.map(Overlay.skeletons, function(skel) {
     let hand = skel.getHandPointerPoint();
     return {
-      x: hand.x + XOFFSET,
-      y: hand.y + YOFFSET
+      x: hand.x + SHAPESXOFFSET,
+      y: hand.y + SHAPESYOFFSET
     };
   });
 

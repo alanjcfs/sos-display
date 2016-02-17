@@ -1,6 +1,6 @@
 let io = require('socket.io-client');
 
-let actions = require('../actions');
+let actions = require('./actions');
 
 let ATTEMPTS = 0;
 let MAX_ATTEMPTS = 3;

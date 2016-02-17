@@ -1,4 +1,5 @@
 let actions = require('../actions');
+let kinectActions = require('../kinect/actions');
 
 // if we are in development mode, use the mouse as a substitution for
 // the hands of the first kinect skeleton.
@@ -30,7 +31,7 @@ let processHands = function(hands) {
     }
   }
 
-  actions.updateHands(hands);
+  kinectActions.updateHands(hands);
 };
 
 module.exports = {

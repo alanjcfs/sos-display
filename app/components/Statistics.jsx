@@ -1,21 +1,21 @@
-'use strict';
 let React = require('react');
 
-let Panel = require('react-bootstrap').Panel;
-let Table = require('react-bootstrap').Table;
-let Sparklines = require('react-sparklines').Sparklines;
-let SparklinesLine = require('react-sparklines').SparklinesLine;
-let SparklinesSpots = require('react-sparklines').SparklinesSpots;
-let SparklinesReferenceLine = require('react-sparklines').SparklinesReferenceLine;
-let DataProcessor = require('react-sparklines').DataProcessor;
+let { Panel, Table } = require('react-bootstrap');
+let Spark = require('react-sparklines');
 
 let KinectInformation = require('./KinectInformation');
 let ModeInformation = require('./ModeInformation');
 
+let {
+    Sparklines,
+    SparklinesLine,
+    SparklinesSpots,
+    SparklinesReferenceLine,
+    DataProcessor,
+} = Spark;
+
 // hack to work around sparklines not updating dynamically.
-Sparklines.prototype.shouldComponentUpdate = () => {
-    return true;
-};
+Sparklines.prototype.shouldComponentUpdate = () => true;
 
 module.exports = React.createClass({
     render: function() {
@@ -27,9 +27,9 @@ module.exports = React.createClass({
                 <tr>
                   <th>Kinect FPS</th>
                   <th>
-                    {this.props.data.kinectFPS}
+                    {this.props.kinectData.kinectFPS}
                     &nbsp;
-                    <Sparklines data={this.props.data.kinectFPSHistory} limit={200} width={200} height={60}>
+                    <Sparklines data={this.props.kinectData.kinectFPSHistory} limit={200} width={200} height={60}>
                       <SparklinesLine color="#1c8cdc" />
                         <SparklinesReferenceLine type="avg" />
                       <SparklinesSpots />
@@ -56,7 +56,7 @@ module.exports = React.createClass({
             </Table>
             </Panel>
             <Panel header="Kinect Stats">
-            <KinectInformation data={this.props.data.kinect} />
+            <KinectInformation data={this.props.kinectData} />
             <ModeInformation data={this.props.data.mode} />
             </Panel>
             </div>
