@@ -31,7 +31,8 @@
     "strict": 2
   },
   "globals": {
-    "$": false
+    "$": false,
+    "Uint8Array": true
   },
   "env": {
     "browser": true,

@@ -63,15 +63,15 @@ let ShaderMode = function(args) {
 
     // global uniforms.
     this.uniforms = {
-      input_resolution: {
+      'input_resolution': {
         type: 'v2',
         value: new Three.Vector2(192.0, 320.0)
       },
-      input_globalTime: {
+      'input_globalTime': {
         type: 'f',
         value: 0.0
       },
-      input_skeletons: {
+      'input_skeletons': {
         type: 'fv1',
         value: inputs
       }
@@ -81,7 +81,9 @@ let ShaderMode = function(args) {
     let uniformExtras = args.uniformExtras || {};
     if (uniformExtras) {
       for (let attr in uniformExtras) {
-        this.uniforms[attr] = uniformExtras[attr];
+        if ({}.hasOwnProperty.call(uniformExtras, attr)) {
+          this.uniforms[attr] = uniformExtras[attr];
+        }
       }
     }
 

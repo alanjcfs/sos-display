@@ -87,16 +87,6 @@ module.exports = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUpdateSkeletons: function(skeletons) {
-    this.data.information.kinect.skeletons = skeletons || [];
-    this.trigger(this.data);
-  },
-
-  onUpdateHands: function(hands) {
-    this.data.information.kinect.hands = hands || [];
-    this.trigger(this.data);
-  },
-
   onUpdateModeInformation: function(data) {
     if(this.data.modes.debug) {
       this.data.information.mode = data || {};
@@ -109,13 +99,6 @@ module.exports = Reflux.createStore({
     if(!this.data.modes.debug) {
       this.data.information.mode = {};
     }
-    this.trigger(this.data);
-  },
-
-  onUpdateKinectFPS: function(fps) {
-    this.data.information.kinectFPSHistory.shift();
-    this.data.information.kinectFPSHistory.push(fps);
-    this.data.information.kinectFPS = fps;
     this.trigger(this.data);
   },
 

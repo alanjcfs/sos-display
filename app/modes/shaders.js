@@ -19,8 +19,8 @@ let cloudten = new ShaderMode({ id: 'CloudTen',
                                   let tex = loader.load('static/images/tex16.png');
                                   tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                   let res = new Three.Vector2(256.0, 256.0);
-                                  return { input_channel0: { type: 't', value: tex },
-                                           input_channel0_resolution: { type: 'v2', value: res } };
+                                  return { 'input_channel0': { type: 't', value: tex },
+                                           'input_channel0_resolution': { type: 'v2', value: res } };
                                 })()
                               });
 
@@ -35,7 +35,7 @@ let echoplex = new ShaderMode({ id: 'Echoplex',
                                 uniformExtras: (() => {
                                   let tex = loader.load('static/images/tex07.jpg');
                                   tex.wrapS = tex.wrapT = Three.RepeatWrapping;
-                                  return { input_channel0: { type: 't', value: tex } };
+                                  return { 'input_channel0': { type: 't', value: tex } };
                                 })()
                               });
 
@@ -50,8 +50,8 @@ let hell = new ShaderMode({ id: 'Hell',
                               let tex = loader.load('static/images/tex16.png');
                               tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                               let res = new Three.Vector2(256.0, 256.0);
-                              return { input_channel0: { type: 't', value: tex },
-                                       input_channel0_resolution: { type: 'v2', value: res } };
+                              return { 'input_channel0': { type: 't', value: tex },
+                                       'input_channel0_resolution': { type: 'v2', value: res } };
                             })()
                           });
 
@@ -65,9 +65,9 @@ let nyan = new ShaderMode({ id: 'Nyan',
                               stars.wrapS = stars.wrapT = Three.RepeatWrapping;
                               anim.wrapS = anim.wrapT = Three.RepeatWrapping;
                               anim.minFilter = anim.magFilter = Three.NearestFilter;
-                              return { input_channel0: { type: 't', value: anim },
-                                       input_channel1: { type: 't', value: stars },
-                                       input_resolution: { type: 'v2', value: new Three.Vector2(240.0, 140.0) }
+                              return { 'input_channel0': { type: 't', value: anim },
+                                       'input_channel1': { type: 't', value: stars },
+                                       'input_resolution': { type: 'v2', value: new Three.Vector2(240.0, 140.0) }
                                      };
                             })()
                           });
@@ -91,8 +91,8 @@ let storm = new ShaderMode({ id: 'Storm',
                                let tex = loader.load('static/images/tex16.png');
                                tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                let res = new Three.Vector2(256.0, 256.0);
-                               return { input_channel0: { type: 't', value: tex },
-                                        input_channel0_resolution: { type: 'v2', value: res } };
+                               return { 'input_channel0': { type: 't', value: tex },
+                                        'input_channel0_resolution': { type: 'v2', value: res } };
                              })()
                         });
 
@@ -109,8 +109,8 @@ let truchet = new ShaderMode({ id: 'Truchet',
                                  // yes, the resolution given is not correct. this is because the
                                  // original shader code has a bug in it when x-res > y-res.
                                  return {
-                                   input_resolution: { type: 'v2', value: new Three.Vector2(320.0, 480.0) },
-                                   input_channel0: { type: 't', value: cube }
+                                   'input_resolution': { type: 'v2', value: new Three.Vector2(320.0, 480.0) },
+                                   'input_channel0': { type: 't', value: cube }
                                  };
                                })()
                              });
@@ -126,8 +126,8 @@ let vortex = new ShaderMode({ id: 'Vortex',
                                 let tex = loader.load('static/images/tex16.png');
                                 tex.wrapS = tex.wrapT = Three.RepeatWrapping;
                                 let res = new Three.Vector2(256.0, 256.0);
-                                return { input_channel0: { type: 't', value: tex },
-                                         input_channel0_resolution: { type: 'v2', value: res } };
+                                return { 'input_channel0': { type: 't', value: tex },
+                                         'input_channel0_resolution': { type: 'v2', value: res } };
                               })()
                             });
 

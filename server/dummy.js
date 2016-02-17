@@ -1,5 +1,5 @@
 // constants
-var KINECT_DATA_FILE = './dummy-data/skeletal-stress-test.json';
+var KINECT_DATA_FILE = './dummy-data/skeletal-output-01.json';
 var LISTEN_PORT = '8008';
 
 var io = require('socket.io')(LISTEN_PORT);
@@ -39,4 +39,3 @@ io.on('connection', function(socket){
 		term.nextLine().bold.red("Disconnected from client.").nextLine();
 	});
 });
-
