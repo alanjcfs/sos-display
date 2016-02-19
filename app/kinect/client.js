@@ -47,13 +47,6 @@ socket.on('bodyFrame', function(bodies){
   // update skeletons
   frameCount++;
   actions.updateSkeletons(bodies);
-
-  // we need to send a refresh because socket.io might not flush?
-  // TODO: eliminate the need for this.
-  socket.emit('refresh', 'callback hell', function(data) {
-    // no-op.
-    data = null;
-  });
 });
 
 module.exports = {
