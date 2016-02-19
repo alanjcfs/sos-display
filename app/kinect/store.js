@@ -31,7 +31,7 @@ module.exports = Reflux.createStore({
 
   onUpdateHands: function(hands) {
     this.data.hands = hands || [];
-    this.trigger(this.data);
+    //this.trigger(this.data);
   },
 
   onUpdateKinectFPS: function(fps) {
