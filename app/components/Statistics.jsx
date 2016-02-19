@@ -29,7 +29,7 @@ module.exports = React.createClass({
                   <th>
                     {this.props.kinectData.kinectFPS}
                     &nbsp;
-                    <Sparklines data={this.props.kinectData.kinectFPSHistory} limit={200} width={200} height={60}>
+                    <Sparklines data={this.props.kinectData.kinectFPSHistory} limit={600} width={600} height={60} min={0} max={70}>
                       <SparklinesLine color="#1c8cdc" />
                         <SparklinesReferenceLine type="avg" />
                       <SparklinesSpots />
@@ -41,7 +41,7 @@ module.exports = React.createClass({
                   <th>
                     {this.props.data.modeFPS}
                     &nbsp;
-                    <Sparklines data={this.props.data.modeFPSHistory} limit={200} width={200} height={60}>
+                    <Sparklines data={this.props.data.modeFPSHistory} limit={600} width={600} height={60} min={0} max={70}>
                       <SparklinesLine color="#fa7e17" />
                         <SparklinesReferenceLine type="avg" />
                       <SparklinesSpots />
