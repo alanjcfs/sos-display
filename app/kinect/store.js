@@ -7,6 +7,24 @@ module.exports = Reflux.createStore({
   listenables: actions,
 
   onUpdateSkeletons: function(skeletons) {
+
+    let updatedTrackingIds = _.pluck(skeletons, 'trackingId');
+
+    // determine who left
+    let leftTrackingIds = _.difference(this.data.activeTrackingIds, updatedTrackingIds);
+    if(leftTrackingIds.length > 0) {
+      actions.actorLeft(leftTrackingIds);
+    }
+
+    // determine who entered
+    let enteredTrackingIds = _.difference(updatedTrackingIds, this.data.activeTrackingIds);
+    if(enteredTrackingIds.length > 0) {
+      actions.actorEntered(enteredTrackingIds);
+    }
+
+    this.data.activeTrackingIds = updatedTrackingIds;
+
+
     this.data.skeletons = skeletons || [];
     this.trigger(this.data);
   },
@@ -26,9 +44,10 @@ module.exports = Reflux.createStore({
   getInitialState: function() {
     this.data = {
       kinectFPS: 0.0,
-      kinectFPSHistory: _(200).times(function() { return 0.0; }),
+      kinectFPSHistory: _(200).times(() => 0.0),
       skeletons: [],
-      hands: []
+      hands: [],
+      activeTrackingIds: []
     };
     return this.data;
   }

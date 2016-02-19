@@ -4,5 +4,7 @@ module.exports = Reflux.createActions([
   // kinect
   'updateKinectFPS',
   'updateSkeletons',
-  'updateHands'
+  'updateHands',
+  'actorLeft',
+  'actorEntered'
 ]);
