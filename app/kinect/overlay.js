@@ -12,7 +12,7 @@ const TRACKINGID_PREFIX = 'skel-';
 let timer = new Timer();
 setInterval(function() {
   kinectActions.updateKinectFPS(timer.fps());
-}, 500);
+}, 200);
 
 // wrapper to draw the current skeleton bodies.
 let Overlay = {

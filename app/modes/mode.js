@@ -103,7 +103,7 @@ let ShaderMode = function(args) {
     let timer = new util.Timer();
     setInterval(function() {
       actions.updateModeFPS(timer.fps());
-    }, 1000);
+    }, 200);
 
     let render = (now) => {
       timer.tick(now);
