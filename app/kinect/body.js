@@ -44,16 +44,15 @@ let HandPointer = function() {
   };
 };
 
-let SkeletalBody = function() {
+let SkeletalBody = function(color) {
 
+  this._color = color;
   this._bodyData = {};
   this._shapesData = null;
-  this._color = null;
   this._isActive = true;
   this._alpha = 0.1;
 
   this.handPointer = new HandPointer();
-  this.getHandPointerFn = null;
 
   this.pointer = new Pixi.Graphics();
   this.torso = new Pixi.Graphics();
@@ -71,6 +70,11 @@ let SkeletalBody = function() {
   this.leftKneeToAnkle = new Pixi.Graphics();
   this.rightHipToKnee = new Pixi.Graphics();
   this.rightKneeToAnkle = new Pixi.Graphics();
+
+  this._shapesData = new Pixi.Container();
+  this._shapesData.x = this._shapesData.x + KINECTXOFFSET;
+  this._shapesData.y = this._shapesData.y + KINECTYOFFSET;
+  this._shapesData.alpha = this._alpha;
 
   let getJointAsPoint = (jointName) => {
     let joint = this._bodyData.joints[jointName];
@@ -100,11 +104,10 @@ let SkeletalBody = function() {
                           getJointAsPoint('HandRight'));
   };
 
-  let randomizeHandPointer = () => {
-    let fns = [getHandPointerPoint, getLeftHandPointerPoint, getRightHandPointerPoint];
-    let index = Math.floor(Math.random() * fns.length);
-    this.getHandPointerFn = fns[index];
-  };
+  // toggle hand pointer between left, center, right
+  let fns = [getHandPointerPoint, getLeftHandPointerPoint, getRightHandPointerPoint];
+  let index = Math.floor(Math.random() * fns.length);
+  this.getHandPointerFn = fns[index];
 
   let drawLineBetweenJoints = (j1Name, j2Name, polygon) => {
     let j1 = this._bodyData.joints[j1Name];
@@ -135,21 +138,6 @@ let SkeletalBody = function() {
     polygon.endFill();
 
     this._shapesData.addChild(polygon);
-  };
-
-  this.init = (color) => {
-
-    // set up stage reference
-    this._color = color;
-
-    // set up shapes
-    this._shapesData = new Pixi.Container();
-    this._shapesData.x = this._shapesData.x + KINECTXOFFSET;
-    this._shapesData.y = this._shapesData.y + KINECTYOFFSET;
-    this._shapesData.alpha = this._alpha;
-
-    // toggle pointer
-    randomizeHandPointer();
   };
 
   this.setBodyData = (bodyData) => {

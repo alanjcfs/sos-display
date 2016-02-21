@@ -1,11 +1,10 @@
 let Pixi = require('pixi.js');
 let _ = require('underscore');
 
-let input = require('./input');
 let kinectActions = require('./actions');
 
 let { SkeletalBody } = require('./body');
-let { TRACKINGID_PREFIX, KINECTXOFFSET, KINECTYOFFSET } = require('./constants');
+let { TRACKINGID_PREFIX } = require('./constants');
 let { Timer } = require('../util');
 
 let timer = new Timer();
@@ -17,29 +16,36 @@ setInterval(function() {
 let Overlay = {
   container: new Pixi.Container(),
   skeletons: {},
+
   skeletonsCount: function() {
     return _.size(this.skeletons);
   },
+
   getSkeleton: function(bodyId) {
-    let skel = this.skeletons[TRACKINGID_PREFIX + bodyId];
-    return skel;
+    let id = TRACKINGID_PREFIX + bodyId;
+    return this.skeletons[id];
   },
+
   addSkeleton: function(bodyId) {
-    let skeleton = new SkeletalBody();
+    let id = TRACKINGID_PREFIX + bodyId;
     let color = Math.random() * 0x1000000;
-    skeleton.init(color);
-    this.skeletons[TRACKINGID_PREFIX + bodyId] = skeleton;
+    let skeleton = new SkeletalBody(color);
+    this.skeletons[id] = skeleton;
   },
+
   removeSkeleton: function(bodyId) {
-    let skel = this.getSkeleton(bodyId);
-    skel.remove();
-    delete this.skeletons[TRACKINGID_PREFIX + bodyId];
+    let id = TRACKINGID_PREFIX + bodyId;
+    this.getSkeleton(bodyId).remove();
+    delete this.skeletons[id];
   },
+
   updateSkeletonBodyData: function(bodyId, bodyData) {
-    if(_.has(this.skeletons, TRACKINGID_PREFIX + bodyId)) {
-      this.skeletons[TRACKINGID_PREFIX + bodyId].setBodyData(bodyData);
+    let id = TRACKINGID_PREFIX + bodyId;
+    if(_.has(this.skeletons, id)) {
+      this.skeletons[id].setBodyData(bodyData);
     }
   },
+
   start: function(renderer) {
 
     let draw = (now) => {
@@ -75,23 +81,10 @@ kinectActions.actorEntered.listen(function(ids) {
   });
 });
 
-// process all the raw kinect data and turn them into skeleton bodies
-// we can work with.
 kinectActions.updateSkeletons.listen(function(bodies) {
-
   _.each(bodies, function(body) {
     Overlay.updateSkeletonBodyData(body.trackingId, body);
   });
-
-  let hands = _.map(Overlay.skeletons, function(skel) {
-    let hand = skel.getHandPointerFn();
-    return {
-      x: hand.x + KINECTXOFFSET,
-      y: hand.y + KINECTYOFFSET
-    };
-  });
-
-  input.processHands(hands);
 });
 
 module.exports = Overlay;

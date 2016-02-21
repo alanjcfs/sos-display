@@ -130,7 +130,7 @@ module.exports = Reflux.createStore({
         started: new Date().getTime(),
         elapsed: 0.0,
         modeFPS: 0.0,
-        modeFPSHistory: _(200).times(function() { return 0.0; }),
+        modeFPSHistory: _(200).times(() => 0.0),
         mode: {}
       }
     };

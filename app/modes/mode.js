@@ -8,7 +8,7 @@ let kinectActions = require('../kinect/actions');
 let vertexShader = require('./shaders/generic.vert.glsl');
 
 const jumpInterval = 5 * 60; // in seconds
-let inputs = _(32).times(function() { return 0.0; }); // shader inputs
+let inputs = _(32).times(() => 0.0); // shader inputs
 
 let Mode = function(id, title) {
   this.id = id;
@@ -146,6 +146,6 @@ kinectActions.updateHands.listen(function(hands) {
 });
 
 module.exports = {
-  Mode: Mode,
-  ShaderMode: ShaderMode
+  Mode,
+  ShaderMode
 };

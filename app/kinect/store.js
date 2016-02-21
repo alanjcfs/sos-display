@@ -1,37 +1,28 @@
 let Reflux = require('reflux');
 let _ = require('underscore');
 
-let actions = require('./actions');
+let kinectActions = require('./actions');
 
 module.exports = Reflux.createStore({
-  listenables: actions,
+  listenables: kinectActions,
 
   onUpdateSkeletons: function(skeletons) {
 
-    let updatedTrackingIds = _.pluck(skeletons, 'trackingId');
+    let updated = _.pluck(skeletons, 'trackingId');
 
-    // determine who left
-    let leftTrackingIds = _.difference(this.data.activeTrackingIds, updatedTrackingIds);
-    if(leftTrackingIds.length > 0) {
-      actions.actorLeft(leftTrackingIds);
+    let left = _.difference(this.data.trackingIds, updated);
+    if(left.length > 0) {
+      kinectActions.actorLeft(left);
     }
 
-    // determine who entered
-    let enteredTrackingIds = _.difference(updatedTrackingIds, this.data.activeTrackingIds);
-    if(enteredTrackingIds.length > 0) {
-      actions.actorEntered(enteredTrackingIds);
+    let entered = _.difference(updated, this.data.trackingIds);
+    if(entered.length > 0) {
+      kinectActions.actorEntered(entered);
     }
 
-    this.data.activeTrackingIds = updatedTrackingIds;
-
-
+    this.data.trackingIds = updated;
     this.data.skeletons = skeletons || [];
     this.trigger(this.data);
-  },
-
-  onUpdateHands: function(hands) {
-    this.data.hands = hands || [];
-    //this.trigger(this.data);
   },
 
   onUpdateKinectFPS: function(fps) {
@@ -46,8 +37,7 @@ module.exports = Reflux.createStore({
       kinectFPS: 0.0,
       kinectFPSHistory: _(200).times(() => 0.0),
       skeletons: [],
-      hands: [],
-      activeTrackingIds: []
+      trackingIds: []
     };
     return this.data;
   }
