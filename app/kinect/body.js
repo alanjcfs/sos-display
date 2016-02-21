@@ -1,6 +1,14 @@
 let Pixi = require('pixi.js');
+let _ = require('underscore');
 
-let { KINECTXOFFSET, KINECTYOFFSET } = require('./constants');
+let {
+  KINECTXOFFSET,
+  KINECTYOFFSET
+} = require('./constants');
+
+const HANDSNORMAL = Symbol();
+const HANDSCLOSED = Symbol();
+const HANDSOPENED = Symbol();
 
 let HandPointer = function() {
 
@@ -48,8 +56,6 @@ let SkeletalBody = function(color) {
 
   this._color = color;
   this._bodyData = {};
-  this._shapesData = null;
-  this._isActive = true;
   this._alpha = 0.1;
 
   this.handPointer = new HandPointer();
@@ -72,40 +78,35 @@ let SkeletalBody = function(color) {
   this.rightKneeToAnkle = new Pixi.Graphics();
 
   this._shapesData = new Pixi.Container();
-  this._shapesData.x = this._shapesData.x + KINECTXOFFSET;
-  this._shapesData.y = this._shapesData.y + KINECTYOFFSET;
+  this._shapesData.x = KINECTXOFFSET;
+  this._shapesData.y = KINECTYOFFSET;
   this._shapesData.alpha = this._alpha;
 
-  let getJointAsPoint = (jointName) => {
-    let joint = this._bodyData.joints[jointName];
-    if(joint) {
-      return { x : joint.x, y : joint.y };
-    } else {
-      return null;
-    }
+  let getLeftHandPoint = () => {
+    let { x, y } = this._bodyData.joints['HandLeft'];
+    let lstatus = this._bodyData['handLeftState'];
+    let status = _.result({ 'Closed': HANDSCLOSED, 'Open': HANDSOPENED }, lstatus, HANDSNORMAL);
+    return { x, y, status };
   };
 
-  let getCenterPoint = function(topLeftRect, bottomRightRect) {
-    let centerX = (topLeftRect.x + bottomRightRect.x) / 2;
-    let centerY = (topLeftRect.y + bottomRightRect.y) / 2;
-    return { x : centerX, y :  centerY };
+  let getRightHandPoint = () => {
+    let { x, y } = this._bodyData.joints['HandRight'];
+    let rstatus = this._bodyData['handRightState'];
+    let status = _.result({ 'Closed': HANDSCLOSED, 'Open': HANDSOPENED }, rstatus, HANDSNORMAL);
+    return { x, y, status };
   };
 
-  let getLeftHandPointerPoint = () => {
-    return getJointAsPoint('HandLeft');
-  };
-
-  let getRightHandPointerPoint = () => {
-    return getJointAsPoint('HandRight');
-  };
-
-  let getHandPointerPoint = () => {
-    return getCenterPoint(getJointAsPoint('HandLeft'),
-                          getJointAsPoint('HandRight'));
+  let getCenterHandsPoint = () => {
+    let { x: lx, y: ly, status: lstatus } = getLeftHandPoint();
+    let { x: rx, y: ry, status: rstatus } = getRightHandPoint();
+    let x = (lx + rx) / 2;
+    let y = (ly + ry) / 2;
+    let status = lstatus === rstatus ? lstatus : HANDSNORMAL;
+    return { x, y, status };
   };
 
   // toggle hand pointer between left, center, right
-  let fns = [getHandPointerPoint, getLeftHandPointerPoint, getRightHandPointerPoint];
+  let fns = [getCenterHandsPoint, getLeftHandPoint, getRightHandPoint];
   let index = Math.floor(Math.random() * fns.length);
   this.getHandPointerFn = fns[index];
 
@@ -207,11 +208,19 @@ let SkeletalBody = function(color) {
       this._shapesData.addChild(this.head);
 
       if(this.handPointer.visible) {
-        let pointerLoc = this.getHandPointerFn();
+        let { x, y, status } = this.getHandPointerFn();
         this.pointer.clear();
         this.pointer.lineStyle(2, 0xffffff);
-        this.pointer.beginFill(this.handPointer.color);
-        this.pointer.drawCircle(pointerLoc.x, pointerLoc.y, this.handPointer.getNextSize());
+
+        if (status === HANDSOPENED) {
+          this.pointer.beginFill(0x00ff00); // green
+        } else if (status === HANDSCLOSED) {
+          this.pointer.beginFill(0xff0000); // red
+        } else {
+          this.pointer.beginFill(this.handPointer.color);
+        }
+
+        this.pointer.drawCircle(x, y, this.handPointer.getNextSize());
         this.pointer.alpha = this.handPointer.getNextAlpha();
         this.pointer.endFill();
         this._shapesData.addChild(this.pointer);
@@ -229,8 +238,6 @@ let SkeletalBody = function(color) {
 };
 
 module.exports = {
-  KINECTXOFFSET,
-  KINECTYOFFSET,
   SkeletalBody,
   HandPointer
 };

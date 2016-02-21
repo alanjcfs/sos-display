@@ -32,7 +32,8 @@
   },
   "globals": {
     "$": false,
-    "Uint8Array": true
+    "Uint8Array": true,
+    "Symbol"
   },
   "env": {
     "browser": true,
