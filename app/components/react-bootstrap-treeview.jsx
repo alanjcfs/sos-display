@@ -39,8 +39,10 @@ var TreeView = React.createClass({
 
     let data = this.props.data;
     let children = _.map(data, (skeleton, i) => {
-        let name = "Skeleton " + i;
-        let kSkel = overlay.getSkeleton(skeleton.trackingId);
+      let name = "Skeleton " + i;
+      let kSkel = overlay.getSkeleton(skeleton.trackingId);
+      if(kSkel)
+      {
         let kSkelColor = Math.floor(kSkel._color).toString(16);
         //this.props.color = "green";
         return (<TreeNode node={name}
@@ -51,6 +53,7 @@ var TreeView = React.createClass({
                           visible={true}
                           options={this.props} />
         );
+      }
     });
 
     return (
@@ -189,5 +192,5 @@ var TreeNode = React.createClass({
 });
 
 module.exports = {
-    TreeView: TreeView
+    TreeView
 };

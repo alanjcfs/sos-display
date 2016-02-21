@@ -4,10 +4,9 @@ let _ = require('underscore');
 let input = require('./input');
 let kinectActions = require('./actions');
 
-let { SkeletalBody, SHAPESXOFFSET, SHAPESYOFFSET } = require('./skeletalbody');
+let { SkeletalBody } = require('./body');
+let { TRACKINGID_PREFIX, KINECTXOFFSET, KINECTYOFFSET } = require('./constants');
 let { Timer } = require('../util');
-
-const TRACKINGID_PREFIX = 'skel-';
 
 let timer = new Timer();
 setInterval(function() {
@@ -85,10 +84,10 @@ kinectActions.updateSkeletons.listen(function(bodies) {
   });
 
   let hands = _.map(Overlay.skeletons, function(skel) {
-    let hand = skel.getHandPointerPoint();
+    let hand = skel.getHandPointerFn();
     return {
-      x: hand.x + SHAPESXOFFSET,
-      y: hand.y + SHAPESYOFFSET
+      x: hand.x + KINECTXOFFSET,
+      y: hand.y + KINECTYOFFSET
     };
   });
 

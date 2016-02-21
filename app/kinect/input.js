@@ -35,5 +35,5 @@ let processHands = function(hands) {
 };
 
 module.exports = {
-  processHands: processHands
+  processHands
 };
