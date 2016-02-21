@@ -38,6 +38,7 @@ var TreeView = React.createClass({
 
     let data = this.props.data;
     let children = _.map(data, (skeleton, i) => {
+      let name = "Skeleton " + i;
       let color = Math.floor(skeleton.color).toString(16);
       return (<TreeNode node={name}
                         value={skeleton}
