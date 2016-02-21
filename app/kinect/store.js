@@ -6,7 +6,20 @@ let kinectActions = require('./actions');
 module.exports = Reflux.createStore({
   listenables: kinectActions,
 
+  setColors: function(skeletons) {
+    _.each(skeletons, (skeleton) => {
+      let id = skeleton.trackingId;
+      if (!this.data.skeletonColors[id]) {
+        let color = Math.random() * 0x1000000;
+        this.data.skeletonColors[id] = color;
+      }
+      skeleton.color = this.data.skeletonColors[id];
+    });
+  },
+
   onUpdateSkeletons: function(skeletons) {
+
+    this.setColors(skeletons);
 
     let updated = _.pluck(skeletons, 'trackingId');
 
@@ -17,7 +30,8 @@ module.exports = Reflux.createStore({
 
     let entered = _.difference(updated, this.data.trackingIds);
     if(entered.length > 0) {
-      kinectActions.actorEntered(entered);
+      let bodies = _.filter(skeletons, ({ trackingId }) => _.contains(entered, trackingId));
+      kinectActions.actorEntered(bodies);
     }
 
     this.data.trackingIds = updated;
@@ -37,6 +51,7 @@ module.exports = Reflux.createStore({
       kinectFPS: 0.0,
       kinectFPSHistory: _(200).times(() => 0.0),
       skeletons: [],
+      skeletonColors: {},
       trackingIds: []
     };
     return this.data;

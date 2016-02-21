@@ -3,7 +3,6 @@ let React = require('react');
 let _ = require('underscore');
 let { Table } = require('react-bootstrap');
 let SkeletalDebug = require('./SkeletalDebug');
-let overlay = require('../kinect/overlay');
 
 module.exports = React.createClass({
     render: function() {
@@ -20,7 +19,7 @@ module.exports = React.createClass({
               <tbody>
                 <tr>
                   <th>Number of detected figures</th>
-                  <th>{overlay.skeletonsCount()}</th>
+                  <th>{this.props.data.skeletons.length}</th>
                 </tr>
                 <tr>
                   <th>Hand coordinates</th>

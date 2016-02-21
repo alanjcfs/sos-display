@@ -3,7 +3,6 @@
 'use strict';
 let React = require('react');
 let _ = require('underscore');
-let overlay = require("../kinect/overlay");
 
 var TreeView = React.createClass({
 
@@ -39,21 +38,15 @@ var TreeView = React.createClass({
 
     let data = this.props.data;
     let children = _.map(data, (skeleton, i) => {
-      let name = "Skeleton " + i;
-      let kSkel = overlay.getSkeleton(skeleton.trackingId);
-      if(kSkel)
-      {
-        let kSkelColor = Math.floor(kSkel._color).toString(16);
-        //this.props.color = "green";
-        return (<TreeNode node={name}
-                          value={skeleton}
-                          backColor={"#"+ kSkelColor}
-                          key={skeleton.trackingId}
-                          level={1}
-                          visible={true}
-                          options={this.props} />
+      let color = Math.floor(skeleton.color).toString(16);
+      return (<TreeNode node={name}
+                        value={skeleton}
+                        backColor={"#"+ color}
+                        key={skeleton.trackingId}
+                        level={1}
+                        visible={true}
+                        options={this.props} />
         );
-      }
     });
 
     return (

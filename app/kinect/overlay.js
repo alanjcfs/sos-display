@@ -17,33 +17,25 @@ let Overlay = {
   container: new Pixi.Container(),
   skeletons: {},
 
-  skeletonsCount: function() {
-    return _.size(this.skeletons);
-  },
-
-  getSkeleton: function(bodyId) {
+  addSkeleton: function(bodyData) {
+    let { trackingId: bodyId, color } = bodyData;
     let id = TRACKINGID_PREFIX + bodyId;
-    return this.skeletons[id];
-  },
-
-  addSkeleton: function(bodyId) {
-    let id = TRACKINGID_PREFIX + bodyId;
-    let color = Math.random() * 0x1000000;
     let skeleton = new SkeletalBody(color);
     this.skeletons[id] = skeleton;
   },
 
-  removeSkeleton: function(bodyId) {
-    let id = TRACKINGID_PREFIX + bodyId;
-    this.getSkeleton(bodyId).remove();
-    delete this.skeletons[id];
-  },
-
-  updateSkeletonBodyData: function(bodyId, bodyData) {
+  updateSkeleton: function(bodyData) {
+    let { trackingId: bodyId } = bodyData;
     let id = TRACKINGID_PREFIX + bodyId;
     if(_.has(this.skeletons, id)) {
       this.skeletons[id].setBodyData(bodyData);
     }
+  },
+
+  removeSkeleton: function(bodyId) {
+    let id = TRACKINGID_PREFIX + bodyId;
+    this.skeletons[id].remove();
+    delete this.skeletons[id];
   },
 
   start: function(renderer) {
@@ -69,22 +61,16 @@ let Overlay = {
   }
 };
 
-kinectActions.actorLeft.listen(function(ids) {
-  _.each(ids, (bodyId) => {
-    Overlay.removeSkeleton(bodyId);
-  });
-});
-
-kinectActions.actorEntered.listen(function(ids) {
-  _.each(ids, (bodyId) => {
-   Overlay.addSkeleton(bodyId);
-  });
+kinectActions.actorEntered.listen(function(bodies) {
+  _.each(bodies, Overlay.addSkeleton.bind(Overlay));
 });
 
 kinectActions.updateSkeletons.listen(function(bodies) {
-  _.each(bodies, function(body) {
-    Overlay.updateSkeletonBodyData(body.trackingId, body);
-  });
+  _.each(bodies, Overlay.updateSkeleton.bind(Overlay));
+});
+
+kinectActions.actorLeft.listen(function(ids) {
+  _.each(ids, Overlay.removeSkeleton.bind(Overlay));
 });
 
 module.exports = Overlay;
