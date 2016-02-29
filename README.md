@@ -6,6 +6,7 @@
 2. `cd` into cloned project
 3. `npm install` to pull down deps
 4. `npm start` to run instance. (usually at `http://localhost:8080`, but see console output)
+5. Click on 'build' or go to `localhost:8080/build` to see the screen running.
 
 ### Development / Production Rotation Toggle
 
