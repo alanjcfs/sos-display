@@ -1,16 +1,15 @@
-'use strict';
-
-var services = angular.module('sos.services');
+let angular  = require('angular');
+let services = angular.module('sos.services');
 services.service('audioService', function($rootScope, $log, $q) {
   window.AudioContext = window.AudioContext||window.webkitAudioContext;
-  var self = this;
+  let self = this;
 
   this.context = new AudioContext();
 
   this.loadBuffer = function(fileName) {
-    var deferred = $q.defer();
-    var request = new XMLHttpRequest();
-    request.open("GET", "audio/" + fileName, true);
+    let deferred = $q.defer();
+    let request = new XMLHttpRequest();
+    request.open('GET', 'audio/' + fileName, true);
     request.responseType = 'arraybuffer';
     request.onload = function() {
       self.context.decodeAudioData(request.response, function(buffer) {
