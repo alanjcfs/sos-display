@@ -29,7 +29,7 @@ let Layout = React.createClass({
           <Grid fluid={true}>
             <Header />
             <Row>
-              <Col xs={5} md={3}>
+              <Col xs={5} md={4}>
                 <Canvas data={this.state.data} />
               </Col>
               <Col xs={4} md={2}>
@@ -37,7 +37,7 @@ let Layout = React.createClass({
                 <ControlPanel data={this.state.data.control} />
                 <SocketIOPanel />
               </Col>
-              <Col xs={9} md={7}>
+              <Col xs={9} md={6}>
                 <Statistics data={this.state.data.information}
                             kinectData={this.state.kinectData}
                             audioData={this.state.data.soundWaveData}
